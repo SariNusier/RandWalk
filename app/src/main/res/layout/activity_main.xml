@@ -45,7 +45,8 @@
                     android:textAlignment="center"
                     android:layout_weight=".2"
                     android:layout_marginLeft="5dp"
-                    android:id="@+id/button_smecher" />
+                    android:id="@+id/button_smecher"
+                    android:onClick="startLevel1" />
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -57,7 +58,8 @@
                     android:textStyle="bold"
                     android:textAlignment="center"
                     android:layout_weight=".2"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginLeft="5dp"
+                    android:onClick="startLevel1" />
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -69,7 +71,8 @@
                     android:textStyle="bold"
                     android:textAlignment="center"
                     android:layout_weight=".2"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginLeft="5dp"
+                    android:onClick="startLevel1" />
 
 
                 <Button

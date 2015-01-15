@@ -1,6 +1,7 @@
 package com.example.sari.randomwalk;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,7 +62,16 @@ public class MainActivity extends ActionBarActivity {
         dialog1.show(manager,"MyDialog");
     }
     public void showScore2(View v){
+        FragmentManager manager = getFragmentManager();
+        ScoreDialog2 dialog2 = new ScoreDialog2();
+        dialog2.show(manager,"MyDialog");
+    }
 
+    public void startLevel1(View view){
+       Button buttonClicked = (Button) view;
+        Intent intent = new Intent(this, Level1Activity.class);
+        intent.putExtra("SUB_LEVEL", buttonClicked.getText());
+        startActivity(intent);
     }
 
 }

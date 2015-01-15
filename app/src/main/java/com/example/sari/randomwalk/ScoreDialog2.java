@@ -12,12 +12,12 @@ import android.view.Window;
 /**
  * Created by Sari on 1/15/2015.
  */
-public class ScoreDialog1 extends DialogFragment {
+public class ScoreDialog2 extends DialogFragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.score_dialog_1, null);
+        return inflater.inflate(R.layout.score_dialog_2, null);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class ScoreDialog1 extends DialogFragment {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
 
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(R.drawable.shape1);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.shape2);
         return dialog;
     }
 }
