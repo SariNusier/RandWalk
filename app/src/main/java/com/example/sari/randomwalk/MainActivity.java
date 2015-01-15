@@ -41,19 +41,15 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         Toast toast;
-        switch (item.getItemId()) {
-            case R.id.action_about:
-                toast = Toast.makeText(getApplicationContext(),"About",Toast.LENGTH_SHORT);
-                toast.show();
-                return true;
-            case R.id.action_help:
-                Toast.makeText(getApplicationContext(),"Help",Toast.LENGTH_SHORT);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        //noinspection SimplifiableIfStatement
+        if(id == R.id.action_about)
+           showAboutDialog();
+        return super.onOptionsItemSelected(item);
+    }
 
-        }
+    public void showAboutDialog(){
+        FragmentManager manager = getFragmentManager();
+        MoreDialog dialog = new MoreDialog();
+        dialog.show(manager,"Learn More");
     }
 
     public void showScore1(View v){
@@ -71,6 +67,13 @@ public class MainActivity extends ActionBarActivity {
        Button buttonClicked = (Button) view;
         Intent intent = new Intent(this, Level1Activity.class);
         intent.putExtra("SUB_LEVEL", buttonClicked.getText());
+        startActivity(intent);
+    }
+
+    public void startLevel2(View view){
+        Button buttonClicked = (Button) view;
+        Intent intent = new Intent(this, Level2Activity.class);
+        intent.putExtra("SUB_LEVEL",buttonClicked.getText());
         startActivity(intent);
     }
 

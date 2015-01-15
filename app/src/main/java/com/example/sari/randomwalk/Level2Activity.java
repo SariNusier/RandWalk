@@ -3,30 +3,27 @@ package com.example.sari.randomwalk;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 
-public class Level1Activity extends ActionBarActivity {
-    private int clickCount = 0;
+public class Level2Activity extends ActionBarActivity {
+    private int clickCount=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_level1);
+        setContentView(R.layout.activity_level2);
         Intent intent = getIntent();
-        setTitle("Level 1" + intent.getStringExtra("SUB_LEVEL"));
+        setTitle("Level 2" + intent.getStringExtra("SUB_LEVEL"));
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_level1, menu);
+        getMenuInflater().inflate(R.menu.menu_level2, menu);
         return true;
     }
 
@@ -47,8 +44,8 @@ public class Level1Activity extends ActionBarActivity {
 
     public void nextPage(View view){
 
-        TextView textView = (TextView) findViewById(R.id.textView_intro_level1A);
-        View layout = findViewById(R.id.guide_layout);
+        TextView textView = (TextView) findViewById(R.id.textView_intro_level2);
+        View layout = (View) findViewById(R.id.guide_layout2);
         if(clickCount == 0) {
             textView.setText(R.string.guide_level1A);
             clickCount++;

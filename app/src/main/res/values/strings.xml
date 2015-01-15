@@ -8,11 +8,31 @@
     <string name="button_send">Send</string>
     <string name="intro_level1A">The pirate just arrived in a new harbour and is ready to go out, but he is aware that he might be tottering on his way back to the ship. \n \n  Try helping him with choosing bar wisely to maximise his chances of arriving to the ship! \n \n Choose a starting point of the pirate\'s walk and observe his movement... </string>
     <string name="guide_level1A">To choose a start - long tap on the desired area. \n \n Be prepared - even if you choose
-    ideal starting point, due to waddling in pirate\'s walk you still might fall into the sea! \n \n Try walking couple of times.\n If you are really unlucky, you will be able to change your starting point.
-    </string>
+    ideal starting point, due to waddling in pirate\'s walk you still might fall into the sea! \n \n Try walking couple of times.\n If you are really unlucky, you will be able to change your starting point.</string>
+    <string name="intro_level2A"></string>
+    <string name="guite_level2a"></string>
+    <string name="learn_more_main_menu">
+        The parrot\’s feather coloration
+        pattern doesn\’t look like a
+        perfect copy of its parents\’ one, with whom it shares the genetic heritage. Genetic
+        differences occur due to a rearrangement of DNA during the reproduction (“crossover”) and
+        unpredictable mutations.\n \n
+        In general, patterns of pigmentation in multicoloured animals is not controlled only by their set of genes
+        (“genotype”) but also the history and the environment contribute to their variability. \n
+        Even if we could select the same genes, follow the same history, expose cells to the same
+    environment, still organisms would display some difference in their observable features ("phenotype").
+    \n \n Scientists have recently thought that randomness in the process of gene expression can be a
+     major source of phenotype variability. It means that, if molecules of a specific type exist in few copies inside a cell,
+     random effects stemming from their random walks can become important. \n \n What does it imply at the end of the day? Every
+     individual in a population of living organisms is unique and differs from anyone else, even its twin or clone,
+     in appearance and behaviour. \n \n Biologists refer to variation in measured levels of gene
+    expression products(e.g. proteins) as "noise", regardless of the source. They call "extrinsic"
+     the noise due to microscopic cell-to-cell differences of environment and history, "intrinsic" the
+    one due to random fluctuations."</string>
     <color name="Level1">#E6C850</color>
     <color name="Level2">#48D1FF</color>
 
     <string name="title_activity_level1">Level1</string>
+    <string name="title_activity_level2">Level2</string>
 
 </resources>
