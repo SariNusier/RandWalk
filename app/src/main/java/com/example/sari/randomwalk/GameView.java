@@ -10,8 +10,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Picture;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -39,7 +42,9 @@ public class GameView extends View implements OnTouchListener {
     Paint paintBoundries = new Paint();
     DisplayMetrics metrics;
     boolean canvasCheck = false;
+    Drawable pirate;
 
+    //CONSTRUCTOR
     public GameView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         setFocusable(true);
@@ -49,9 +54,9 @@ public class GameView extends View implements OnTouchListener {
 
         rand = new Random();
         //canvas = new Canvas(bitmap);
-        paint.setColor(Color.WHITE);
-        paintBoundries.setColor(Color.YELLOW);
-        paintBoundries.setStrokeWidth(3);
+        paint.setColor(Color.BLUE);
+        paintBoundries.setColor(Color.RED);
+        paintBoundries.setStrokeWidth(5);
         paint.setStrokeWidth(5);
         //if(Bitmap.Config.ARGB_8888 == null || canvas.getHeight() == 0 || canvas.getWidth() == 0)
         //	Log.d("BITMAP","Is null");
@@ -59,9 +64,18 @@ public class GameView extends View implements OnTouchListener {
         metrics = getResources().getDisplayMetrics();
         Log.d("HEIGHT","Height"+metrics.heightPixels);
         Log.d("WIDTH","Height"+metrics.widthPixels);
-        bitmap = Bitmap.createBitmap(metrics.widthPixels, metrics.heightPixels, Bitmap.Config.ARGB_8888);
 
+        bitmap = Bitmap.createBitmap(metrics.widthPixels, metrics.heightPixels, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
+        canvas.drawColor(Color.parseColor("#DED9D9"));
+        //Picture picture = new Picture();
+        Drawable startSurface = this.getResources().getDrawable(R.drawable.start_surface);
+         pirate = this.getResources().getDrawable(R.drawable.rsz_pirate);
+        startSurface.setBounds(0,0,metrics.widthPixels/6,metrics.heightPixels);
+
+
+        startSurface.draw(canvas);
+
 
 
     }
@@ -71,16 +85,20 @@ public class GameView extends View implements OnTouchListener {
         //canvas.drawLine(50,50, 10, 1000, paint);
         //canvas.drawLine(20, 0, 0, 20, paint);
         paint.setStyle(Paint.Style.STROKE);
-        this.canvas.drawLine(metrics.widthPixels/6,0,metrics.widthPixels/6,metrics.heightPixels,paintBoundries);
+
+        //draw clicking area
+        //this.canvas.drawLine(metrics.widthPixels/6,0,metrics.widthPixels/6,metrics.heightPixels,paintBoundries);
+
+        //draw target!
         this.canvas.drawLine(metrics.widthPixels, metrics.heightPixels/2-100,
                 metrics.widthPixels-20, metrics.heightPixels/2-100, paint);
-
         this.canvas.drawLine(metrics.widthPixels, metrics.heightPixels/2+100,
                 metrics.widthPixels-20, metrics.heightPixels/2+100, paint);
-
         this.canvas.drawLine(metrics.widthPixels-20, metrics.heightPixels/2-100,
                 metrics.widthPixels-20, metrics.heightPixels/2+100, paint);
-        if (ok == 1 ) {//&& start_X <=500 && start_Y<=500
+
+        if (ok == 1 ) {
+
             if(start_X + 25 == metrics.widthPixels)
                 if(start_Y >= metrics.heightPixels/2-100+25 && start_Y <= metrics.heightPixels/2+100+25)
                     Toast.makeText(getContext(), "YOU ARE HOME!", Toast.LENGTH_SHORT);
@@ -96,8 +114,6 @@ public class GameView extends View implements OnTouchListener {
         //drawTick();
         canvas.drawBitmap(bitmap, 0, 0, paint);
 
-
-
     }
 
     @Override
@@ -105,7 +121,11 @@ public class GameView extends View implements OnTouchListener {
         if(ok<1 && event.getX()<=metrics.widthPixels/6)
         {	ok++;
             start_X = event.getX();
-            start_Y = event.getY();invalidate();}
+            start_Y = event.getY();
+            pirate.setBounds(0,0,500,150);
+            pirate.setBounds((int)start_X-50,(int)start_Y-66,(int)start_X+50,(int)start_Y+66);
+            pirate.draw(canvas);
+            invalidate();}
 
         return true;
     }
