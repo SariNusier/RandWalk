@@ -14,6 +14,7 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Picture;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -70,12 +71,25 @@ public class GameView extends View implements OnTouchListener {
         canvas.drawColor(Color.parseColor("#DED9D9"));
         //Picture picture = new Picture();
         Drawable startSurface = this.getResources().getDrawable(R.drawable.start_surface);
-         pirate = this.getResources().getDrawable(R.drawable.rsz_pirate);
+        Drawable boat = this.getResources().getDrawable(R.drawable.boat);
+        int left,top,right,bottom;
+        left =  metrics.widthPixels-200;
+        right = metrics.widthPixels-100;
+        top = metrics.heightPixels - 50;
+        bottom = metrics.heightPixels + 50;
+
+        Rect rect = new Rect(1000,920,1080,1000);
+
+        Rect rect1 = new Rect(metrics.widthPixels-200,metrics.heightPixels/2 -100,metrics.widthPixels,metrics.heightPixels/2 +100);
+        Log.d("Rect",rect1.toString());
+        boat.setBounds(rect1);
+
+        pirate = this.getResources().getDrawable(R.drawable.rsz_pirate);
         startSurface.setBounds(0,0,metrics.widthPixels/6,metrics.heightPixels);
 
 
         startSurface.draw(canvas);
-
+        boat.draw(canvas);
 
 
     }
@@ -90,13 +104,13 @@ public class GameView extends View implements OnTouchListener {
         //this.canvas.drawLine(metrics.widthPixels/6,0,metrics.widthPixels/6,metrics.heightPixels,paintBoundries);
 
         //draw target!
-        this.canvas.drawLine(metrics.widthPixels, metrics.heightPixels/2-100,
+    /*    this.canvas.drawLine(metrics.widthPixels, metrics.heightPixels/2-100,
                 metrics.widthPixels-20, metrics.heightPixels/2-100, paint);
         this.canvas.drawLine(metrics.widthPixels, metrics.heightPixels/2+100,
                 metrics.widthPixels-20, metrics.heightPixels/2+100, paint);
         this.canvas.drawLine(metrics.widthPixels-20, metrics.heightPixels/2-100,
                 metrics.widthPixels-20, metrics.heightPixels/2+100, paint);
-
+*/
         if (ok == 1 ) {
 
             if(start_X + 25 == metrics.widthPixels)
