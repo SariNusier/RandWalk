@@ -46,12 +46,7 @@ public class Level2Activity extends ActionBarActivity {
 
         TextView textView = (TextView) findViewById(R.id.textView_intro_level2);
         View layout = (View) findViewById(R.id.guide_layout2);
-        if(clickCount == 0) {
-            textView.setText(R.string.guide_level1A);
-            clickCount++;
-        } else {
-            layout.setVisibility(View.GONE);
-            clickCount = 0;
-        }
+        layout.setVisibility(View.GONE);
+
     }
 }

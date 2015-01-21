@@ -1,6 +1,7 @@
 package com.example.sari.randomwalk;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Layout;
@@ -27,6 +28,7 @@ public class Level1Activity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_level1, menu);
+
         return true;
     }
 
@@ -50,10 +52,11 @@ public class Level1Activity extends ActionBarActivity {
         TextView textView = (TextView) findViewById(R.id.textView_intro_level1A);
         View layout = findViewById(R.id.guide_layout);
         if(clickCount == 0) {
-            textView.setText(R.string.guide_level1A);
+          //  textView.setText(R.string.guide_level1A);
+            layout.setVisibility(View.GONE);
             clickCount++;
         } else {
-            layout.setVisibility(View.GONE);
+
             clickCount = 0;
         }
     }

@@ -7,10 +7,12 @@ package com.example.sari.randomwalk;
 import java.util.Random;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Picture;
@@ -29,13 +31,16 @@ import android.widget.Toast;
  */
 
 public class GameView extends View implements OnTouchListener {
-
     Paint paint = new Paint();
     float start_X;
     float start_Y;
-    Path path = new Path();
+   // Path path = new Path();
     int ok = 0;
-    int random;
+    boolean ok1 = false;
+    int  click_counter = 0;
+    int random_X, random_Y;
+    boolean listenTouch = true;
+    float X,Y;
     int counter = 0;
     Canvas canvas;
     Bitmap bitmap;
@@ -44,6 +49,9 @@ public class GameView extends View implements OnTouchListener {
     DisplayMetrics metrics;
     boolean canvasCheck = false;
     Drawable pirate;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+
 
     //CONSTRUCTOR
     public GameView(Context context, AttributeSet attributeSet) {
@@ -52,6 +60,10 @@ public class GameView extends View implements OnTouchListener {
         setFocusableInTouchMode(true);
         //bitmap = new Bitmap();
         this.setOnTouchListener(this);
+
+         preferences = context.getSharedPreferences("GAME_DATA",Context.MODE_PRIVATE);
+         editor = preferences.edit();
+
 
         rand = new Random();
         //canvas = new Canvas(bitmap);
@@ -69,16 +81,9 @@ public class GameView extends View implements OnTouchListener {
         bitmap = Bitmap.createBitmap(metrics.widthPixels, metrics.heightPixels, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
         canvas.drawColor(Color.parseColor("#DED9D9"));
-        //Picture picture = new Picture();
         Drawable startSurface = this.getResources().getDrawable(R.drawable.start_surface);
         Drawable boat = this.getResources().getDrawable(R.drawable.boat);
-        int left,top,right,bottom;
-        left =  metrics.widthPixels-200;
-        right = metrics.widthPixels-100;
-        top = metrics.heightPixels - 50;
-        bottom = metrics.heightPixels + 50;
 
-        Rect rect = new Rect(1000,920,1080,1000);
 
         Rect rect1 = new Rect(metrics.widthPixels-200,metrics.heightPixels/2 -100,metrics.widthPixels,metrics.heightPixels/2 +100);
         Log.d("Rect",rect1.toString());
@@ -96,35 +101,33 @@ public class GameView extends View implements OnTouchListener {
 
     @Override
     public void onDraw(final Canvas canvas) {
-        //canvas.drawLine(50,50, 10, 1000, paint);
-        //canvas.drawLine(20, 0, 0, 20, paint);
+
         paint.setStyle(Paint.Style.STROKE);
-
-        //draw clicking area
-        //this.canvas.drawLine(metrics.widthPixels/6,0,metrics.widthPixels/6,metrics.heightPixels,paintBoundries);
-
-        //draw target!
-    /*    this.canvas.drawLine(metrics.widthPixels, metrics.heightPixels/2-100,
-                metrics.widthPixels-20, metrics.heightPixels/2-100, paint);
-        this.canvas.drawLine(metrics.widthPixels, metrics.heightPixels/2+100,
-                metrics.widthPixels-20, metrics.heightPixels/2+100, paint);
-        this.canvas.drawLine(metrics.widthPixels-20, metrics.heightPixels/2-100,
-                metrics.widthPixels-20, metrics.heightPixels/2+100, paint);
-*/
-        if (ok == 1 ) {
-
-            if(start_X + 25 == metrics.widthPixels)
-                if(start_Y >= metrics.heightPixels/2-100+25 && start_Y <= metrics.heightPixels/2+100+25)
-                    Toast.makeText(getContext(), "YOU ARE HOME!", Toast.LENGTH_SHORT);
-                else
-                    Toast.makeText(getContext(), "Almost There"+ Math.abs(start_Y - metrics.heightPixels/2), Toast.LENGTH_SHORT);
-
-            drawTick();
-            //Log.d("COUNTER","COUNTER + "+counter);
-            counter++;
+      // paint.setPathEffect(new DashPathEffect())
 
 
+        if ( start_X<=metrics.widthPixels && start_X >= metrics.widthPixels-200 && start_Y>= metrics.heightPixels/2 -100 && start_Y<=metrics.heightPixels/2 + 100) {
+            listenTouch = true;
+            Log.d("HOME", "You are home");
+            editor.putInt("score", 10000 + preferences.getInt("score",0));
+            editor.commit();
         }
+        else
+            if(start_X >= metrics.widthPixels){
+                listenTouch = true;
+                Log.d("SCORE","Your score is: "+Math.abs(start_Y - metrics.heightPixels/2));
+                int score = Math.round(Math.abs(start_Y - metrics.heightPixels/2));
+                editor.putInt("score", Math.round(5/score*1000)+ preferences.getInt("score",0));
+                editor.commit();
+            }
+            else
+            if (ok1 == true)
+            {drawTick();}
+            ok1 = true;
+
+ //           drawTick();
+
+
         //drawTick();
         canvas.drawBitmap(bitmap, 0, 0, paint);
 
@@ -132,6 +135,36 @@ public class GameView extends View implements OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+
+        if(listenTouch == true) {
+
+            if (event.getX() <= metrics.widthPixels / 6 && ok<1) {
+
+                ok++;
+                listenTouch = false;
+                X = event.getX();
+                Y = event.getY();
+                start_X = X;
+                start_Y = Y;
+
+                pirate.setBounds(0, 0, 500, 150);
+                pirate.setBounds((int) start_X - 50, (int) start_Y - 66, (int) start_X + 50, (int) start_Y + 66);
+                pirate.draw(canvas);
+                invalidate();
+
+
+            }
+            if(ok>=1 && ok<=3){
+                ok++;
+                listenTouch = false;
+                start_Y = Y;
+                start_X = X;
+                invalidate();
+            }
+        }
+
+
+
         if(ok<1 && event.getX()<=metrics.widthPixels/6)
         {	ok++;
             start_X = event.getX();
@@ -148,82 +181,20 @@ public class GameView extends View implements OnTouchListener {
 
     public void drawTick(){
 
-        int distance = 25;
-        try {
+      /*  try {
             Thread.sleep(10);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
-        random = rand.nextInt(7);
+        }*/
+        random_X = rand.nextInt(40);
+        random_Y = rand.nextInt(40);
+        if(Math.random()<=.5)
+            random_Y = random_Y * -1;
 
-        switch (random) {
-            case 0: {
-                canvas.drawLine(start_X, start_Y, start_X, start_Y - distance,
-                        paint);
-
-                start_Y = start_Y - distance;
-                break;
-            }
-            case 1: {
-
-                canvas.drawLine(start_X, start_Y, start_X, start_Y + distance,
-                        paint);
-                start_Y = start_Y + distance;
-                break;
-            }
-//		case 2: {
-//
-//
-//			canvas.drawLine(start_X, start_Y, start_X - distance, start_Y,
-//					paint);
-//			start_X = start_X - distance;
-//		}
-            case 3: {
-
-
-                canvas.drawLine(start_X, start_Y, start_X + distance, start_Y,
-                        paint);
-                start_X = start_X + distance;
-                break;
-            }
-
-//		case 4: {
-//			canvas.drawLine(start_X, start_Y, start_X - distance, start_Y - distance,
-//					paint);
-//
-//			start_Y = start_Y - distance;
-//			start_X = start_X - distance;
-//			break;
-//		}
-            case 5: {
-
-                canvas.drawLine(start_X, start_Y, start_X + distance, start_Y + distance,
-                        paint);
-                start_Y = start_Y + distance;
-                start_X = start_X + distance;
-                break;
-            }
-//		case 6: {
-//
-//
-//			canvas.drawLine(start_X, start_Y, start_X - distance, start_Y + distance,
-//					paint);
-//			start_X = start_X - distance;
-//			start_Y = start_Y + distance;
-//		}
-            case 7: {
-
-
-                canvas.drawLine(start_X, start_Y, start_X + distance, start_Y - distance,
-                        paint);
-                start_X = start_X + distance;
-                start_Y = start_Y - distance;
-                break;
-            }
-
-        }
-
+        canvas.drawLine(start_X, start_Y,start_X+random_X, start_Y + random_Y,paint);
+       start_X = start_X+random_X;
+        start_Y = start_Y + random_Y;
         invalidate();
 
 

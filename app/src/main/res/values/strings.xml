@@ -6,8 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
-    <string name="intro_level1A">The pirate just arrived in a new harbour and is ready to go out, but he is aware that he might be tottering on his way back to the ship. \n \n  Try helping him with choosing bar wisely to maximise his chances of arriving to the ship! \n \n Choose a starting point of the pirate\'s walk and observe his movement... </string>
-    <string name="guide_level1A">To choose a start - long tap on the desired area. \n \n Be prepared - even if you choose
+    <string name="intro_level1A">The pirate just arrived in a new harbour and is ready to go out, but he is aware that he might be tottering on his way back to the ship. \n \n  Try helping him with choosing bar wisely to maximise his chances of arriving to the ship! \n \n Choose a starting point of the pirate\'s walk and observe his movement... \n To choose a start - long tap on the desired area. \n \n Be prepared - even if you choose
     ideal starting point, due to waddling in pirate\'s walk you still might fall into the sea! \n \n Try walking couple of times.\n If you are really unlucky, you will be able to change your starting point.</string>
     <string name="intro_level2A"></string>
     <string name="guite_level2a"></string>

@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:background="@drawable/shape1"
-        android:text="Your score for Level 1: /n/n/n/n/n/n/n/n"
+        android:text="Your score for Level 1: "
         android:id="@+id/scoreTextView1"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
