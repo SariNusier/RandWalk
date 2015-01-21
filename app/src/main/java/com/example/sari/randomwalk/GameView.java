@@ -109,15 +109,16 @@ public class GameView extends View implements OnTouchListener {
         if ( start_X<=metrics.widthPixels && start_X >= metrics.widthPixels-200 && start_Y>= metrics.heightPixels/2 -100 && start_Y<=metrics.heightPixels/2 + 100) {
             listenTouch = true;
             Log.d("HOME", "You are home");
-            editor.putInt("score", 10000 + preferences.getInt("score",0));
+            editor.putInt("score", 100 + preferences.getInt("score",0));
             editor.commit();
         }
         else
             if(start_X >= metrics.widthPixels){
                 listenTouch = true;
-                Log.d("SCORE","Your score is: "+Math.abs(start_Y - metrics.heightPixels/2));
-                int score = Math.round(Math.abs(start_Y - metrics.heightPixels/2));
-                editor.putInt("score", Math.round(5/score*1000)+ preferences.getInt("score",0));
+
+                int score = Math.round((5/Math.abs(start_Y - metrics.heightPixels/2))*1000);
+                Log.d("SCORE","Your score is: "+score);
+                editor.putInt("score",score + preferences.getInt("score",0));
                 editor.commit();
             }
             else

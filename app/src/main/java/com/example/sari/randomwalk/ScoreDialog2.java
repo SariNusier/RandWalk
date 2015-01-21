@@ -19,8 +19,8 @@ public class ScoreDialog2 extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        TextView textView =(TextView) container.findViewById(R.id.scoreTextView1);
-       // SharedPreferences preferences = savedInstanceState.getSha
+      //  TextView textView =(TextView) container.findViewById(R.id.scoreTextView1);
+        //SharedPreferences preferences = savedInstanceState.getSha
         //textView.setText(textView.getText() + );
         return inflater.inflate(R.layout.score_dialog_2, null);
     }

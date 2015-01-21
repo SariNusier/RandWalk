@@ -43,9 +43,14 @@ public class MainActivity extends ActionBarActivity {
         Toast toast;
         if(id == R.id.action_about)
            showAboutDialog();
+        if(id == R.id.action_settings)
+            showSettings();
         return super.onOptionsItemSelected(item);
     }
 
+    public void showSettings(){
+
+    }
     public void showAboutDialog(){
         FragmentManager manager = getFragmentManager();
         MoreDialog dialog = new MoreDialog();
