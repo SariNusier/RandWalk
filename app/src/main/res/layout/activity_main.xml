@@ -1,226 +1,217 @@
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="2"
-    android:background="#000000"
-    >
+    android:background="#000000" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:background="@drawable/shape1"
-            android:layout_margin="10dp"
-            android:weightSum="1"
-            android:id="@+id/level1_layout">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Level 1"
-                android:textSize="25dp"
-                android:textAlignment="center"
-                android:layout_marginLeft="10dp"
-                android:textColor="#000"
-                android:layout_weight="0.1" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight="0.06">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/round_button"
-                    android:textColor="#fff"
-                    android:layout_marginRight="5dp"
-                    android:text="A"
-                    android:textSize="29dp"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:layout_weight=".2"
-                    android:layout_marginLeft="5dp"
-                    android:id="@+id/button_smecher"
-                    android:onClick="startLevel1" />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/round_button"
-                    android:textColor="#fff"
-                    android:layout_marginRight="5dp"
-                    android:text="B"
-                    android:textSize="29dp"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:layout_weight=".2"
-                    android:layout_marginLeft="5dp"
-                    android:onClick="showDevelopment"
-                     />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/round_button"
-                    android:textColor="#fff"
-                    android:layout_marginRight="5dp"
-                    android:text="C"
-                    android:textSize="29dp"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:layout_weight=".2"
-                    android:layout_marginLeft="5dp"
-                    android:onClick="showDevelopment"
-                    android:nestedScrollingEnabled="false" />
-
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/space"
-                    android:textColor="#fff"
-                    android:layout_marginRight="5dp"
-
-                    android:textSize="29dp"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:layout_weight=".2"
-                    android:layout_marginLeft="5dp" />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/round_button"
-                    android:textColor="#fff"
-                    android:layout_marginRight="5dp"
-                    android:text="\?"
-                    android:textSize="29dp"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:layout_weight=".2"
-                    android:layout_marginLeft="5dp"
-                    android:onClick="showScore1"/>
-
-
-            </LinearLayout>
-           <ImageView
-                android:layout_width="240dp"
-                android:layout_height="172dp"
-               android:layout_gravity="center_horizontal"
-                android:src="@drawable/pirate"
-                />
-
-
-        </LinearLayout>
-
-    <LinearLayout
+    <LinearLayout android:id="@+id/level1_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/shape2"
-        android:layout_margin="10dp"
-        android:weightSum="1"
+        android:layout_height="fill_parent"
         android:layout_weight="1"
-        android:id="@+id/level2_layout">
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/shape1"
+        android:weightSum="1" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Level 2"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.1"
+            android:text="Level 1"
             android:textSize="25dp"
             android:textAlignment="center"
-            android:layout_marginLeft="10dp"
-            android:textColor="#000"
-            android:layout_weight="0.1" />
+            android:textColor="#000"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="0.06">
+            android:layout_weight="0.06"
+            android:orientation="horizontal">
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@drawable/round_button2"
-                android:textColor="#fff"
+                android:layout_weight=".2"
+                android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:text="A"
+                android:textColor="#fff"
                 android:textSize="29dp"
                 android:textStyle="bold"
                 android:textAlignment="center"
-                android:layout_weight=".2"
-                android:layout_marginLeft="5dp"
-                android:onClick="showDevelopment" />
+                android:background="@drawable/round_button"
+                android:onClick="startLevel1Activity" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@drawable/round_button2"
-                android:textColor="#fff"
                 android:layout_marginRight="5dp"
+                android:layout_weight=".2"
+                android:layout_marginLeft="5dp"
                 android:text="B"
+                android:textColor="#fff"
                 android:textSize="29dp"
                 android:textStyle="bold"
                 android:textAlignment="center"
-                android:layout_weight=".2"
-                android:layout_marginLeft="5dp"
-                android:onClick="showDevelopment"
-                android:nestedScrollingEnabled="false" />
+                android:background="@drawable/round_button"
+                android:onClick="showDevelopmentDialog" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@drawable/round_button2"
+                android:layout_marginRight="5dp"
+                android:layout_weight=".2"
+                android:layout_marginLeft="5dp"
+                android:text="C"
                 android:textColor="#fff"
+                android:textSize="29dp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:background="@drawable/round_button"
+                android:onClick="showDevelopmentDialog" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:layout_weight=".2"
+                android:layout_marginLeft="5dp"
+                android:textColor="#fff"
+                android:textSize="29dp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:background="@drawable/space" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight=".2"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:text="\?"
+                android:textColor="#fff"
+                android:textSize="29dp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:background="@drawable/round_button"
+                android:onClick="showScoreLevel1Dialog" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="240dp"
+            android:layout_height="172dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/pirate" />
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/level2_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@drawable/shape2"
+        android:weightSum="1" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.1"
+            android:text="Level 2"
+            android:textSize="25dp"
+            android:textAlignment="center"
+            android:textColor="#000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.06"
+            android:orientation="horizontal" >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:layout_weight=".2"
+                android:layout_marginLeft="5dp"
+                android:text="A"
+                android:textColor="#fff"
+                android:textSize="29dp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:background="@drawable/round_button2"
+                android:onClick="showDevelopmentDialog" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:layout_weight=".2"
+                android:layout_marginLeft="5dp"
+                android:text="B"
+                android:textColor="#fff"
+                android:textSize="29dp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:background="@drawable/round_button2"
+                android:onClick="showDevelopmentDialog"
+                android:nestedScrollingEnabled="false" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight=".2"
+                android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:text="C"
+                android:textColor="#fff"
                 android:textSize="29dp"
                 android:textStyle="bold"
                 android:textAlignment="center"
+                android:background="@drawable/round_button2"
+                android:onClick="showDevelopmentDialog" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
                 android:layout_weight=".2"
                 android:layout_marginLeft="5dp"
-                android:nestedScrollingEnabled="false"
-                android:onClick="showDevelopment" />
-
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/space"
                 android:textColor="#fff"
-                android:layout_marginRight="5dp"
-
                 android:textSize="29dp"
                 android:textStyle="bold"
                 android:textAlignment="center"
-                android:layout_weight=".2"
-                android:layout_marginLeft="5dp" />
+                android:background="@drawable/space" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@drawable/round_button2"
-                android:textColor="#fff"
+                android:layout_weight=".2"
+                android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:text="\?"
+                android:textColor="#fff"
                 android:textSize="29dp"
                 android:textStyle="bold"
                 android:textAlignment="center"
-                android:layout_weight=".2"
-                android:layout_marginLeft="5dp"
-                android:onClick="showScore2"
-                />
-
+                android:background="@drawable/round_button2"
+                android:onClick="showScoreLevel2Dialog" />
 
         </LinearLayout>
 
         <ImageView
             android:layout_width="220dp"
             android:layout_height="158dp"
-            android:src="@drawable/parrot"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/parrot" />
 
     </LinearLayout>
-
 
 </LinearLayout>
 

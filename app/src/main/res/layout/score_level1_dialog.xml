@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:background="@drawable/shape1" >
 
-    <TextView android:id="@+id/underDevelopmentTextView"
+    <TextView android:id="@+id/scoreLevel1TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="This section is under development and will be coming soon"
+        android:text="Your score for Level 1: "
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:background="@drawable/shape1" />
 

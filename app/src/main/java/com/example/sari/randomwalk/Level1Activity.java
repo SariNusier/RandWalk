@@ -1,82 +1,71 @@
 package com.example.sari.randomwalk;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-
 public class Level1Activity extends ActionBarActivity {
-    private int clickCount = 0;
+
     static TextView textView;
     static SharedPreferences preferences;
+    String subLevel;
+
+    /**
+     * onCreate method for Level1Activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_level1);
+        setContentView(R.layout.activity_level1); //sets layout activity_level1
         Intent intent = getIntent();
-        setTitle("Level 1" + intent.getStringExtra("SUB_LEVEL"));
-
+        subLevel = intent.getStringExtra("SUB_LEVEL"); //gets the sub-level selected from main activity
+        setTitle("Level 1" + subLevel); //sets appropriate title based on sub-level
         getSupportActionBar().setCustomView(R.layout.actionbar_custom);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         preferences = getSharedPreferences("GAME_DATA", MODE_PRIVATE);
         textView = (TextView) findViewById(R.id.scoreText);
-
         updateScore();
-
-
     }
 
-
+    /**
+     * onCreateOptionsMenu for Level1Activity
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_level1, menu);
+        getMenuInflater().inflate(R.menu.menu_level1, menu);    // Inflate the menu; this adds items to the action bar if it is present.
         return true;
     }
 
+    /**
+     * Handles action bar item clicks.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * This method hides the guide page and reveals the game view behind it.
+     */
     public void nextPage(View view){
-
-        TextView textView = (TextView) findViewById(R.id.textView_intro_level1A);
-        View layout = findViewById(R.id.guide_layout);
-        if(clickCount == 0) {
-          //  textView.setText(R.string.guide_level1A);
-            layout.setVisibility(View.GONE);
-            clickCount++;
-        } else {
-
-            clickCount = 0;
-        }
+        View layout = findViewById(R.id.level1_guide_layout);
+        layout.setVisibility(View.GONE);
     }
 
+    /**
+     * Refreshes the score's text view, displaying most recent score.
+     */
     public static void updateScore(){
         textView.setText("Score: " + preferences.getInt("score", 0));
-
     }
+
 }

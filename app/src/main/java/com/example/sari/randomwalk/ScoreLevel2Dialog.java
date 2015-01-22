@@ -9,25 +9,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
-public class DevelopmentDialog extends DialogFragment {
+public class ScoreLevel2Dialog extends DialogFragment {
 
     /**
-     * onCreateView method for the Development Dialog
+     * onCreateView method for ScoreLevel2Dialog
      */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.under_development, null); //inflates Dialog with under_development layout
+        return inflater.inflate(R.layout.score_level2_dialog, null); //inflates view with score_level2_dialog layout
     }
 
     /**
-     * onCreateDialog method for Development Dialog.
+     * onCreateDialog method for ScoreLevel2Dialog.
      */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(R.drawable.shape1); //sets background the shape of level 1.
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.shape2);    //sets the shape of the window as the level 1 shape
         return dialog;
     }
 

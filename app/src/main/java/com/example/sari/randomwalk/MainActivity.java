@@ -2,32 +2,27 @@ package com.example.sari.randomwalk;
 
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
 
 public class MainActivity extends ActionBarActivity {
 
+    /**
+     * onCreate method for Main Activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
     }
 
-
-
-
+    /**
+     * onCreateOptionsMenu method for Main Activity
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -35,63 +30,85 @@ public class MainActivity extends ActionBarActivity {
         return true;
     }
 
+    /**
+     * Method called when an item from the menu is selected.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        Toast toast;
-        if(id == R.id.action_about)
-           showAboutDialog();
-        if(id == R.id.action_settings)
-            showSettings();
+
+        int idItemSelected = item.getItemId(); //gets the id of the item that was selected
+
+        if(idItemSelected == R.id.action_learn_more)
+            showLearnMoreDialog(); //calls the method that shows the dialog with the "about" text
+        if(idItemSelected == R.id.action_settings)
+            startSettingsActivity(); //calls the method that shows the settings menu (activity)
+
         return super.onOptionsItemSelected(item);
     }
 
-    public void showSettings(){
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-      // SharedPreferences preferences = getSharedPreferences("GAME_DATA",MODE_PRIVATE);
-     //  SharedPreferences.Editor editor = preferences.edit();
-      //  editor.putInt("score",0);
-        //editor.commit();
-    }
 
-    public void showAboutDialog(){
+    /**
+     * Method will show the Learn More Dialog
+     */
+    public void showLearnMoreDialog(){
         FragmentManager manager = getFragmentManager();
-        MoreDialog dialog = new MoreDialog();
+        LearnMoreDialog dialog = new LearnMoreDialog();
         dialog.show(manager,"Learn More");
     }
 
-    public void showDevelopment(View v){
+    /**
+     * Shows In Development dialog.
+     */
+    public void showDevelopmentDialog(View v){
         FragmentManager manager = getFragmentManager();
         DevelopmentDialog dialog = new DevelopmentDialog();
-        dialog.show(manager,"MyDialog");
-    }
-    //methods to show dialogs with score for level1 and level2
-    public void showScore1(View v){
-        FragmentManager manager = getFragmentManager();
-        ScoreDialog1 dialog1 = new ScoreDialog1();
-        dialog1.show(manager,"MyDialog");
-    }
-    public void showScore2(View v){
-        FragmentManager manager = getFragmentManager();
-        ScoreDialog2 dialog2 = new ScoreDialog2();
-        dialog2.show(manager,"MyDialog");
+        dialog.show(manager,"In Development");
     }
 
-    //methods for starting level1 and level2 activities
-    public void startLevel1(View view){
-       Button buttonClicked = (Button) view;
-        Intent intent = new Intent(this, Level1Activity.class);
-        intent.putExtra("SUB_LEVEL", buttonClicked.getText());
+    /**
+     * Shows the dialog with the scores for Level 1.
+     */
+    public void showScoreLevel1Dialog(View v){
+        FragmentManager manager = getFragmentManager();
+        ScoreLevel1Dialog dialog = new ScoreLevel1Dialog();
+        dialog.show(manager,"Level 1 Score");
+    }
+
+    /**
+     * Shows the dialog with the scores for Level 2.
+     */
+    public void showScoreLevel2Dialog(View v){
+        FragmentManager manager = getFragmentManager();
+        ScoreLevel2Dialog dialog = new ScoreLevel2Dialog();
+        dialog.show(manager,"Level 2 Score");
+    }
+
+
+    /**
+     * Method will start the Settings Activity
+     */
+    public void startSettingsActivity(){
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
-    public void startLevel2(View view){
-        Button buttonClicked = (Button) view;
+
+    /**
+     * Method that starts Level 1 Activity.
+     */
+    public void startLevel1Activity(View view){
+        Button button = (Button) view;
+        Intent intent = new Intent(this, Level1Activity.class);
+        intent.putExtra("SUB_LEVEL", button.getText()); //extracts the sublevel from the button that was pressed and sends it to the Level 1 Activity.
+        startActivity(intent);
+    }
+
+    /**
+     * Method that starts Level 2 Activity.
+     */
+    public void startLevel2Activity(View view){
+        Button button = (Button) view;
         Intent intent = new Intent(this, Level2Activity.class);
-        intent.putExtra("SUB_LEVEL",buttonClicked.getText());
+        intent.putExtra("SUB_LEVEL",button.getText()); //extracts the sublevel from the button that was pressed and sends it to the Level 2 Activity.
         startActivity(intent);
     }
 

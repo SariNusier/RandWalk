@@ -7,27 +7,25 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 
-public class DevelopmentDialog extends DialogFragment {
+public class LearnMoreDialog extends DialogFragment {
 
     /**
-     * onCreateView method for the Development Dialog
+     * onCreateView method for LearnMoreDialog
      */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.under_development, null); //inflates Dialog with under_development layout
+        return inflater.inflate(R.layout.learn_more_dialog, null); //inflates view with learn_more_dialog layout
     }
 
     /**
-     * onCreateDialog method for Development Dialog.
+     * onCreateDialog method for LearnMoreDialog.
      */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(R.drawable.shape1); //sets background the shape of level 1.
+        dialog.setTitle("Learn More");
         return dialog;
     }
 

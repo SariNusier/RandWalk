@@ -36,11 +36,9 @@ public class GameView extends View implements OnTouchListener {
    // Path path = new Path();
     int ok = 0;
     boolean ok1 = false;
-    int  click_counter = 0;
     int random_X, random_Y;
     boolean listenTouch = true;
     float X,Y;
-    int counter = 0;
     Canvas canvas;
     Bitmap bitmap;
     Bitmap savedBitmap;
@@ -54,6 +52,7 @@ public class GameView extends View implements OnTouchListener {
     TextView scoreText;
     Level1Activity parentActivity;
     boolean bitmapSaved = false;
+
     //CONSTRUCTOR
     public GameView(Context context, AttributeSet attributeSet) {
 
