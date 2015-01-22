@@ -2,6 +2,7 @@ package com.example.sari.randomwalk;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,14 +50,20 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void showSettings(){
-
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+      // SharedPreferences preferences = getSharedPreferences("GAME_DATA",MODE_PRIVATE);
+     //  SharedPreferences.Editor editor = preferences.edit();
+      //  editor.putInt("score",0);
+        //editor.commit();
     }
+
     public void showAboutDialog(){
         FragmentManager manager = getFragmentManager();
         MoreDialog dialog = new MoreDialog();
         dialog.show(manager,"Learn More");
     }
-
+    //methods to show dialogs with score for level1 and level2
     public void showScore1(View v){
         FragmentManager manager = getFragmentManager();
         ScoreDialog1 dialog1 = new ScoreDialog1();
@@ -68,13 +75,13 @@ public class MainActivity extends ActionBarActivity {
         dialog2.show(manager,"MyDialog");
     }
 
+    //methods for starting level1 and level2 activities
     public void startLevel1(View view){
        Button buttonClicked = (Button) view;
         Intent intent = new Intent(this, Level1Activity.class);
         intent.putExtra("SUB_LEVEL", buttonClicked.getText());
         startActivity(intent);
     }
-
     public void startLevel2(View view){
         Button buttonClicked = (Button) view;
         Intent intent = new Intent(this, Level2Activity.class);

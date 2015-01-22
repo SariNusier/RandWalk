@@ -10,8 +10,7 @@
     ideal starting point, due to waddling in pirate\'s walk you still might fall into the sea! \n \n Try walking couple of times.\n If you are really unlucky, you will be able to change your starting point.</string>
     <string name="intro_level2A"></string>
     <string name="guite_level2a"></string>
-    <string name="learn_more_main_menu">
-        The parrot\’s feather coloration
+    <string name="learn_more_main_menu">        The parrot\’s feather coloration
         pattern doesn\’t look like a
         perfect copy of its parents\’ one, with whom it shares the genetic heritage. Genetic
         differences occur due to a rearrangement of DNA during the reproduction (“crossover”) and
@@ -28,10 +27,12 @@
     expression products(e.g. proteins) as "noise", regardless of the source. They call "extrinsic"
      the noise due to microscopic cell-to-cell differences of environment and history, "intrinsic" the
     one due to random fluctuations."</string>
+
     <color name="Level1">#E6C850</color>
     <color name="Level2">#48D1FF</color>
 
     <string name="title_activity_level1">Level1</string>
     <string name="title_activity_level2">Level2</string>
+    <string name="title_activity_settings">Settings</string>
 
 </resources>
