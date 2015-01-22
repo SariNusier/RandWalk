@@ -63,6 +63,12 @@ public class MainActivity extends ActionBarActivity {
         MoreDialog dialog = new MoreDialog();
         dialog.show(manager,"Learn More");
     }
+
+    public void showDevelopment(View v){
+        FragmentManager manager = getFragmentManager();
+        DevelopmentDialog dialog = new DevelopmentDialog();
+        dialog.show(manager,"MyDialog");
+    }
     //methods to show dialogs with score for level1 and level2
     public void showScore1(View v){
         FragmentManager manager = getFragmentManager();

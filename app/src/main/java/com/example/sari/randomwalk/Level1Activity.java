@@ -1,6 +1,8 @@
 package com.example.sari.randomwalk;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -12,15 +14,28 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 
 public class Level1Activity extends ActionBarActivity {
     private int clickCount = 0;
+    static TextView textView;
+    static SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level1);
         Intent intent = getIntent();
         setTitle("Level 1" + intent.getStringExtra("SUB_LEVEL"));
+
+        getSupportActionBar().setCustomView(R.layout.actionbar_custom);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        preferences = getSharedPreferences("GAME_DATA", MODE_PRIVATE);
+        textView = (TextView) findViewById(R.id.scoreText);
+
+        updateScore();
+
+
     }
 
 
@@ -28,7 +43,6 @@ public class Level1Activity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_level1, menu);
-
         return true;
     }
 
@@ -59,5 +73,10 @@ public class Level1Activity extends ActionBarActivity {
 
             clickCount = 0;
         }
+    }
+
+    public static void updateScore(){
+        textView.setText("Score: " + preferences.getInt("score", 0));
+
     }
 }

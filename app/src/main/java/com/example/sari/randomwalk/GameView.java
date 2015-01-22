@@ -6,6 +6,7 @@ package com.example.sari.randomwalk;
 
 import java.util.Random;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -24,6 +25,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -51,19 +53,20 @@ public class GameView extends View implements OnTouchListener {
     Drawable pirate;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
-
-
+    TextView scoreText;
+    Level1Activity parentActivity;
     //CONSTRUCTOR
     public GameView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         setFocusable(true);
         setFocusableInTouchMode(true);
+        parentActivity =(Level1Activity) context;
+
         //bitmap = new Bitmap();
         this.setOnTouchListener(this);
-
-         preferences = context.getSharedPreferences("GAME_DATA",Context.MODE_PRIVATE);
-         editor = preferences.edit();
-
+       // scoreText = (TextView)findViewById(R.id.scoreText);
+        preferences = context.getSharedPreferences("GAME_DATA",Context.MODE_PRIVATE);
+        editor = preferences.edit();
 
         rand = new Random();
         //canvas = new Canvas(bitmap);
@@ -96,7 +99,6 @@ public class GameView extends View implements OnTouchListener {
         startSurface.draw(canvas);
         boat.draw(canvas);
 
-
     }
 
     @Override
@@ -105,12 +107,16 @@ public class GameView extends View implements OnTouchListener {
         paint.setStyle(Paint.Style.STROKE);
       // paint.setPathEffect(new DashPathEffect())
 
+       // Log.d("TEXTVIEW",scoreText.toString());
+
+
 
         if ( start_X<=metrics.widthPixels && start_X >= metrics.widthPixels-200 && start_Y>= metrics.heightPixels/2 -100 && start_Y<=metrics.heightPixels/2 + 100) {
             listenTouch = true;
             Log.d("HOME", "You are home");
-            editor.putInt("score", 100 + preferences.getInt("score",0));
+            editor.putInt("score", 50 + preferences.getInt("score",0));
             editor.commit();
+            parentActivity.updateScore();
         }
         else
             if(start_X >= metrics.widthPixels){
@@ -120,6 +126,7 @@ public class GameView extends View implements OnTouchListener {
                 Log.d("SCORE","Your score is: "+score);
                 editor.putInt("score",score + preferences.getInt("score",0));
                 editor.commit();
+                parentActivity.updateScore();
             }
             else
             if (ok1 == true)
@@ -147,7 +154,6 @@ public class GameView extends View implements OnTouchListener {
                 Y = event.getY();
                 start_X = X;
                 start_Y = Y;
-
                 pirate.setBounds(0, 0, 500, 150);
                 pirate.setBounds((int) start_X - 50, (int) start_Y - 66, (int) start_X + 50, (int) start_Y + 66);
                 pirate.draw(canvas);
@@ -200,7 +206,6 @@ public class GameView extends View implements OnTouchListener {
 
 
     }
-
 
 }
 
