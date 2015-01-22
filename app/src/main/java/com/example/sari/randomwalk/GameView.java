@@ -6,17 +6,15 @@ package com.example.sari.randomwalk;
 
 import java.util.Random;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.Picture;
+import android.graphics.PathDashPathEffect;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -26,7 +24,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by Sari on 1/20/2015.
@@ -46,6 +43,7 @@ public class GameView extends View implements OnTouchListener {
     int counter = 0;
     Canvas canvas;
     Bitmap bitmap;
+    Bitmap savedBitmap;
     Random rand;
     Paint paintBoundries = new Paint();
     DisplayMetrics metrics;
@@ -55,25 +53,28 @@ public class GameView extends View implements OnTouchListener {
     SharedPreferences.Editor editor;
     TextView scoreText;
     Level1Activity parentActivity;
+    boolean bitmapSaved = false;
     //CONSTRUCTOR
     public GameView(Context context, AttributeSet attributeSet) {
+
         super(context, attributeSet);
         setFocusable(true);
         setFocusableInTouchMode(true);
         parentActivity =(Level1Activity) context;
 
-        //bitmap = new Bitmap();
+
         this.setOnTouchListener(this);
-       // scoreText = (TextView)findViewById(R.id.scoreText);
+
         preferences = context.getSharedPreferences("GAME_DATA",Context.MODE_PRIVATE);
         editor = preferences.edit();
 
         rand = new Random();
-        //canvas = new Canvas(bitmap);
+
         paint.setColor(Color.BLUE);
         paintBoundries.setColor(Color.RED);
         paintBoundries.setStrokeWidth(5);
-        paint.setStrokeWidth(5);
+        paint.setStrokeWidth(3);
+        paint.setPathEffect(new DashPathEffect(new float[]{4,4},0));
         //if(Bitmap.Config.ARGB_8888 == null || canvas.getHeight() == 0 || canvas.getWidth() == 0)
         //	Log.d("BITMAP","Is null");
         //else
@@ -82,6 +83,8 @@ public class GameView extends View implements OnTouchListener {
         Log.d("WIDTH","Height"+metrics.widthPixels);
 
         bitmap = Bitmap.createBitmap(metrics.widthPixels, metrics.heightPixels, Bitmap.Config.ARGB_8888);
+        savedBitmap = Bitmap.createBitmap(metrics.widthPixels, metrics.heightPixels, Bitmap.Config.ARGB_8888);
+
         canvas = new Canvas(bitmap);
         canvas.drawColor(Color.parseColor("#DED9D9"));
         Drawable startSurface = this.getResources().getDrawable(R.drawable.start_surface);
@@ -137,8 +140,12 @@ public class GameView extends View implements OnTouchListener {
 
 
         //drawTick();
-        canvas.drawBitmap(bitmap, 0, 0, paint);
 
+        canvas.drawBitmap(bitmap, 0, 0, paint);
+        if(bitmapSaved == false) {
+            savedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), null, true);
+            bitmapSaved = true;
+        }
     }
 
     @Override
@@ -146,7 +153,7 @@ public class GameView extends View implements OnTouchListener {
 
         if(listenTouch == true) {
 
-            if (event.getX() <= metrics.widthPixels / 6 && ok<1) {
+            if (event.getX() <= metrics.widthPixels / 6 && ok < 1) {
 
                 ok++;
                 listenTouch = false;
@@ -161,28 +168,30 @@ public class GameView extends View implements OnTouchListener {
 
 
             }
-            if(ok>=1 && ok<=3){
+            if (ok >= 1 && ok <= 3) {
                 ok++;
                 listenTouch = false;
                 start_Y = Y;
                 start_X = X;
                 invalidate();
             }
+
+
+            if (ok < 1 && event.getX() <= metrics.widthPixels / 6) {
+                ok++;
+                start_X = event.getX();
+                start_Y = event.getY();
+                pirate.setBounds(0, 0, 500, 150);
+                pirate.setBounds((int) start_X - 50, (int) start_Y - 66, (int) start_X + 50, (int) start_Y + 66);
+                pirate.draw(canvas);
+                invalidate();
+            }
         }
-
-
-
-        if(ok<1 && event.getX()<=metrics.widthPixels/6)
-        {	ok++;
-            start_X = event.getX();
-            start_Y = event.getY();
-            pirate.setBounds(0,0,500,150);
-            pirate.setBounds((int)start_X-50,(int)start_Y-66,(int)start_X+50,(int)start_Y+66);
-            pirate.draw(canvas);
-            invalidate();}
-
         return true;
+
     }
+
+
 
 
 
