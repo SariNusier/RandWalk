@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +14,7 @@ public class Level1Activity extends ActionBarActivity {
 
     static TextView textView;
     static SharedPreferences preferences;
-    String subLevel;
+    static String subLevel;
 
     /**
      * onCreate method for Level1Activity
@@ -21,9 +22,9 @@ public class Level1Activity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_level1); //sets layout activity_level1
         Intent intent = getIntent();
         subLevel = intent.getStringExtra("SUB_LEVEL"); //gets the sub-level selected from main activity
+        setContentView(R.layout.activity_level1); //sets layout activity_level1
         setTitle("Level 1" + subLevel); //sets appropriate title based on sub-level
         getSupportActionBar().setCustomView(R.layout.actionbar_custom);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
@@ -66,6 +67,10 @@ public class Level1Activity extends ActionBarActivity {
      */
     public static void updateScore(){
         textView.setText("Score: " + preferences.getInt("score", 0));
+    }
+
+    public static String getSubLevel(){
+        return subLevel;
     }
 
 }

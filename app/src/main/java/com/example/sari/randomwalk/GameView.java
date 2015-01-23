@@ -12,6 +12,10 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -20,15 +24,17 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 
 
-public class GameView extends View implements OnTouchListener {
+public class GameView extends View implements OnTouchListener, SensorEventListener {
 
     float start_X, start_Y;
     float X,Y;
+    float drift_Y = 0;
     int random_X, random_Y;
     int ok = 0;
     boolean bitmapSaved = false;
     boolean isStarted = false;
     boolean listenTouch = true;
+    String subLevel;
     Random rand;
 
     Paint paintWalk;
@@ -51,12 +57,15 @@ public class GameView extends View implements OnTouchListener {
         this.setOnTouchListener(this);
 
 
+
         /*
         <===== INITIALISATIONS =====>
          */
         paintWalk = new Paint(); //construct paint for drawing path/walk
         rand = new Random();
         parentActivity =(Level1Activity) context; //casts the context as a Level1Activity to use updateScore()
+       // subLevel = parentActivity.getSubLevel(); // gets selected sublevel
+
         preferences = context.getSharedPreferences("GAME_DATA",Context.MODE_PRIVATE);//get preferences GAME_DATA
         editor = preferences.edit(); //sets the editor as editor of preferences declared above
         metrics = getResources().getDisplayMetrics(); //gets the metrics of the screen
@@ -72,11 +81,20 @@ public class GameView extends View implements OnTouchListener {
         Rect boundsBoat = new Rect(metrics.widthPixels-200,metrics.heightPixels/2 -100,metrics.widthPixels,metrics.heightPixels/2 +100);
         boat.setBounds(boundsBoat);
         boat.draw(canvas);
+        subLevel = parentActivity.getSubLevel();
 
+        if(!subLevel.equals("A")) {
+            SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+            Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        }
         paintWalk.setColor(Color.BLUE); //set the color of the walk
         paintWalk.setStrokeWidth(3); //sets the width of the walk
         paintWalk.setPathEffect(new DashPathEffect(new float[]{4, 4}, 0)); //sets the dash effect of the walk
         paintWalk.setStyle(Paint.Style.STROKE);
+
+
+
     }
 
     @Override
@@ -149,23 +167,46 @@ public class GameView extends View implements OnTouchListener {
 
     }
 
-    public void drawTick(){
+    @Override
+    public final void onAccuracyChanged(Sensor sensor, int accuracy) {
+        // Do something here if sensor accuracy changes.
+    }
+    @Override
+    public final void onSensorChanged(SensorEvent event) {
+        // The light sensor returns a single value.
+        // Many sensors return 3 values, one for each axis.
+        float x, y, z;
+        x = event.values[0];
+        y = event.values[1];
+        drift_Y = y;
+        z = event.values[2];
+        //Log.d("ACCELEROMETRU","X:"+x+" "+"Y:"+y+" "+"Z:"+z+" ");
+        // Do something with this sensor value.
+    }
 
-      /*  try {
-            Thread.sleep(10);
+    public void drawTick(){
+        /*
+       try {
+            Thread.sleep();
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }*/
-        random_X = rand.nextInt(40); //generates two random numbers for X and Y
-        random_Y = rand.nextInt(40);
-
+        if(subLevel.equals("A")) {
+            random_X = rand.nextInt(40); //generates two random numbers for X and Y
+            random_Y = rand.nextInt(40);
+        }
+        else
+        {
+            random_X = rand.nextInt(10);
+            random_Y = rand.nextInt(10);
+        }
         if(Math.random()<=.5)
             random_Y = random_Y * -1;
 
-        canvas.drawLine(start_X, start_Y,start_X+random_X, start_Y + random_Y, paintWalk);
+        canvas.drawLine(start_X, start_Y,start_X+random_X, start_Y + random_Y + drift_Y, paintWalk);
         start_X = start_X+random_X;
-        start_Y = start_Y + random_Y;
+        start_Y = start_Y + random_Y + drift_Y;
         invalidate();
 
 
