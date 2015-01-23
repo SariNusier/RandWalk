@@ -1,9 +1,5 @@
 package com.example.sari.randomwalk;
 
-
-
-
-
 import java.util.Random;
 
 
@@ -14,7 +10,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
-import android.graphics.PathDashPathEffect;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -23,95 +18,69 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.TextView;
 
-/**
- * Created by Sari on 1/20/2015.
- */
 
 public class GameView extends View implements OnTouchListener {
-    Paint paint = new Paint();
-    float start_X;
-    float start_Y;
-   // Path path = new Path();
-    int ok = 0;
-    boolean ok1 = false;
-    int random_X, random_Y;
-    boolean listenTouch = true;
+
+    float start_X, start_Y;
     float X,Y;
-    Canvas canvas;
-    Bitmap bitmap;
-    Bitmap savedBitmap;
+    int random_X, random_Y;
+    int ok = 0;
+    boolean bitmapSaved = false;
+    boolean isStarted = false;
+    boolean listenTouch = true;
     Random rand;
-    Paint paintBoundries = new Paint();
+
+    Paint paintWalk;
+    Canvas canvas;
+    Bitmap playingBitmap; //this bitmap stores the game status during play
+    Bitmap initialBitmap; //this bitmap stores the initial, clean state of the screen
     DisplayMetrics metrics;
-    boolean canvasCheck = false;
     Drawable pirate;
+
+    Level1Activity parentActivity;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
-    TextView scoreText;
-    Level1Activity parentActivity;
-    boolean bitmapSaved = false;
 
-    //CONSTRUCTOR
+    //<-----CONSTRUCTOR------>
     public GameView(Context context, AttributeSet attributeSet) {
 
         super(context, attributeSet);
         setFocusable(true);
         setFocusableInTouchMode(true);
-        parentActivity =(Level1Activity) context;
-
-
         this.setOnTouchListener(this);
 
-        preferences = context.getSharedPreferences("GAME_DATA",Context.MODE_PRIVATE);
-        editor = preferences.edit();
 
+        /*
+        <===== INITIALISATIONS =====>
+         */
+        paintWalk = new Paint(); //construct paint for drawing path/walk
         rand = new Random();
-
-        paint.setColor(Color.BLUE);
-        paintBoundries.setColor(Color.RED);
-        paintBoundries.setStrokeWidth(5);
-        paint.setStrokeWidth(3);
-        paint.setPathEffect(new DashPathEffect(new float[]{4,4},0));
-        //if(Bitmap.Config.ARGB_8888 == null || canvas.getHeight() == 0 || canvas.getWidth() == 0)
-        //	Log.d("BITMAP","Is null");
-        //else
-        metrics = getResources().getDisplayMetrics();
-        Log.d("HEIGHT","Height"+metrics.heightPixels);
-        Log.d("WIDTH","Height"+metrics.widthPixels);
-
-        bitmap = Bitmap.createBitmap(metrics.widthPixels, metrics.heightPixels, Bitmap.Config.ARGB_8888);
-        savedBitmap = Bitmap.createBitmap(metrics.widthPixels, metrics.heightPixels, Bitmap.Config.ARGB_8888);
-
-        canvas = new Canvas(bitmap);
-        canvas.drawColor(Color.parseColor("#DED9D9"));
-        Drawable startSurface = this.getResources().getDrawable(R.drawable.start_surface);
-        Drawable boat = this.getResources().getDrawable(R.drawable.boat);
-
-
-        Rect rect1 = new Rect(metrics.widthPixels-200,metrics.heightPixels/2 -100,metrics.widthPixels,metrics.heightPixels/2 +100);
-        Log.d("Rect",rect1.toString());
-        boat.setBounds(rect1);
-
-        pirate = this.getResources().getDrawable(R.drawable.rsz_pirate);
+        parentActivity =(Level1Activity) context; //casts the context as a Level1Activity to use updateScore()
+        preferences = context.getSharedPreferences("GAME_DATA",Context.MODE_PRIVATE);//get preferences GAME_DATA
+        editor = preferences.edit(); //sets the editor as editor of preferences declared above
+        metrics = getResources().getDisplayMetrics(); //gets the metrics of the screen
+        playingBitmap = Bitmap.createBitmap(metrics.widthPixels, metrics.heightPixels, Bitmap.Config.ARGB_8888);
+        initialBitmap = Bitmap.createBitmap(metrics.widthPixels, metrics.heightPixels, Bitmap.Config.ARGB_8888);
+        canvas = new Canvas(playingBitmap); //canvas draw into a bitmap
+        canvas.drawColor(Color.parseColor("#DED9D9")); //sets the color of the background
+        pirate = this.getResources().getDrawable(R.drawable.rsz_pirate); // the pirate arrrr!
+        Drawable startSurface = this.getResources().getDrawable(R.drawable.start_surface);//area where the player starts
         startSurface.setBounds(0,0,metrics.widthPixels/6,metrics.heightPixels);
-
-
         startSurface.draw(canvas);
+        Drawable boat = this.getResources().getDrawable(R.drawable.boat); // just boat
+        Rect boundsBoat = new Rect(metrics.widthPixels-200,metrics.heightPixels/2 -100,metrics.widthPixels,metrics.heightPixels/2 +100);
+        boat.setBounds(boundsBoat);
         boat.draw(canvas);
 
+        paintWalk.setColor(Color.BLUE); //set the color of the walk
+        paintWalk.setStrokeWidth(3); //sets the width of the walk
+        paintWalk.setPathEffect(new DashPathEffect(new float[]{4, 4}, 0)); //sets the dash effect of the walk
+        paintWalk.setStyle(Paint.Style.STROKE);
     }
 
     @Override
     public void onDraw(final Canvas canvas) {
-
-        paint.setStyle(Paint.Style.STROKE);
-      // paint.setPathEffect(new DashPathEffect())
-
-       // Log.d("TEXTVIEW",scoreText.toString());
-
-
 
         if ( start_X<=metrics.widthPixels && start_X >= metrics.widthPixels-200 && start_Y>= metrics.heightPixels/2 -100 && start_Y<=metrics.heightPixels/2 + 100) {
             listenTouch = true;
@@ -123,7 +92,6 @@ public class GameView extends View implements OnTouchListener {
         else
             if(start_X >= metrics.widthPixels){
                 listenTouch = true;
-
                 int score = Math.round((5/Math.abs(start_Y - metrics.heightPixels/2))*1000);
                 Log.d("SCORE","Your score is: "+score);
                 editor.putInt("score",score + preferences.getInt("score",0));
@@ -131,18 +99,15 @@ public class GameView extends View implements OnTouchListener {
                 parentActivity.updateScore();
             }
             else
-            if (ok1 == true)
-            {drawTick();}
-            ok1 = true;
+            if (isStarted == true)
+                drawTick();
 
- //           drawTick();
+        isStarted = true;
 
 
-        //drawTick();
-
-        canvas.drawBitmap(bitmap, 0, 0, paint);
+        canvas.drawBitmap(playingBitmap, 0, 0, paintWalk);
         if(bitmapSaved == false) {
-            savedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), null, true);
+            initialBitmap = Bitmap.createBitmap(playingBitmap, 0, 0, playingBitmap.getWidth(), playingBitmap.getHeight(), null, true);
             bitmapSaved = true;
         }
     }
@@ -160,39 +125,29 @@ public class GameView extends View implements OnTouchListener {
                 Y = event.getY();
                 start_X = X;
                 start_Y = Y;
-                pirate.setBounds(0, 0, 500, 150);
-                pirate.setBounds((int) start_X - 50, (int) start_Y - 66, (int) start_X + 50, (int) start_Y + 66);
+                pirate.setBounds((int) start_X - 50, (int) start_Y - 66, (int) start_X + 50, (int) start_Y + 66); //draws pirate here
                 pirate.draw(canvas);
                 invalidate();
 
 
             }
-            if (ok >= 1 && ok <= 3) {
+            else
+            if (ok >= 1 && ok < 4) {
                 ok++;
                 listenTouch = false;
                 start_Y = Y;
                 start_X = X;
                 invalidate();
             }
+            else {
+                ok = 0;
+                canvas.drawBitmap(initialBitmap,0,0,paintWalk);
 
-
-            if (ok < 1 && event.getX() <= metrics.widthPixels / 6) {
-                ok++;
-                start_X = event.getX();
-                start_Y = event.getY();
-                pirate.setBounds(0, 0, 500, 150);
-                pirate.setBounds((int) start_X - 50, (int) start_Y - 66, (int) start_X + 50, (int) start_Y + 66);
-                pirate.draw(canvas);
-                invalidate();
             }
         }
         return true;
 
     }
-
-
-
-
 
     public void drawTick(){
 
@@ -202,13 +157,14 @@ public class GameView extends View implements OnTouchListener {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }*/
-        random_X = rand.nextInt(40);
+        random_X = rand.nextInt(40); //generates two random numbers for X and Y
         random_Y = rand.nextInt(40);
+
         if(Math.random()<=.5)
             random_Y = random_Y * -1;
 
-        canvas.drawLine(start_X, start_Y,start_X+random_X, start_Y + random_Y,paint);
-       start_X = start_X+random_X;
+        canvas.drawLine(start_X, start_Y,start_X+random_X, start_Y + random_Y, paintWalk);
+        start_X = start_X+random_X;
         start_Y = start_Y + random_Y;
         invalidate();
 
