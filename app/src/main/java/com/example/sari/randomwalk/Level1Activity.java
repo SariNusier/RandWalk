@@ -17,6 +17,7 @@ public class Level1Activity extends ActionBarActivity {
     static TextView textView, textViewIntro;
     static SharedPreferences preferences;
     static String subLevel;
+    int clickCounter;
 
     /**
      * onCreate method for Level1Activity
@@ -36,6 +37,7 @@ public class Level1Activity extends ActionBarActivity {
         textViewIntro = (TextView) findViewById(R.id.textView_intro_level1A);
         Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/goudy.ttf");
         textViewIntro.setTypeface(typeface);
+        clickCounter = 0;
         updateScore();
     }
 
@@ -64,8 +66,22 @@ public class Level1Activity extends ActionBarActivity {
      * This method hides the guide page and reveals the game view behind it.
      */
     public void nextPage(View view){
+
         View layout = findViewById(R.id.level1_guide_layout);
-        layout.setVisibility(View.GONE);
+        View scrollView = findViewById(R.id.level1_guide_scrollView);
+
+
+        if(clickCounter == 0){
+            scrollView.setVisibility(View.GONE);
+            layout.setBackgroundColor(Color.WHITE);
+            clickCounter++;
+        }
+        else
+            if(clickCounter == 1){
+                layout.setVisibility(View.GONE);
+            }
+
+
     }
 
     /**

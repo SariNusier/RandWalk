@@ -28,8 +28,8 @@
      the noise due to microscopic cell-to-cell differences of environment and history, "intrinsic" the
     one due to random fluctuations."</string>
 
-    <color name="Level1">#E6C850</color>
-    <color name="Level2">#48D1FF</color>
+    <color name="Level1">#F1D495</color>
+    <color name="Level2">#91C8C2</color>
 
     <string name="title_activity_level1">Level1</string>
     <string name="title_activity_level2">Level2</string>
