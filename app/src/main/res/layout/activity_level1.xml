@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/rsz_level1_intro_background"
     tools:context="com.example.sari.randomwalk.Level1Activity" >
 
     <LinearLayout android:id="@+id/level1_guide_layout"
@@ -19,15 +20,16 @@
             <TextView android:id="@+id/textView_intro_level1A"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
                 android:text="@string/intro_level1A"
-                android:textSize="30dp" />
+                android:textSize="20dp" />
 
         </ScrollView>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.1"
             android:layout_gravity="right"
             android:background="@drawable/ic_action_forward"
             android:onClick="nextPage" />

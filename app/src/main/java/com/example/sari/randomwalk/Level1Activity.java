@@ -2,6 +2,8 @@ package com.example.sari.randomwalk;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +14,7 @@ import android.widget.TextView;
 
 public class Level1Activity extends ActionBarActivity {
 
-    static TextView textView;
+    static TextView textView, textViewIntro;
     static SharedPreferences preferences;
     static String subLevel;
 
@@ -25,11 +27,15 @@ public class Level1Activity extends ActionBarActivity {
         Intent intent = getIntent();
         subLevel = intent.getStringExtra("SUB_LEVEL"); //gets the sub-level selected from main activity
         setContentView(R.layout.activity_level1); //sets layout activity_level1
+        getWindow().getDecorView().setBackgroundColor(Color.WHITE);
         setTitle("Level 1" + subLevel); //sets appropriate title based on sub-level
         getSupportActionBar().setCustomView(R.layout.actionbar_custom);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         preferences = getSharedPreferences("GAME_DATA", MODE_PRIVATE);
         textView = (TextView) findViewById(R.id.scoreText);
+        textViewIntro = (TextView) findViewById(R.id.textView_intro_level1A);
+        Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/goudy.ttf");
+        textViewIntro.setTypeface(typeface);
         updateScore();
     }
 
