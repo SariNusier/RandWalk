@@ -117,8 +117,13 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
                 parentActivity.updateScore();
             }
             else
-            if (isStarted == true)
-                drawTick();
+                if(start_Y <=0 || start_Y >=metrics.heightPixels){
+                    Log.d("OUT OF BOUNDS","OUT OF BOUNDS!");
+                    listenTouch = true;
+                }
+                else
+                    if (isStarted == true)
+                        drawTick();
 
         isStarted = true;
 
