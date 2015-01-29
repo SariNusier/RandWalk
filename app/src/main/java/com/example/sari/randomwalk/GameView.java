@@ -78,17 +78,19 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
         startSurface.setBounds(0,0,metrics.widthPixels/6,metrics.heightPixels);
         startSurface.draw(canvas);
         Drawable boat = this.getResources().getDrawable(R.drawable.boat); // just boat
-        Rect boundsBoat = new Rect(metrics.widthPixels-100,metrics.heightPixels/2 -50,metrics.widthPixels,metrics.heightPixels/2 +50);
+        subLevel = parentActivity.getSubLevel();
+        Rect boundsBoat;
+        boundsBoat = new Rect(metrics.widthPixels-100,metrics.heightPixels/2 -50,metrics.widthPixels,metrics.heightPixels/2 +50);
         boat.setBounds(boundsBoat);
         boat.draw(canvas);
-        subLevel = parentActivity.getSubLevel();
+
 
         if(!subLevel.equals("A")) {
             SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
             Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         }
-        paintWalk.setColor(Color.BLUE); //set the color of the walk
+        paintWalk.setColor(getResources().getColor(R.color.BlueLine)); //set the color of the walk
         paintWalk.setStrokeWidth(3); //sets the width of the walk
         paintWalk.setPathEffect(new DashPathEffect(new float[]{4, 4}, 0)); //sets the dash effect of the walk
         paintWalk.setStyle(Paint.Style.STROKE);
@@ -141,7 +143,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
         if(listenTouch == true) {
 
             if (event.getX() <= metrics.widthPixels / 6 && ok < 1) {
-
+                paintWalk.setColor(getResources().getColor(R.color.BlueLine));
                 ok++;
                 listenTouch = false;
                 X = event.getX();
@@ -158,6 +160,11 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
             }
             else
             if (ok >= 1 && ok < 4) {
+                switch (ok){
+                    case 1:paintWalk.setColor(getResources().getColor(R.color.GreenLine));break;
+                    case 2:paintWalk.setColor(getResources().getColor(R.color.RedLine));break;
+                    case 3:paintWalk.setColor(getResources().getColor(R.color.YelloLine));break;
+                }
                 ok++;
                 listenTouch = false;
                 start_Y = Y;
