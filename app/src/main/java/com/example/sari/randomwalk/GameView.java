@@ -187,15 +187,13 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
     }
     @Override
     public final void onSensorChanged(SensorEvent event) {
-        // The light sensor returns a single value.
         // Many sensors return 3 values, one for each axis.
         float x, y, z;
         x = event.values[0];
         y = event.values[1];
-        drift_Y = y;
+        drift_Y = y*2;
         z = event.values[2];
-        //Log.d("ACCELEROMETRU","X:"+x+" "+"Y:"+y+" "+"Z:"+z+" ");
-        // Do something with this sensor value.
+
     }
 
     public void drawTick(){
@@ -207,13 +205,13 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
             e.printStackTrace();
         }*/
         if(subLevel.equals("A")) {
-            random_X = rand.nextInt(40); //generates two random numbers for X and Y
-            random_Y = rand.nextInt(40);
+            random_X = rand.nextInt(30); //generates two random numbers for X and Y
+            random_Y = rand.nextInt(80);
         }
         else
         {
             random_X = rand.nextInt(10);
-            random_Y = rand.nextInt(10);
+            random_Y = rand.nextInt(60);
         }
         if(Math.random()<=.5)
             random_Y = random_Y * -1;

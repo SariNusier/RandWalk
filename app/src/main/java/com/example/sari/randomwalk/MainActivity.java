@@ -20,7 +20,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
+        Try incercare = new Try(this,"12345",1234,1234,1234,124,1234);
+        new EndpointsAsyncTask().execute(new Pair<Context, Try>(this, incercare));
     }
 
     /**

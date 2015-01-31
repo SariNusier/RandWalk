@@ -9,7 +9,6 @@ package com.example.sari.backend;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
-import java.util.Date;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -25,26 +24,37 @@ public class MyEndpoint {
      * A simple endpoint method that takes a name and says Hi back
      */
     @ApiMethod(name = "sayHi")
-    public MyBean sayHi(@Named("name") String name) {
-        MyBean response = new MyBean();
+    public Game sayHi(@Named("name") String name) {
+        Game response = new Game();
         response.setData("Hi, " + name);
 
         return response;
     }
 
 
-    @ApiMethod(name = "saveData")
-    public MyBean saveData(@Named("data") String data, @Named("score") int score){
-        Entity player = new Entity("Employee");
-        player.setProperty("firstName", data);
-        player.setProperty("score", score);
+    @ApiMethod(name = "saveDataLevel1A")
+    public Game saveDataLevel1A(@Named("playerID") String playerID, @Named("score") int score, @Named("startingPoint") float startingPoint,
+                                @Named("finalPointX") float finalPointX, @Named("finalPointY") float finalPointY,
+                                @Named("length") float length){
 
-        datastore.put(player);
+        Entity lvTry = new Entity("Level1ATry");
+        lvTry.setProperty("id",playerID);
+        lvTry.setProperty("score", score);
+        lvTry.setProperty("StartingPoint", startingPoint);
+        lvTry.setProperty("Final Point_X",finalPointX);
+        lvTry.setProperty("Final Point_Y",finalPointY);
+        lvTry.setProperty("length", length);
+        datastore.put(lvTry);
 
-        MyBean response = new MyBean();
-        response.setData("Saved score for player " + data);
+        Game response = new Game();
+        response.setData("Saved score for player " + "CVeva");
 
         return response;
+    }
+
+    @ApiMethod(name = "saveDataLevel1B")
+    public void saveDataLevel1B(){
+        Entity game = new Entity("Level1BTry");
     }
 
 

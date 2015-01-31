@@ -16,23 +16,26 @@ import java.util.prefs.Preferences;
 /**
  * Created by sari on 26/01/15.
  */
-public class EndpointsAsyncTask extends AsyncTask<Pair<Context,String>,Void, String> {
+public class EndpointsAsyncTask extends AsyncTask<Pair<Context,Try>,Void, String> {
     private MyApi myApiService = null;
     private Context context;
 
     @Override
-    protected String doInBackground(Pair<Context, String>... params) {
+    protected String doInBackground(Pair<Context, Try>... params) {
         if(myApiService == null){
+
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),new AndroidJsonFactory(), null);
             builder.setRootUrl("https://randwalk-project.appspot.com/_ah/api/");
             myApiService = builder.build();
+
         }
 
         context = params[0].first;
-        String name = params[0].second;
+        Try trai = params[0].second;
         SharedPreferences preferences = context.getSharedPreferences("GAME_DATA", Context.MODE_PRIVATE);
         try {
-            return myApiService.saveData(name, preferences.getInt("score", 0)).execute().getData();
+            //return myApiService.saveData(name, preferences.getInt("score", 0)).execute().getData();
+            return myApiService.saveDataLevel1A(trai.getId(), preferences.getInt("score",0), trai.getStartingPoint(),trai.getFinalPointX(),trai.getFinalPointY(),trai.getLength()).execute().getData();
         } catch (IOException e) {
             return e.getMessage();
         }

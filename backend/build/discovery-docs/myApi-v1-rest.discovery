@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"c05bU6zpvXPOpQakG5gG3IOJh8Y/mXTA4mYZP7clb8CNoRVz2VfnhgE\"",
+ "etag": "\"c05bU6zpvXPOpQakG5gG3IOJh8Y/-cQmwH9ML3td4ichD3tD7PQOgjY\"",
  "discoveryVersion": "v1",
  "id": "myApi:v1",
  "name": "myApi",
@@ -73,8 +73,8 @@
   }
  },
  "schemas": {
-  "MyBean": {
-   "id": "MyBean",
+  "Game": {
+   "id": "Game",
    "type": "object",
    "properties": {
     "data": {
@@ -84,12 +84,30 @@
   }
  },
  "methods": {
-  "saveData": {
-   "id": "myApi.saveData",
-   "path": "saveData/{data}/{score}",
+  "saveDataLevel1A": {
+   "id": "myApi.saveDataLevel1A",
+   "path": "saveDataLevel1A/{playerID}/{score}/{startingPoint}/{finalPointX}/{finalPointY}/{length}",
    "httpMethod": "POST",
    "parameters": {
-    "data": {
+    "finalPointX": {
+     "type": "number",
+     "required": true,
+     "format": "float",
+     "location": "path"
+    },
+    "finalPointY": {
+     "type": "number",
+     "required": true,
+     "format": "float",
+     "location": "path"
+    },
+    "length": {
+     "type": "number",
+     "required": true,
+     "format": "float",
+     "location": "path"
+    },
+    "playerID": {
      "type": "string",
      "required": true,
      "location": "path"
@@ -99,15 +117,33 @@
      "required": true,
      "format": "int32",
      "location": "path"
+    },
+    "startingPoint": {
+     "type": "number",
+     "required": true,
+     "format": "float",
+     "location": "path"
     }
    },
    "parameterOrder": [
-    "data",
-    "score"
+    "playerID",
+    "score",
+    "startingPoint",
+    "finalPointX",
+    "finalPointY",
+    "length"
    ],
    "response": {
-    "$ref": "MyBean"
+    "$ref": "Game"
    },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "saveDataLevel1B": {
+   "id": "myApi.saveDataLevel1B",
+   "path": "saveDataLevel1B",
+   "httpMethod": "POST",
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
    ]
@@ -127,7 +163,7 @@
     "name"
    ],
    "response": {
-    "$ref": "MyBean"
+    "$ref": "Game"
    },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"

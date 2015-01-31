@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"c05bU6zpvXPOpQakG5gG3IOJh8Y/mXTA4mYZP7clb8CNoRVz2VfnhgE\"",
+ "etag": "\"c05bU6zpvXPOpQakG5gG3IOJh8Y/-cQmwH9ML3td4ichD3tD7PQOgjY\"",
  "discoveryVersion": "v1",
  "id": "myApi:v1",
  "name": "myApi",
@@ -71,8 +71,8 @@
   }
  },
  "schemas": {
-  "MyBean": {
-   "id": "MyBean",
+  "Game": {
+   "id": "Game",
    "type": "object",
    "properties": {
     "data": {
@@ -82,10 +82,25 @@
   }
  },
  "methods": {
-  "myApi.saveData": {
-   "id": "myApi.saveData",
+  "myApi.saveDataLevel1A": {
+   "id": "myApi.saveDataLevel1A",
    "parameters": {
-    "data": {
+    "finalPointX": {
+     "type": "number",
+     "required": true,
+     "format": "float"
+    },
+    "finalPointY": {
+     "type": "number",
+     "required": true,
+     "format": "float"
+    },
+    "length": {
+     "type": "number",
+     "required": true,
+     "format": "float"
+    },
+    "playerID": {
      "type": "string",
      "required": true
     },
@@ -93,15 +108,30 @@
      "type": "integer",
      "required": true,
      "format": "int32"
+    },
+    "startingPoint": {
+     "type": "number",
+     "required": true,
+     "format": "float"
     }
    },
    "parameterOrder": [
-    "data",
-    "score"
+    "playerID",
+    "score",
+    "startingPoint",
+    "finalPointX",
+    "finalPointY",
+    "length"
    ],
    "returns": {
-    "$ref": "MyBean"
+    "$ref": "Game"
    },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "myApi.saveDataLevel1B": {
+   "id": "myApi.saveDataLevel1B",
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
    ]
@@ -118,7 +148,7 @@
     "name"
    ],
    "returns": {
-    "$ref": "MyBean"
+    "$ref": "Game"
    },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"

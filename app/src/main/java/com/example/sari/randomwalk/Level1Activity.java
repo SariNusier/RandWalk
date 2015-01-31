@@ -39,6 +39,10 @@ public class Level1Activity extends ActionBarActivity {
         textViewIntro.setTypeface(typeface);
         clickCounter = 0;
         updateScore();
+        if(subLevel.equals("B"))
+        {
+
+        }
     }
 
     /**
