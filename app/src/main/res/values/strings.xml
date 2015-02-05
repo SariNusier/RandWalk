@@ -34,8 +34,10 @@
     <color name="RedLine">#ef7861</color>
     <color name="GreenLine">#01a05f</color>
     <color name="YelloLine">#864ca3</color>
+
     <string name="title_activity_level1">Level1</string>
     <string name="title_activity_level2">Level2</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_start">Random Walk</string>
 
 </resources>
