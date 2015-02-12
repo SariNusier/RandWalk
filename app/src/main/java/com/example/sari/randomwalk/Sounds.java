@@ -13,7 +13,7 @@ public class Sounds extends AsyncTask<Pair<Context,Integer>, Void, Void> {
     @Override
     protected Void doInBackground(Pair... params) {
         MediaPlayer player = MediaPlayer.create((Context)params[0].first, (Integer)params[0].second);
-        player.setLooping(false); // Set looping
+        player.setLooping(true); // Set looping
         player.setVolume(100,100);
         player.start();
 

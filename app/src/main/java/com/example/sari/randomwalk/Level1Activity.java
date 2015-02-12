@@ -1,5 +1,6 @@
 package com.example.sari.randomwalk;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -7,6 +8,7 @@ import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +45,8 @@ public class Level1Activity extends ActionBarActivity {
         {
 
         }
+
+
     }
 
     /**
@@ -64,6 +68,12 @@ public class Level1Activity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        //sounds.cancel(true);
     }
 
     /**
@@ -91,8 +101,39 @@ public class Level1Activity extends ActionBarActivity {
     /**
      * Refreshes the score's text view, displaying most recent score.
      */
-    public static void updateScore(){
-        textView.setText("Score: " + preferences.getInt("score", 0));
+    public void updateScore(){
+        textView.setText("Score: " + preferences.getInt(String.format("score_1%s",subLevel), 0));
+        final int oldColor = textView.getCurrentTextColor();
+
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+
+                try {
+
+                    runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            textView.setTextColor(Color.GREEN);
+                        }
+                    });
+                    sleep(500);
+                    runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            textView.setTextColor(oldColor);
+                        }
+                    });
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
     }
 
     public static String getSubLevel(){

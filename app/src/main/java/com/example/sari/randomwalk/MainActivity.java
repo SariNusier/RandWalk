@@ -3,6 +3,7 @@ package com.example.sari.randomwalk;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Pair;
@@ -20,8 +21,10 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Try incercare = new Try(this,"12345",1234,1234,1234,124,1234);
-        new EndpointsAsyncTask().execute(new Pair<Context, Try>(this, incercare));
+        SharedPreferences preferences = getSharedPreferences("GAME_DATA",Context.MODE_PRIVATE);
+        Try save = new Try(this,"0",preferences.getInt("score_1A",0),1234,1234,124,1234);
+
+        new EndpointsAsyncTask().execute(new Pair<Context, Try>(this, save));
     }
 
     /**

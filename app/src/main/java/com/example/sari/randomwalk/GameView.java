@@ -16,9 +16,11 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -28,6 +30,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
 
     float start_X, start_Y;
     float X,Y;
+    float drift_X = 0;
     float drift_Y = 0;
     int random_X, random_Y;
     int ok = 0;
@@ -48,6 +51,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
+    //Sounds sounds = new Sounds();
     //<-----CONSTRUCTOR------>
     public GameView(Context context, AttributeSet attributeSet) {
 
@@ -105,7 +109,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
         if ( start_X<=metrics.widthPixels && start_X >= metrics.widthPixels-100 && start_Y>= metrics.heightPixels/2 -50 && start_Y<=metrics.heightPixels/2 + 50) {
             listenTouch = true;
             Log.d("HOME", "You are home");
-            editor.putInt("score", 100 + preferences.getInt("score",0));
+            editor.putInt(String.format("score_1%s",subLevel), 100 + preferences.getInt(String.format("score_1%s",subLevel),0));
             editor.commit();
             parentActivity.updateScore();
         }
@@ -114,7 +118,8 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
                 listenTouch = true;
                 int score = Math.round((5/Math.abs(start_Y - metrics.heightPixels/2))*1000);
                 Log.d("SCORE","Your score is: "+score);
-                editor.putInt("score",score + preferences.getInt("score",0));
+                editor.putInt(String.format("score_1%s",subLevel),score + preferences.getInt(String.format("score_1%s",subLevel),0));
+
                 editor.commit();
                 parentActivity.updateScore();
             }
@@ -124,9 +129,10 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
                     listenTouch = true;
                 }
                 else
-                    if (isStarted == true)
+                    if (isStarted == true) {
                         drawTick();
-
+                        //sounds.execute(new Pair<Context, Integer>(this.getContext(),R.raw.background_sound));
+                    }
         isStarted = true;
 
 
@@ -190,6 +196,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
         // Many sensors return 3 values, one for each axis.
         float x, y, z;
         x = event.values[0];
+        drift_X = 0;//x*2;
         y = event.values[1];
         drift_Y = y*2;
         z = event.values[2];
@@ -205,19 +212,17 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
             e.printStackTrace();
         }*/
         if(subLevel.equals("A")) {
-            random_X = rand.nextInt(30); //generates two random numbers for X and Y
-            random_Y = rand.nextInt(80);
+            random_X = rand.nextInt(31); //generates two random numbers for X and Y
+            random_Y = rand.nextInt(61)-30;
         }
         else
         {
-            random_X = rand.nextInt(10);
-            random_Y = rand.nextInt(60);
+            random_X = rand.nextInt(21);
+            random_Y = rand.nextInt(41)-20;
         }
-        if(Math.random()<=.5)
-            random_Y = random_Y * -1;
 
         canvas.drawLine(start_X, start_Y,start_X+random_X, start_Y + random_Y + drift_Y, paintWalk);
-        start_X = start_X+random_X;
+        start_X = start_X+random_X + drift_X;
         start_Y = start_Y + random_Y + drift_Y;
         invalidate();
 

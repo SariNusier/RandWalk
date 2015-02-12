@@ -35,7 +35,7 @@ public class EndpointsAsyncTask extends AsyncTask<Pair<Context,Try>,Void, String
         SharedPreferences preferences = context.getSharedPreferences("GAME_DATA", Context.MODE_PRIVATE);
         try {
             //return myApiService.saveData(name, preferences.getInt("score", 0)).execute().getData();
-            return myApiService.saveDataLevel1A(trai.getId(), preferences.getInt("score",0), trai.getStartingPoint(),trai.getFinalPointX(),trai.getFinalPointY(),trai.getLength()).execute().getData();
+            return myApiService.saveDataLevel1A(trai.getId(), trai.getScore(), trai.getStartingPoint(),trai.getFinalPointX(),trai.getFinalPointY(),trai.getLength()).execute().getData();
         } catch (IOException e) {
             return e.getMessage();
         }

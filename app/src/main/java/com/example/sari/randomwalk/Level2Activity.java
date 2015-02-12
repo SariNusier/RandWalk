@@ -1,6 +1,7 @@
 package com.example.sari.randomwalk;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,7 +11,8 @@ import android.widget.TextView;
 
 
 public class Level2Activity extends ActionBarActivity {
-    private int clickCount=0;
+
+    static String subLevel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,11 +44,12 @@ public class Level2Activity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void nextPage(View view){
-
-        TextView textView = (TextView) findViewById(R.id.textView_intro_level2);
-        View layout = (View) findViewById(R.id.guide_layout2);
-        layout.setVisibility(View.GONE);
+    public void updateScore(){
 
     }
+
+    public static String getSubLevel(){
+        return "A";
+    }
+
 }

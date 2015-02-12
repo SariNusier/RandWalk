@@ -17,6 +17,7 @@ public class Try {
 
         this.context = context;
         this.id = id;
+        this.score = score;
         this.startingPoint = startingPoint;
         this.finalPointX = finalPointX;
         this.finalPointY = finalPointY;
