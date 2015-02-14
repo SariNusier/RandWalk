@@ -13,6 +13,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -31,6 +32,7 @@ public class GameView2 extends View implements OnTouchListener, SensorEventListe
     float drift_Y = 0;
     int random_X, random_Y;
     int ok = 0;
+    int cellCount = 0;
     boolean bitmapSaved = false;
     boolean isStarted = false;
     boolean listenTouch = true;
@@ -66,7 +68,6 @@ public class GameView2 extends View implements OnTouchListener, SensorEventListe
         rand = new Random();
         parentActivity =(Level2Activity) context; //casts the context as a Level1Activity to use updateScore()
        // subLevel = parentActivity.getSubLevel(); // gets selected sublevel
-
         preferences = context.getSharedPreferences("GAME_DATA",Context.MODE_PRIVATE);//get preferences GAME_DATA
         editor = preferences.edit(); //sets the editor as editor of preferences declared above
         metrics = getResources().getDisplayMetrics(); //gets the metrics of the screen
@@ -83,12 +84,7 @@ public class GameView2 extends View implements OnTouchListener, SensorEventListe
 
         dnaImage.setBounds(0,(int)Math.round(metrics.heightPixels/1.4),metrics.widthPixels,metrics.heightPixels);
         dnaImage.draw(canvas);
-        Drawable boat = this.getResources().getDrawable(R.drawable.boat); // just boat
         subLevel = parentActivity.getSubLevel();
-        Rect boundsBoat;
-        boundsBoat = new Rect(metrics.widthPixels-100,metrics.heightPixels/2 -50,metrics.widthPixels,metrics.heightPixels/2 +50);
-        boat.setBounds(boundsBoat);
-        boat.draw(canvas);
 
 
         if(!subLevel.equals("A")) {
@@ -147,41 +143,30 @@ public class GameView2 extends View implements OnTouchListener, SensorEventListe
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-
+        
         if(listenTouch == true) {
 
-            if (event.getX() <= metrics.widthPixels / 6 && ok < 1) {
+            if (event.getY() <= metrics.heightPixels / 12 && ok < 1) {
                 paintWalk.setColor(getResources().getColor(R.color.BlueLine));
-                ok++;
+                cellCount++;
+                if(cellCount == 5)
+                    ok++;
                 listenTouch = false;
                 X = event.getX();
                 Y = event.getY();
-                start_X = metrics.widthPixels/12;
-                start_Y = Y;
-               // pirate.setBounds((int) start_X - 50, (int) start_Y - 66, (int) start_X + 50, (int) start_Y + 66); //draws pirate here
-                pirate.setBounds(metrics.widthPixels/12 -50, (int) start_Y - 66, metrics.widthPixels/12 + 50, (int) start_Y + 66); //draws pirate here
+                start_Y = metrics.widthPixels/24;
+                start_X = X;
+                pirate.setBounds((int)start_X - 66,metrics.heightPixels/24 - 50,(int)start_X + 66,metrics.widthPixels/24 + 50);
                 Log.d("BOUNDS"," "+metrics.widthPixels/12);
                 pirate.draw(canvas);
                 invalidate();
 
 
             }
-            else
-            if (ok >= 1 && ok < 4) {
-                switch (ok){
-                    case 1:paintWalk.setColor(getResources().getColor(R.color.GreenLine));break;
-                    case 2:paintWalk.setColor(getResources().getColor(R.color.RedLine));break;
-                    case 3:paintWalk.setColor(getResources().getColor(R.color.YelloLine));break;
-                }
-                ok++;
-                listenTouch = false;
-                start_Y = Y;
-                start_X = metrics.widthPixels/12;
-                invalidate();
-            }
             else {
                 ok = 0;
-                canvas.drawBitmap(initialBitmap,0,0,paintWalk);
+                cellCount = 0;
+                canvas.drawBitmap(initialBitmap,0,0,paintWalk); //restart everything.
 
             }
         }
