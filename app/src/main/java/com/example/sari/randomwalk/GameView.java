@@ -33,10 +33,12 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
     float drift_X = 0;
     float drift_Y = 0;
     int random_X, random_Y;
+    float startingPoint, finalPointX, finalPointY, length;
     int ok = 0;
     boolean bitmapSaved = false;
     boolean isStarted = false;
     boolean listenTouch = true;
+    int saveTry = 0;
     String subLevel;
     Random rand;
 
@@ -112,6 +114,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
             editor.putInt(String.format("score_1%s",subLevel), 100 + preferences.getInt(String.format("score_1%s",subLevel),0));
             editor.commit();
             parentActivity.updateScore();
+            saveTry++;
         }
         else
             if(start_X >= metrics.widthPixels){
@@ -119,23 +122,30 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
                 int score = Math.round((5/Math.abs(start_Y - metrics.heightPixels/2))*1000);
                 Log.d("SCORE","Your score is: "+score);
                 editor.putInt(String.format("score_1%s",subLevel),score + preferences.getInt(String.format("score_1%s",subLevel),0));
-
                 editor.commit();
                 parentActivity.updateScore();
+                saveTry++;
             }
             else
                 if(start_Y <=0 || start_Y >=metrics.heightPixels){
                     Log.d("OUT OF BOUNDS","OUT OF BOUNDS!");
                     listenTouch = true;
+                    saveTry++;
                 }
                 else
                     if (isStarted == true) {
                         drawTick();
                         //sounds.execute(new Pair<Context, Integer>(this.getContext(),R.raw.background_sound));
                     }
+
+        if(saveTry == 2) {
+            finalPointX = start_X;
+            finalPointY = start_Y;
+            Try save = new Try(getContext(), "0", preferences.getInt("score_1A", 0), startingPoint, finalPointX, finalPointY, 1234);
+            new EndpointsAsyncTask().execute(new Pair<Context, Try>(getContext(), save));
+            saveTry = 1;
+        }
         isStarted = true;
-
-
         canvas.drawBitmap(playingBitmap, 0, 0, paintWalk);
         if(bitmapSaved == false) {
             initialBitmap = Bitmap.createBitmap(playingBitmap, 0, 0, playingBitmap.getWidth(), playingBitmap.getHeight(), null, true);
@@ -160,6 +170,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
                 pirate.setBounds(metrics.widthPixels/12 -50, (int) start_Y - 66, metrics.widthPixels/12 + 50, (int) start_Y + 66); //draws pirate here
                 Log.d("BOUNDS"," "+metrics.widthPixels/12);
                 pirate.draw(canvas);
+                startingPoint = Y;
                 invalidate();
 
 
@@ -169,7 +180,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
                 switch (ok){
                     case 1:paintWalk.setColor(getResources().getColor(R.color.GreenLine));break;
                     case 2:paintWalk.setColor(getResources().getColor(R.color.RedLine));break;
-                    case 3:paintWalk.setColor(getResources().getColor(R.color.YelloLine));break;
+                    case 3:paintWalk.setColor(getResources().getColor(R.color.YellowLine));break;
                 }
                 ok++;
                 listenTouch = false;
@@ -178,6 +189,8 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
                 invalidate();
             }
             else {
+                if(ok == 4) {
+                }
                 ok = 0;
                 canvas.drawBitmap(initialBitmap,0,0,paintWalk);
 

@@ -33,7 +33,7 @@
     <color name="BlueLine">#5069a9</color>
     <color name="RedLine">#ef7861</color>
     <color name="GreenLine">#01a05f</color>
-    <color name="YelloLine">#864ca3</color>
+    <color name="YellowLine">#864ca3</color>
 
     <string name="title_activity_level1">Level1</string>
     <string name="title_activity_level2">Level2</string>

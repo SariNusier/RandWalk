@@ -22,9 +22,9 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SharedPreferences preferences = getSharedPreferences("GAME_DATA",Context.MODE_PRIVATE);
-        Try save = new Try(this,"0",preferences.getInt("score_1A",0),1234,1234,124,1234);
 
-        new EndpointsAsyncTask().execute(new Pair<Context, Try>(this, save));
+
+
     }
 
     /**
