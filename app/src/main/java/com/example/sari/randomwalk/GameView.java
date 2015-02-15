@@ -33,7 +33,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
     float drift_X = 0;
     float drift_Y = 0;
     int random_X, random_Y;
-    float startingPoint, finalPointX, finalPointY, length;
+    float startingPoint, finalPointX, finalPointY, length = 0;
     int ok = 0;
     boolean bitmapSaved = false;
     boolean isStarted = false;
@@ -42,6 +42,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
     String subLevel;
     Random rand;
 
+    Drawable boat;
     Paint paintWalk;
     Canvas canvas;
     Bitmap playingBitmap; //this bitmap stores the game status during play
@@ -83,11 +84,16 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
         Drawable startSurface = this.getResources().getDrawable(R.drawable.start_surface);//area where the player starts
         startSurface.setBounds(0,0,metrics.widthPixels/6,metrics.heightPixels);
         startSurface.draw(canvas);
-        Drawable boat = this.getResources().getDrawable(R.drawable.boat); // just boat
+        boat = this.getResources().getDrawable(R.drawable.boat); // just boat
         subLevel = parentActivity.getSubLevel();
-        Rect boundsBoat;
-        boundsBoat = new Rect(metrics.widthPixels-100,metrics.heightPixels/2 -50,metrics.widthPixels,metrics.heightPixels/2 +50);
-        boat.setBounds(boundsBoat);
+        Rect boundsBoatA;
+        Rect boundsBoatB;
+        boundsBoatA = new Rect(metrics.widthPixels-100,metrics.heightPixels/2 -50,metrics.widthPixels,metrics.heightPixels/2 +50);
+        boundsBoatB = new Rect(metrics.widthPixels-100,metrics.heightPixels/12*9-50,metrics.widthPixels,metrics.heightPixels/12*9+50);
+        if(subLevel.equals("A"))
+            boat.setBounds(boundsBoatA);
+        else
+            boat.setBounds(boundsBoatB);
         boat.draw(canvas);
 
 
@@ -108,7 +114,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
     @Override
     public void onDraw(final Canvas canvas) {
 
-        if ( start_X<=metrics.widthPixels && start_X >= metrics.widthPixels-100 && start_Y>= metrics.heightPixels/2 -50 && start_Y<=metrics.heightPixels/2 + 50) {
+        if(boat.getBounds().contains((int)start_X,(int)start_Y)){
             listenTouch = true;
             Log.d("HOME", "You are home");
             editor.putInt(String.format("score_1%s",subLevel), 100 + preferences.getInt(String.format("score_1%s",subLevel),0));
@@ -119,7 +125,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
         else
             if(start_X >= metrics.widthPixels){
                 listenTouch = true;
-                int score = Math.round((5/Math.abs(start_Y - metrics.heightPixels/2))*1000);
+                int score = Math.round((5/Math.abs(start_Y - boat.getBounds().centerY()))*1000);
                 Log.d("SCORE","Your score is: "+score);
                 editor.putInt(String.format("score_1%s",subLevel),score + preferences.getInt(String.format("score_1%s",subLevel),0));
                 editor.commit();
@@ -138,11 +144,12 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
                         //sounds.execute(new Pair<Context, Integer>(this.getContext(),R.raw.background_sound));
                     }
 
-        if(saveTry == 2) {
+        if(saveTry == 2 && length !=0) {
             finalPointX = start_X;
             finalPointY = start_Y;
-            Try save = new Try(getContext(), "0", preferences.getInt("score_1A", 0), startingPoint, finalPointX, finalPointY, 1234);
+            Try save = new Try(getContext(), "0", preferences.getInt("score_1A", 0), startingPoint, finalPointX, finalPointY, length);
             new EndpointsAsyncTask().execute(new Pair<Context, Try>(getContext(), save));
+            length = 0;
             saveTry = 1;
         }
         isStarted = true;
@@ -235,6 +242,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
         }
 
         canvas.drawLine(start_X, start_Y,start_X+random_X, start_Y + random_Y + drift_Y, paintWalk);
+        length += Math.sqrt(Math.pow(random_X+drift_X,2)+Math.pow(random_Y+drift_Y,2));
         start_X = start_X+random_X + drift_X;
         start_Y = start_Y + random_Y + drift_Y;
         invalidate();
