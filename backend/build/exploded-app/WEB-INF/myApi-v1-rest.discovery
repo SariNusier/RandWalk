@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"c05bU6zpvXPOpQakG5gG3IOJh8Y/-cQmwH9ML3td4ichD3tD7PQOgjY\"",
+ "etag": "\"c05bU6zpvXPOpQakG5gG3IOJh8Y/vgadnWZPbXm_1QWtoFjvPU2lq9M\"",
  "discoveryVersion": "v1",
  "id": "myApi:v1",
  "name": "myApi",
@@ -86,7 +86,7 @@
  "methods": {
   "saveDataLevel1A": {
    "id": "myApi.saveDataLevel1A",
-   "path": "saveDataLevel1A/{playerID}/{score}/{startingPoint}/{finalPointX}/{finalPointY}/{length}",
+   "path": "saveDataLevel1A/{playerID}/{score}/{startingPoint}/{finalPointX}/{finalPointY}/{length}/{subLevel}",
    "httpMethod": "POST",
    "parameters": {
     "finalPointX": {
@@ -123,6 +123,11 @@
      "required": true,
      "format": "float",
      "location": "path"
+    },
+    "subLevel": {
+     "type": "string",
+     "required": true,
+     "location": "path"
     }
    },
    "parameterOrder": [
@@ -131,7 +136,8 @@
     "startingPoint",
     "finalPointX",
     "finalPointY",
-    "length"
+    "length",
+    "subLevel"
    ],
    "response": {
     "$ref": "Game"

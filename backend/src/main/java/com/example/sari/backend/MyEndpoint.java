@@ -35,7 +35,7 @@ public class MyEndpoint {
     @ApiMethod(name = "saveDataLevel1A")
     public Game saveDataLevel1A(@Named("playerID") String playerID, @Named("score") int score, @Named("startingPoint") float startingPoint,
                                 @Named("finalPointX") float finalPointX, @Named("finalPointY") float finalPointY,
-                                @Named("length") float length){
+                                @Named("length") float length, @Named("subLevel") String subLevel){
 
         Entity lvTry = new Entity("Level1ATry");
         lvTry.setProperty("id",playerID);
@@ -44,6 +44,7 @@ public class MyEndpoint {
         lvTry.setProperty("Final Point_X",finalPointX);
         lvTry.setProperty("Final Point_Y",finalPointY);
         lvTry.setProperty("length", length);
+        lvTry.setProperty("subLevel", subLevel);
         datastore.put(lvTry);
 
         Game response = new Game();

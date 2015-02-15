@@ -8,12 +8,12 @@ import android.content.Context;
 public class Try {
 
     private Context context;
-    private String id;
+    private String id, subLevel;
     private int score;
     private float startingPoint, finalPointY, finalPointX, length;
 
 
-    public Try(Context context,String id, int score, float startingPoint,float finalPointX, float finalPointY, float length){
+    public Try(Context context,String id, int score, float startingPoint,float finalPointX, float finalPointY, float length, String subLevel){
 
         this.context = context;
         this.id = id;
@@ -22,6 +22,7 @@ public class Try {
         this.finalPointX = finalPointX;
         this.finalPointY = finalPointY;
         this.length = length;
+        this.subLevel = subLevel;
 
     }
 
@@ -32,6 +33,8 @@ public class Try {
     public String getId() {
         return id;
     }
+
+    public String getSubLevel(){return subLevel;}
 
     public float getStartingPoint() {
         return startingPoint;

@@ -92,8 +92,11 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
         boundsBoatB = new Rect(metrics.widthPixels-100,metrics.heightPixels/12*9-50,metrics.widthPixels,metrics.heightPixels/12*9+50);
         if(subLevel.equals("A"))
             boat.setBounds(boundsBoatA);
-        else
+        else {
             boat.setBounds(boundsBoatB);
+            pirate.setBounds(metrics.widthPixels/12 - 50, 4, metrics.widthPixels/12 + 50, 136); //draws pirate here
+            pirate.draw(canvas);
+        }
         boat.draw(canvas);
 
 
@@ -147,7 +150,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
         if(saveTry == 2 && length !=0) {
             finalPointX = start_X;
             finalPointY = start_Y;
-            Try save = new Try(getContext(), "0", preferences.getInt("score_1A", 0), startingPoint, finalPointX, finalPointY, length);
+            Try save = new Try(getContext(), "0", preferences.getInt("score_1A", 0), startingPoint, finalPointX, finalPointY, length, subLevel);
             new EndpointsAsyncTask().execute(new Pair<Context, Try>(getContext(), save));
             length = 0;
             saveTry = 1;
@@ -169,11 +172,18 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
                 paintWalk.setColor(getResources().getColor(R.color.BlueLine));
                 ok++;
                 listenTouch = false;
-                X = event.getX();
-                Y = event.getY();
+                if (subLevel.equals("A")){
+                    X = event.getX();
+                    Y = event.getY();
+                }
+                else
+                {
+                    X = 0;
+                    Y = 70;
+                }
                 start_X = metrics.widthPixels/12;
                 start_Y = Y;
-               // pirate.setBounds((int) start_X - 50, (int) start_Y - 66, (int) start_X + 50, (int) start_Y + 66); //draws pirate here
+
                 pirate.setBounds(metrics.widthPixels/12 -50, (int) start_Y - 66, metrics.widthPixels/12 + 50, (int) start_Y + 66); //draws pirate here
                 Log.d("BOUNDS"," "+metrics.widthPixels/12);
                 pirate.draw(canvas);
@@ -181,6 +191,12 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
                 invalidate();
 
 
+            }
+            else if(subLevel.equals("B")){
+                start_X = metrics.widthPixels/12;
+                start_Y = 70;
+                listenTouch = false;
+                invalidate();
             }
             else
             if (ok >= 1 && ok < 4) {

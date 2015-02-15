@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"c05bU6zpvXPOpQakG5gG3IOJh8Y/-cQmwH9ML3td4ichD3tD7PQOgjY\"",
+ "etag": "\"c05bU6zpvXPOpQakG5gG3IOJh8Y/vgadnWZPbXm_1QWtoFjvPU2lq9M\"",
  "discoveryVersion": "v1",
  "id": "myApi:v1",
  "name": "myApi",
@@ -113,6 +113,10 @@
      "type": "number",
      "required": true,
      "format": "float"
+    },
+    "subLevel": {
+     "type": "string",
+     "required": true
     }
    },
    "parameterOrder": [
@@ -121,7 +125,8 @@
     "startingPoint",
     "finalPointX",
     "finalPointY",
-    "length"
+    "length",
+    "subLevel"
    ],
    "returns": {
     "$ref": "Game"
