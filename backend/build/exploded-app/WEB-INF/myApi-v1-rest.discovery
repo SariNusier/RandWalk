@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"c05bU6zpvXPOpQakG5gG3IOJh8Y/vgadnWZPbXm_1QWtoFjvPU2lq9M\"",
+ "etag": "\"c05bU6zpvXPOpQakG5gG3IOJh8Y/8HemXKZBjLDHl7KLA0gQLOBlPDA\"",
  "discoveryVersion": "v1",
  "id": "myApi:v1",
  "name": "myApi",
@@ -81,9 +81,29 @@
      "type": "string"
     }
    }
+  },
+  "Printer": {
+   "id": "Printer",
+   "type": "object",
+   "properties": {
+    "data": {
+     "type": "string"
+    }
+   }
   }
  },
  "methods": {
+  "getData": {
+   "id": "myApi.getData",
+   "path": "printer",
+   "httpMethod": "GET",
+   "response": {
+    "$ref": "Printer"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
   "saveDataLevel1A": {
    "id": "myApi.saveDataLevel1A",
    "path": "saveDataLevel1A/{playerID}/{score}/{startingPoint}/{finalPointX}/{finalPointY}/{length}/{subLevel}",
@@ -142,14 +162,6 @@
    "response": {
     "$ref": "Game"
    },
-   "scopes": [
-    "https://www.googleapis.com/auth/userinfo.email"
-   ]
-  },
-  "saveDataLevel1B": {
-   "id": "myApi.saveDataLevel1B",
-   "path": "saveDataLevel1B",
-   "httpMethod": "POST",
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
    ]

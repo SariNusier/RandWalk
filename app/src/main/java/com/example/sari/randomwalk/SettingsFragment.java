@@ -29,7 +29,8 @@ public class SettingsFragment extends PreferenceFragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 SharedPreferences preferences = getActivity().getSharedPreferences("GAME_DATA", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = preferences.edit();
-                                editor.putInt("score",0); //restarts score
+                                editor.putInt("score_1A",0); //restarts score
+                                editor.putInt("score_1B",0);
                                 editor.commit(); //commits changes
                             }
 

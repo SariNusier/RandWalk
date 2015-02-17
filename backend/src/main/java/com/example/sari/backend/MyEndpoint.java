@@ -12,6 +12,9 @@ import com.google.api.server.spi.config.ApiNamespace;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+
 import javax.inject.Named;
 
 /**
@@ -49,13 +52,23 @@ public class MyEndpoint {
 
         Game response = new Game();
         response.setData("Saved score for player " + "CVeva");
-
         return response;
     }
 
-    @ApiMethod(name = "saveDataLevel1B")
-    public void saveDataLevel1B(){
-        Entity game = new Entity("Level1BTry");
+    @ApiMethod(name = "getData")
+    public Printer getData(){
+        Printer a = new Printer();
+        Query.Filter filter = new Query.FilterPredicate("subLevel", Query.FilterOperator.EQUAL,"A");
+        Query q = new Query("Level1ATry").setFilter(filter);
+        PreparedQuery pq = datastore.prepare(q);
+        for(Entity e : pq.asIterable())
+        {
+            a.addData((String)e.getProperty("subLevel") +" "+ (Long)e.getProperty("score"));
+        }
+        a.addData("123");
+        a.addData("1234");
+
+        return a;
     }
 
 

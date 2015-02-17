@@ -140,4 +140,15 @@ public class Level1Activity extends ActionBarActivity {
         return subLevel;
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        GameView v = (GameView)this.findViewById(R.id.gameView1);
+        v.initialBitmap.recycle();
+        v.playingBitmap.recycle();
+        v.destroyDrawingCache();
+        Log.d("Destroyed!","Destroyed");
+        System.gc();
+
+    }
 }

@@ -61,6 +61,7 @@
         android:orientation="vertical">
 
         <com.example.sari.randomwalk.GameView
+            android:id="@+id/gameView1"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

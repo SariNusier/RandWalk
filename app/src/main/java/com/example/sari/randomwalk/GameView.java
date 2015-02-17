@@ -6,6 +6,7 @@ import java.util.Random;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
@@ -150,7 +151,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
         if(saveTry == 2 && length !=0) {
             finalPointX = start_X;
             finalPointY = start_Y;
-            Try save = new Try(getContext(), "0", preferences.getInt("score_1A", 0), startingPoint, finalPointX, finalPointY, length, subLevel);
+            Try save = new Try(getContext(), "0", preferences.getInt(String.format("score_1%s",subLevel), 0), startingPoint, finalPointX, finalPointY, length, subLevel);
             new EndpointsAsyncTask().execute(new Pair<Context, Try>(getContext(), save));
             length = 0;
             saveTry = 1;

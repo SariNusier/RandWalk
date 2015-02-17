@@ -11,6 +11,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:paddingTop="15dp"
             android:text="@string/learn_more_main_menu"
             android:textSize="20dp" />
 
