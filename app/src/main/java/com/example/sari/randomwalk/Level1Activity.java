@@ -150,4 +150,17 @@ public class Level1Activity extends ActionBarActivity {
         System.gc();
 
     }
+
+    public void goNextLevel(){
+
+        GameView v = (GameView)this.findViewById(R.id.gameView1);
+        v.initialBitmap.recycle();
+        v.playingBitmap.recycle();
+        v.destroyDrawingCache();
+        System.gc();
+        Intent intent = new Intent(this, Level1Activity.class);
+        intent.putExtra("SUB_LEVEL","B");
+        startActivity(intent);
+        finish();
+    }
 }

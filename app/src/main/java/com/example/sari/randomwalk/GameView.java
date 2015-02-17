@@ -162,6 +162,12 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
             initialBitmap = Bitmap.createBitmap(playingBitmap, 0, 0, playingBitmap.getWidth(), playingBitmap.getHeight(), null, true);
             bitmapSaved = true;
         }
+        if(!preferences.getBoolean("level1BUnlocked",false) && preferences.getInt("score_1A",0)>1000 && subLevel.equals("A"))
+        {
+            editor.putBoolean("level1BUnlocked",true);
+            editor.commit();
+            parentActivity.goNextLevel();
+        }
     }
 
     @Override
