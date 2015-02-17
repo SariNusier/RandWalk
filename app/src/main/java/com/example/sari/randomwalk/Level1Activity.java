@@ -147,7 +147,6 @@ public class Level1Activity extends ActionBarActivity {
         v.initialBitmap.recycle();
         v.playingBitmap.recycle();
         v.destroyDrawingCache();
-        Log.d("Destroyed!","Destroyed");
         System.gc();
 
     }

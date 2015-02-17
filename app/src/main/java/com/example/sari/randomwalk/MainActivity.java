@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -22,7 +23,14 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SharedPreferences preferences = getSharedPreferences("GAME_DATA",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        if(preferences.getInt("score_1A",0) <= 1000){
+            editor.putBoolean("level1BUnlocked",false);
+        }
+        else
+            editor.putBoolean("level1BUnlocked",true);
 
+        editor.commit();
 
 
     }
@@ -104,9 +112,17 @@ public class MainActivity extends ActionBarActivity {
      */
     public void startLevel1Activity(View view){
         Button button = (Button) view;
-        Intent intent = new Intent(this, Level1Activity.class);
-        intent.putExtra("SUB_LEVEL", button.getText()); //extracts the sublevel from the button that was pressed and sends it to the Level 1 Activity.
-        startActivity(intent);
+        if(button.getText().equals("A") ||(button.getText().equals("B") && getSharedPreferences("GAME_DATA", MODE_PRIVATE).getBoolean("level1BUnlocked", false))) {
+            Intent intent = new Intent(this, Level1Activity.class);
+            intent.putExtra("SUB_LEVEL", button.getText()); //extracts the sublevel from the button that was pressed and sends it to the Level 1 Activity.
+            startActivity(intent);
+        }
+        else
+        {
+            FragmentManager manager = getFragmentManager();
+            LockedDialog dialog = new LockedDialog();
+            dialog.show(manager,"Level 1B Locked");
+        }
     }
 
     /**
