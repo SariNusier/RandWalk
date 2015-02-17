@@ -7,12 +7,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
-import android.graphics.Rect;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -21,10 +17,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+import java.util.ArrayList;
 import java.util.Random;
 
-
-public class GameView2 extends View implements OnTouchListener, SensorEventListener {
+//BEWARE OF THIS CLASS. IT WAS WRITTEN BY A SHIT PROGRAMMER SO DO NOT ENTER. IF YOU WANT TO IMPLEMENT SOMETHING LIKE THIS YOU WOULD BE BETTER OFF CREATING EVERYTHING YOURSELF.
+public class GameView2 extends View implements OnTouchListener {
 
     float start_X, start_Y;
     float X,Y;
@@ -33,12 +30,13 @@ public class GameView2 extends View implements OnTouchListener, SensorEventListe
     int random_X, random_Y;
     int ok = 0;
     int cellCount = 0;
+    int cellsFinished = 0;
     boolean bitmapSaved = false;
     boolean isStarted = false;
     boolean listenTouch = true;
     String subLevel;
     Random rand;
-
+    ArrayList<Point> points;
     Paint paintWalk;
     Canvas canvas;
     Bitmap playingBitmap; //this bitmap stores the game status during play
@@ -58,7 +56,7 @@ public class GameView2 extends View implements OnTouchListener, SensorEventListe
         setFocusable(true);
         setFocusableInTouchMode(true);
         this.setOnTouchListener(this);
-
+        points = new ArrayList<>();
 
 
         /*
@@ -85,13 +83,6 @@ public class GameView2 extends View implements OnTouchListener, SensorEventListe
         dnaImage.setBounds(0,(int)Math.round(metrics.heightPixels/1.4),metrics.widthPixels,metrics.heightPixels);
         dnaImage.draw(canvas);
         subLevel = parentActivity.getSubLevel();
-
-
-        if(!subLevel.equals("A")) {
-            SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-            Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-        }
         paintWalk.setColor(getResources().getColor(R.color.BlueLine)); //set the color of the walk
         paintWalk.setStrokeWidth(3); //sets the width of the walk
         paintWalk.setPathEffect(new DashPathEffect(new float[]{4, 4}, 0)); //sets the dash effect of the walk
@@ -103,37 +94,34 @@ public class GameView2 extends View implements OnTouchListener, SensorEventListe
 
     @Override
     public void onDraw(final Canvas canvas) {
+        ArrayList<Integer> pointsToDelete = new ArrayList<>();
+        for(Point p : points) {
 
-        if ( start_X<=metrics.widthPixels && start_X >= metrics.widthPixels-100 && start_Y>= metrics.heightPixels/2 -50 && start_Y<=metrics.heightPixels/2 + 50) {
-            listenTouch = true;
-            Log.d("HOME", "You are home");
-            editor.putInt(String.format("score_1%s", subLevel), 100 + preferences.getInt(String.format("score_1%s",subLevel),0));
-            editor.commit();
-            parentActivity.updateScore();
-        }
-        else
-            if(start_X >= metrics.widthPixels){
-                listenTouch = true;
-                int score = Math.round((5/Math.abs(start_Y - metrics.heightPixels/2))*1000);
-                Log.d("SCORE","Your score is: "+score);
-                editor.putInt(String.format("score_1%s", subLevel), score + preferences.getInt(String.format("score_1%s", subLevel), 0));
 
-                editor.commit();
-                parentActivity.updateScore();
-            }
-            else
-                if(start_Y <=0 || start_Y >=metrics.heightPixels){
-                    Log.d("OUT OF BOUNDS","OUT OF BOUNDS!");
+            if (p.y <= metrics.heightPixels && p.y >= metrics.heightPixels/16*15 && p.x >= metrics.widthPixels/8*3 && p.x <= metrics.widthPixels/8*5) {
+                cellsFinished++;
+                pointsToDelete.add(points.indexOf(p));
+                if(cellsFinished == cellCount)
                     listenTouch = true;
-                }
-                else
-                    if (isStarted == true) {
-                        drawTick();
-                        //sounds.execute(new Pair<Context, Integer>(this.getContext(),R.raw.background_sound));
-                    }
-        isStarted = true;
+            } else if (p.y > metrics.heightPixels - 100) {
 
+                cellsFinished++;
+                pointsToDelete.add(points.indexOf(p));
+                if(cellsFinished == cellCount)
+                    listenTouch = true;
+            }
+            else if (p.x <= 0 || p.x >= metrics.widthPixels) {
+                Log.d("OUT OF BOUNDS", "OUT OF BOUNDS!");
+                listenTouch = true;
+            } else if (isStarted == true && cellCount == 5) {
+                drawTick(p);
+            }
+            isStarted = true;
 
+        }
+        for(Integer i : pointsToDelete){
+            points.remove(i);
+        }
         canvas.drawBitmap(playingBitmap, 0, 0, paintWalk);
         if(bitmapSaved == false) {
             initialBitmap = Bitmap.createBitmap(playingBitmap, 0, 0, playingBitmap.getWidth(), playingBitmap.getHeight(), null, true);
@@ -142,75 +130,57 @@ public class GameView2 extends View implements OnTouchListener, SensorEventListe
     }
 
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        
+    public boolean onTouchEvent(MotionEvent event) {
         if(listenTouch == true) {
 
-            if (event.getY() <= metrics.heightPixels / 12 && ok < 1) {
+            if (event.getY() <= metrics.heightPixels / 12 && ok < 1 && event.getX() > metrics.widthPixels/4 && event.getX() < metrics.widthPixels/4*3 && MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
                 paintWalk.setColor(getResources().getColor(R.color.BlueLine));
                 cellCount++;
-                if(cellCount == 5)
+                if(cellCount == 5) {
                     ok++;
-                listenTouch = false;
+                    listenTouch = false;
+                }
                 X = event.getX();
                 Y = event.getY();
                 start_Y = metrics.widthPixels/24;
                 start_X = X;
+                points.add(new Point((int)start_X,metrics.widthPixels/24));
                 pirate.setBounds((int)start_X - 66,metrics.heightPixels/24 - 50,(int)start_X + 66,metrics.widthPixels/24 + 50);
-                Log.d("BOUNDS"," "+metrics.widthPixels/12);
                 pirate.draw(canvas);
+
                 invalidate();
 
 
             }
-            else {
+            else if(cellCount == 5) {
                 ok = 0;
                 cellCount = 0;
-                canvas.drawBitmap(initialBitmap,0,0,paintWalk); //restart everything.
-
+                cellsFinished = 0;
+                points = new ArrayList<>();
+                canvas.drawBitmap(initialBitmap,0,0,paintWalk); //restart everything
+                invalidate();
             }
         }
+        Log.d("ON TOUCH EVENT","ON TOUCH EVENT"+event.toString());
         return true;
 
     }
 
     @Override
-    public final void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // Do something here if sensor accuracy changes.
-    }
-    @Override
-    public final void onSensorChanged(SensorEvent event) {
-        // Many sensors return 3 values, one for each axis.
-        float x, y, z;
-        x = event.values[0];
-        drift_X = 0;//x*2;
-        y = event.values[1];
-        drift_Y = y*2;
-        z = event.values[2];
-
+    public boolean onTouch(View v, MotionEvent event) {
+        Log.d("ON TOUCH","ON TOUCH");
+        return false;
     }
 
-    public void drawTick(){
-        /*
-       try {
-            Thread.sleep();
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }*/
-        if(subLevel.equals("A")) {
-            random_X = rand.nextInt(31); //generates two random numbers for X and Y
-            random_Y = rand.nextInt(61)-30;
-        }
-        else
-        {
-            random_X = rand.nextInt(21);
-            random_Y = rand.nextInt(41)-20;
-        }
 
-        canvas.drawLine(start_X, start_Y,start_X+random_X, start_Y + random_Y + drift_Y, paintWalk);
-        start_X = start_X+random_X + drift_X;
-        start_Y = start_Y + random_Y + drift_Y;
+
+    public void drawTick(Point p){
+
+        random_Y = rand.nextInt(31);
+        random_X = rand.nextInt(61)-30;
+        canvas.drawLine(p.x, p.y,p.x+random_X, p.y + random_Y + drift_Y, paintWalk);
+        p.x = p.x + random_X + (int)drift_X;
+        p.y = p.y + random_Y + (int)drift_Y;
         invalidate();
 
 
