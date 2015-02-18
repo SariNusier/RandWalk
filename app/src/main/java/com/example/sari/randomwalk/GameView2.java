@@ -23,14 +23,11 @@ import java.util.Random;
 //BEWARE OF THIS CLASS. IT WAS WRITTEN BY A SHIT PROGRAMMER SO DO NOT ENTER. IF YOU WANT TO IMPLEMENT SOMETHING LIKE THIS YOU WOULD BE BETTER OFF CREATING EVERYTHING YOURSELF.
 public class GameView2 extends View implements OnTouchListener {
 
-    float start_X, start_Y;
-    float X,Y;
-    float drift_X = 0;
-    float drift_Y = 0;
-    int random_X, random_Y;
-    int ok = 0;
+
+    boolean isPlacing = true;
     int cellCount = 0;
     int cellsFinished = 0;
+    int index = 0;
     boolean bitmapSaved = false;
     boolean isStarted = false;
     boolean listenTouch = true;
@@ -42,7 +39,9 @@ public class GameView2 extends View implements OnTouchListener {
     Bitmap playingBitmap; //this bitmap stores the game status during play
     Bitmap initialBitmap; //this bitmap stores the initial, clean state of the screen
     DisplayMetrics metrics;
-    Drawable pirate;
+    Drawable cellPicture;
+    Drawable cellPicture2;
+
 
     Level2Activity parentActivity;
     SharedPreferences preferences;
@@ -73,7 +72,8 @@ public class GameView2 extends View implements OnTouchListener {
         initialBitmap = Bitmap.createBitmap(metrics.widthPixels, metrics.heightPixels, Bitmap.Config.ARGB_8888);
         canvas = new Canvas(playingBitmap); //canvas draw into a bitmap
         canvas.drawColor(Color.parseColor("#c2d5f0")); //sets the color of the background
-        pirate = this.getResources().getDrawable(R.drawable.rsz_pirate); // the pirate arrrr!
+        cellPicture = this.getResources().getDrawable(R.drawable.cell1); // the pirate arrrr!
+        cellPicture2 = this.getResources().getDrawable(R.drawable.cell2);
         Drawable startSurface = this.getResources().getDrawable(R.drawable.start_surface_2);//area where the player starts
         startSurface.setBounds(0,0,metrics.widthPixels,metrics.heightPixels/12);
         startSurface.draw(canvas);
@@ -96,19 +96,23 @@ public class GameView2 extends View implements OnTouchListener {
     public void onDraw(final Canvas canvas) {
         ArrayList<Integer> pointsToDelete = new ArrayList<>();
         for(Point p : points) {
-
-
-            if (p.y <= metrics.heightPixels && p.y >= metrics.heightPixels/16*15 && p.x >= metrics.widthPixels/8*3 && p.x <= metrics.widthPixels/8*5) {
+            if (p.y <= metrics.heightPixels && p.y >= metrics.heightPixels/24*22 && p.x >= metrics.widthPixels/8*3 && p.x <= metrics.widthPixels/8*5) {
                 cellsFinished++;
-                pointsToDelete.add(points.indexOf(p));
-                if(cellsFinished == cellCount)
+                pointsToDelete.add(index);
+                cellPicture2.setBounds(p.x - 25,p.y - 25,p.x + 25,p.y+ 25);Log.d("PIRATE DRAWN","PIRATE DRAWN"+points.size() );
+                cellPicture2.draw(this.canvas);
+
+                if(cellsFinished == cellCount) {
                     listenTouch = true;
-            } else if (p.y > metrics.heightPixels - 100) {
+                }
+            } else if (p.y > metrics.heightPixels/24*22) {
 
                 cellsFinished++;
-                pointsToDelete.add(points.indexOf(p));
-                if(cellsFinished == cellCount)
-                    listenTouch = true;
+                pointsToDelete.add(index);
+                cellPicture2.setBounds(p.x - 25,p.y - 25,p.x + 25,p.y+ 25);
+                cellPicture2.draw(this.canvas);
+                if(cellsFinished == cellCount){
+                    listenTouch = true;Log.d("PIRATE DRAWN!!","PIRATE DRAWN"+points.size());}
             }
             else if (p.x <= 0 || p.x >= metrics.widthPixels) {
                 Log.d("OUT OF BOUNDS", "OUT OF BOUNDS!");
@@ -117,11 +121,12 @@ public class GameView2 extends View implements OnTouchListener {
                 drawTick(p);
             }
             isStarted = true;
-
+            index++;
         }
-        for(Integer i : pointsToDelete){
-            points.remove(i);
+        for(int i =0; i<pointsToDelete.size();i++){
+            points.remove(pointsToDelete.get(i));
         }
+        pointsToDelete = null;
         canvas.drawBitmap(playingBitmap, 0, 0, paintWalk);
         if(bitmapSaved == false) {
             initialBitmap = Bitmap.createBitmap(playingBitmap, 0, 0, playingBitmap.getWidth(), playingBitmap.getHeight(), null, true);
@@ -131,44 +136,21 @@ public class GameView2 extends View implements OnTouchListener {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(listenTouch == true) {
+        if(listenTouch == true && MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
 
-            if (event.getY() <= metrics.heightPixels / 12 && ok < 1 && event.getX() > metrics.widthPixels/4 && event.getX() < metrics.widthPixels/4*3 && MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-                paintWalk.setColor(getResources().getColor(R.color.BlueLine));
-                cellCount++;
-                if(cellCount == 5) {
-                    ok++;
-                    listenTouch = false;
-                }
-                X = event.getX();
-                Y = event.getY();
-                start_Y = metrics.widthPixels/24;
-                start_X = X;
-                points.add(new Point((int)start_X,metrics.widthPixels/24));
-                pirate.setBounds((int)start_X - 66,metrics.heightPixels/24 - 50,(int)start_X + 66,metrics.widthPixels/24 + 50);
-                pirate.draw(canvas);
-
-                invalidate();
-
-
+            if (event.getY() <= metrics.heightPixels / 12 && event.getX() > metrics.widthPixels/4 && event.getX() < metrics.widthPixels/4*3 && isPlacing) {
+                onCellPlaced(event);
             }
             else if(cellCount == 5) {
-                ok = 0;
-                cellCount = 0;
-                cellsFinished = 0;
-                points = new ArrayList<>();
-                canvas.drawBitmap(initialBitmap,0,0,paintWalk); //restart everything
-                invalidate();
+                onStartAgain();
             }
         }
         Log.d("ON TOUCH EVENT","ON TOUCH EVENT"+event.toString());
         return true;
-
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        Log.d("ON TOUCH","ON TOUCH");
         return false;
     }
 
@@ -176,13 +158,56 @@ public class GameView2 extends View implements OnTouchListener {
 
     public void drawTick(Point p){
 
+        int random_X, random_Y;
         random_Y = rand.nextInt(31);
         random_X = rand.nextInt(61)-30;
-        canvas.drawLine(p.x, p.y,p.x+random_X, p.y + random_Y + drift_Y, paintWalk);
-        p.x = p.x + random_X + (int)drift_X;
-        p.y = p.y + random_Y + (int)drift_Y;
+        canvas.drawLine(p.x, p.y,p.x+random_X, p.y + random_Y, paintWalk);
+        p.x = p.x + random_X;
+        p.y = p.y + random_Y;
+        invalidate();
+    }
+
+
+    public void onBegin(){
+
+    }
+    public void onCellPlaced(MotionEvent event){
+
+        paintWalk.setColor(getResources().getColor(R.color.BlueLine));
+        cellCount++;
+        if(cellCount == 5) {
+            isPlacing = false;
+            listenTouch = false;
+        }
+
+        points.add(new Point((int)event.getX(),metrics.widthPixels/12));
+        cellPicture.setBounds((int)event.getX() - 25, metrics.heightPixels/24 - 25,(int)event.getX() + 25, metrics.heightPixels/24 + 25);
+
+        Log.d("event X","Event x:"+(int)event.getX()+" "+metrics.heightPixels/12);
+        cellPicture.draw(canvas);
+
         invalidate();
 
+    }
+
+    /**
+     * Restart everything
+     */
+    public void onStartAgain(){
+        isPlacing = true;
+        cellCount = 0;
+        index = 0;
+        cellsFinished = 0;
+        points = new ArrayList<>();
+        canvas.drawBitmap(initialBitmap,0,0,paintWalk);
+        invalidate();
+    }
+
+    public void onWalkStarted(){
+
+    }
+
+    public void onWalkFinished(){
 
     }
 
