@@ -41,6 +41,7 @@ public class GameView2 extends View implements OnTouchListener {
     DisplayMetrics metrics;
     Drawable cellPicture;
     Drawable cellPicture2;
+    Drawable cellPicture3;
 
 
     Level2Activity parentActivity;
@@ -74,14 +75,20 @@ public class GameView2 extends View implements OnTouchListener {
         canvas.drawColor(Color.parseColor("#c2d5f0")); //sets the color of the background
         cellPicture = this.getResources().getDrawable(R.drawable.cell1); // the pirate arrrr!
         cellPicture2 = this.getResources().getDrawable(R.drawable.cell2);
+        cellPicture3 = this.getResources().getDrawable(R.drawable.cell3);
+        Drawable dnaImage = this.getResources().getDrawable(R.drawable.dna);
+        dnaImage.setBounds(0,(int)Math.round(metrics.heightPixels/1.4),metrics.widthPixels,metrics.heightPixels);
+        dnaImage.draw(canvas);
+        Drawable leftSide = this.getResources().getDrawable(R.drawable.left_side_2);
+        Drawable rightSide = this.getResources().getDrawable(R.drawable.right_side_2);
+        leftSide.setBounds(0,metrics.heightPixels/12,metrics.widthPixels/4,(int)Math.round(metrics.heightPixels/1.4));
+        rightSide.setBounds(metrics.widthPixels/4*3,metrics.heightPixels/12,metrics.widthPixels,(int)Math.round(metrics.heightPixels/1.4));
+        rightSide.draw(canvas);
+        leftSide.draw(canvas);
         Drawable startSurface = this.getResources().getDrawable(R.drawable.start_surface_2);//area where the player starts
         startSurface.setBounds(0,0,metrics.widthPixels,metrics.heightPixels/12);
         startSurface.draw(canvas);
 
-        Drawable dnaImage = this.getResources().getDrawable(R.drawable.dna);
-
-        dnaImage.setBounds(0,(int)Math.round(metrics.heightPixels/1.4),metrics.widthPixels,metrics.heightPixels);
-        dnaImage.draw(canvas);
         subLevel = parentActivity.getSubLevel();
         paintWalk.setColor(getResources().getColor(R.color.BlueLine)); //set the color of the walk
         paintWalk.setStrokeWidth(3); //sets the width of the walk
@@ -89,42 +96,49 @@ public class GameView2 extends View implements OnTouchListener {
         paintWalk.setStyle(Paint.Style.STROKE);
 
 
-
     }
 
     @Override
     public void onDraw(final Canvas canvas) {
-        ArrayList<Integer> pointsToDelete = new ArrayList<>();
+        ArrayList<Point> pointsToDelete = new ArrayList<>();
         for(Point p : points) {
             if (p.y <= metrics.heightPixels && p.y >= metrics.heightPixels/24*22 && p.x >= metrics.widthPixels/8*3 && p.x <= metrics.widthPixels/8*5) {
                 cellsFinished++;
-                pointsToDelete.add(index);
+                pointsToDelete.add(p);
                 cellPicture2.setBounds(p.x - 25,p.y - 25,p.x + 25,p.y+ 25);Log.d("PIRATE DRAWN","PIRATE DRAWN"+points.size() );
                 cellPicture2.draw(this.canvas);
 
+                if(Math.random()<=0.5){
+                    int randPosition;
+                    if(p.x <= metrics.widthPixels/2)
+                        randPosition = rand.nextInt(metrics.widthPixels/4);
+                    else
+                        randPosition = (metrics.widthPixels/4*3) + rand.nextInt(metrics.widthPixels/4);
+                    cellPicture3.setBounds(randPosition - 41,metrics.heightPixels/24*22 - 28,randPosition + 41,metrics.heightPixels/24*22 + 28);
+                    cellPicture3.draw(this.canvas);
+                }
                 if(cellsFinished == cellCount) {
                     listenTouch = true;
                 }
             } else if (p.y > metrics.heightPixels/24*22) {
 
                 cellsFinished++;
-                pointsToDelete.add(index);
+                pointsToDelete.add(p);
                 cellPicture2.setBounds(p.x - 25,p.y - 25,p.x + 25,p.y+ 25);
                 cellPicture2.draw(this.canvas);
                 if(cellsFinished == cellCount){
                     listenTouch = true;Log.d("PIRATE DRAWN!!","PIRATE DRAWN"+points.size());}
             }
-            else if (p.x <= 0 || p.x >= metrics.widthPixels) {
-                Log.d("OUT OF BOUNDS", "OUT OF BOUNDS!");
-                listenTouch = true;
-            } else if (isStarted == true && cellCount == 5) {
+
+
+             else if (isStarted == true && cellCount == 5) {
                 drawTick(p);
             }
             isStarted = true;
             index++;
         }
-        for(int i =0; i<pointsToDelete.size();i++){
-            points.remove(pointsToDelete.get(i));
+        for(Point p : pointsToDelete){
+            points.remove(p);
         }
         pointsToDelete = null;
         canvas.drawBitmap(playingBitmap, 0, 0, paintWalk);
@@ -157,13 +171,24 @@ public class GameView2 extends View implements OnTouchListener {
 
 
     public void drawTick(Point p){
-
         int random_X, random_Y;
         random_Y = rand.nextInt(31);
         random_X = rand.nextInt(61)-30;
-        canvas.drawLine(p.x, p.y,p.x+random_X, p.y + random_Y, paintWalk);
-        p.x = p.x + random_X;
-        p.y = p.y + random_Y;
+        if (p.x + random_X <= metrics.widthPixels/4){  // || p.x >= metrics.widthPixels/4*3) {
+            Log.d("OUT OF BOUNDS", "OUT OF BOUNDS!");
+            canvas.drawLine(p.x,p.y,metrics.widthPixels/4,p.y+random_Y/2,paintWalk);
+            canvas.drawLine(metrics.widthPixels/4,p.y+random_Y/2,p.x,p.y+random_Y,paintWalk);
+            p.y = p.y + random_Y;
+        } else if(p.x + random_X >= metrics.widthPixels/4*3){
+            Log.d("OUT OF BOUNDS", "OUT OF BOUNDS!");
+            canvas.drawLine(p.x,p.y,metrics.widthPixels/4*3,p.y+random_Y/2,paintWalk);
+            canvas.drawLine(metrics.widthPixels/4*3,p.y+random_Y/2,p.x,p.y+random_Y,paintWalk);
+            p.y = p.y + random_Y;
+        } else {
+            canvas.drawLine(p.x, p.y, p.x + random_X, p.y + random_Y, paintWalk);
+            p.x = p.x + random_X;
+            p.y = p.y + random_Y;
+        }
         invalidate();
     }
 
