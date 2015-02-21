@@ -27,6 +27,9 @@
     expression products(e.g. proteins) as "noise", regardless of the source. They call "extrinsic"
      the noise due to microscopic cell-to-cell differences of environment and history, "intrinsic" the
     one due to random fluctuations."</string>
+    <string name="level2A_text">
+        Marvellous! You have just seen how random walks at the cell level contribute to differences in gene expression. Adding up all these microscopic events, through a chain of connected biochemical processes, may give rise macroscopically to variability among parrots, for example in their feathers\' coloration patters.\n\nNow you can play again, with a new set of TFs, or go to the next level.
+    </string>
 
     <color name="Level1">#F1D495</color>
     <color name="Level2">#91C8C2</color>

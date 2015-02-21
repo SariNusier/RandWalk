@@ -1,6 +1,8 @@
 package com.example.sari.randomwalk;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,7 +10,9 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 
 public class Level2Animation extends Activity {
@@ -24,7 +28,9 @@ public class Level2Animation extends Activity {
         animation.setRight(metrics.widthPixels);
         animation.setBottom(metrics.heightPixels);
         rocketAnimation = (AnimationDrawable) animation.getBackground();
-
+        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/goudy.ttf");
+        TextView v =(TextView) findViewById(R.id.textView_feather);
+        v.setTypeface(tf,Typeface.BOLD);
         rocketAnimation.start();
         new Thread(){
             @Override
@@ -44,7 +50,11 @@ public class Level2Animation extends Activity {
         }.start();
 
     }
-
+    public void startLevel2Activity(View view){
+        Intent intent = new Intent(this, Level2Activity.class);
+        startActivity(intent);
+        this.finish();
+    }
 
 
 }

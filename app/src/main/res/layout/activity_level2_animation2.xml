@@ -13,15 +13,34 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/animation_view">
+        android:layout_above="@id/animation_view"
+        android:background="@drawable/animation_frame_17">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-     <TextView
+        <TextView
+         android:id="@+id/textView_feather"
          android:layout_width="match_parent"
          android:layout_height="match_parent"
-         android:text="HAHAHHAHAHAHAHHAHAHAHSHDASDASDASDASDALKSDJALKSJDLAKSJDLKASJDLKASJDLKASJDLKAJSDLKASJDLKAJSDLKAJSDLKAJSLDKJASLKDJALKSJDLAKSJDLKASHAHAHHAHAHAHAHHAHAHAHSHDASDASDASDASDALKSDJALKSJDLAKSJDLKASJDLKASJDLKASJDLKAJSDLKASJDLKAJSDLKAJSDLKAJSLDKJASLKDJALKSJDLAKSJDLKASJDHAHAHHAHAHAHAHHAHAHAHSHDASDASDASDASDALKSDJALKSJDLAKSJDLKASJDLKASJDLKASJDLKAJSDLKASJDLKAJSDLKAJSDLKAJSLDKJASLKDJALKSJDLAKSJDLKASJDHAHAHHAHAHAHAHHAHAHAHSHDASDASDASDASDALKSDJALKSJDLAKSJDLKASJDLKASJDLKASJDLKAJSDLKASJDLKAJSDLKAJSDLKAJSLDKJASLKDJALKSJDLAKSJDLKASJDJD"
-         android:background="@drawable/animation_frame_17"
+         android:padding="10dp"
+         android:textSize="30dp"
+         android:text="@string/level2A_text"
+         android:textColor="#ffffff"
          />
 
+    </ScrollView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:layout_gravity="right"
+            android:background="@drawable/ic_action_forward"
+            android:onClick="startLevel2Activity"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 
