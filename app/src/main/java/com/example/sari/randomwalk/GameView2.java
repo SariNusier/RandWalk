@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
@@ -26,14 +27,15 @@ public class GameView2 extends View implements OnTouchListener {
 
     boolean isPlacing = true;
     int cellCount = 0;
-    int cellsFinished = 0;
-    int index = 0;
+    int cellToDraw = 0;
+    float numTF = 0.0f;
     boolean bitmapSaved = false;
     boolean isStarted = false;
     boolean listenTouch = true;
     String subLevel;
     Random rand;
     ArrayList<Point> points;
+    ArrayList<Rect> mRNA;
     Paint paintWalk;
     Canvas canvas;
     Bitmap playingBitmap; //this bitmap stores the game status during play
@@ -57,7 +59,7 @@ public class GameView2 extends View implements OnTouchListener {
         setFocusableInTouchMode(true);
         this.setOnTouchListener(this);
         points = new ArrayList<>();
-
+        mRNA = new ArrayList<>();
 
         /*
         <===== INITIALISATIONS =====>
@@ -97,50 +99,47 @@ public class GameView2 extends View implements OnTouchListener {
 
 
     }
-
+        // 2
     @Override
     public void onDraw(final Canvas canvas) {
-        ArrayList<Point> pointsToDelete = new ArrayList<>();
         for(Point p : points) {
+            if(p.equals(points.get(cellToDraw)))
             if (p.y <= metrics.heightPixels && p.y >= metrics.heightPixels/24*22 && p.x >= metrics.widthPixels/8*3 && p.x <= metrics.widthPixels/8*5) {
-                cellsFinished++;
-                pointsToDelete.add(p);
                 cellPicture2.setBounds(p.x - 25,p.y - 25,p.x + 25,p.y+ 25);Log.d("PIRATE DRAWN","PIRATE DRAWN"+points.size() );
                 cellPicture2.draw(this.canvas);
+                cellToDraw++;
+                numTF++;
+                float probability = numTF/(numTF +1);
+                Log.d("CellToDRAW","Cell index: "+probability );
 
-                if(Math.random()<=0.5){
+                if(Math.random()<=probability){
                     int randPosition;
                     if(p.x <= metrics.widthPixels/2)
                         randPosition = rand.nextInt(metrics.widthPixels/4);
                     else
                         randPosition = (metrics.widthPixels/4*3) + rand.nextInt(metrics.widthPixels/4);
+                    
                     cellPicture3.setBounds(randPosition - 41,metrics.heightPixels/24*22 - 28,randPosition + 41,metrics.heightPixels/24*22 + 28);
                     cellPicture3.draw(this.canvas);
+
                 }
-                if(cellsFinished == cellCount) {
+                if(cellToDraw == cellCount) {
                     listenTouch = true;
                 }
             } else if (p.y > metrics.heightPixels/24*22) {
-
-                cellsFinished++;
-                pointsToDelete.add(p);
-                cellPicture2.setBounds(p.x - 25,p.y - 25,p.x + 25,p.y+ 25);
-                cellPicture2.draw(this.canvas);
-                if(cellsFinished == cellCount){
+                cellToDraw++;
+                Log.d("CellToDRAW","Cell index: "+cellToDraw);
+                cellPicture.setBounds(p.x - 25,p.y - 25,p.x + 25,p.y+ 25);
+                cellPicture.draw(this.canvas);
+                if(cellToDraw == cellCount){
                     listenTouch = true;Log.d("PIRATE DRAWN!!","PIRATE DRAWN"+points.size());}
             }
-
-
-             else if (isStarted == true && cellCount == 5) {
+             else if (isStarted == true && cellCount == 10 && points.get(cellToDraw).equals(p)) {
                 drawTick(p);
             }
             isStarted = true;
-            index++;
         }
-        for(Point p : pointsToDelete){
-            points.remove(p);
-        }
-        pointsToDelete = null;
+
         canvas.drawBitmap(playingBitmap, 0, 0, paintWalk);
         if(bitmapSaved == false) {
             initialBitmap = Bitmap.createBitmap(playingBitmap, 0, 0, playingBitmap.getWidth(), playingBitmap.getHeight(), null, true);
@@ -155,7 +154,7 @@ public class GameView2 extends View implements OnTouchListener {
             if (event.getY() <= metrics.heightPixels / 12 && event.getX() > metrics.widthPixels/4 && event.getX() < metrics.widthPixels/4*3 && isPlacing) {
                 onCellPlaced(event);
             }
-            else if(cellCount == 5) {
+            else if(cellCount == 10) {
                 onStartAgain();
             }
         }
@@ -168,19 +167,15 @@ public class GameView2 extends View implements OnTouchListener {
         return false;
     }
 
-
-
     public void drawTick(Point p){
         int random_X, random_Y;
         random_Y = rand.nextInt(31);
         random_X = rand.nextInt(61)-30;
         if (p.x + random_X <= metrics.widthPixels/4){  // || p.x >= metrics.widthPixels/4*3) {
-            Log.d("OUT OF BOUNDS", "OUT OF BOUNDS!");
             canvas.drawLine(p.x,p.y,metrics.widthPixels/4,p.y+random_Y/2,paintWalk);
             canvas.drawLine(metrics.widthPixels/4,p.y+random_Y/2,p.x,p.y+random_Y,paintWalk);
             p.y = p.y + random_Y;
         } else if(p.x + random_X >= metrics.widthPixels/4*3){
-            Log.d("OUT OF BOUNDS", "OUT OF BOUNDS!");
             canvas.drawLine(p.x,p.y,metrics.widthPixels/4*3,p.y+random_Y/2,paintWalk);
             canvas.drawLine(metrics.widthPixels/4*3,p.y+random_Y/2,p.x,p.y+random_Y,paintWalk);
             p.y = p.y + random_Y;
@@ -200,7 +195,7 @@ public class GameView2 extends View implements OnTouchListener {
 
         paintWalk.setColor(getResources().getColor(R.color.BlueLine));
         cellCount++;
-        if(cellCount == 5) {
+        if(cellCount == 10) {
             isPlacing = false;
             listenTouch = false;
         }
@@ -221,8 +216,8 @@ public class GameView2 extends View implements OnTouchListener {
     public void onStartAgain(){
         isPlacing = true;
         cellCount = 0;
-        index = 0;
-        cellsFinished = 0;
+        cellToDraw = 0;
+        numTF = 0.0f;
         points = new ArrayList<>();
         canvas.drawBitmap(initialBitmap,0,0,paintWalk);
         invalidate();

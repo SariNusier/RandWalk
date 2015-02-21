@@ -135,4 +135,9 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
+    public void startAnimation(View view){
+        Intent intent = new Intent(this, Level2Animation.class);
+        startActivity(intent);
+    }
+
 }
