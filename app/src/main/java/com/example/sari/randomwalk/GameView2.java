@@ -170,7 +170,7 @@ public class GameView2 extends View implements OnTouchListener {
 
     public void drawTick(Point p){
         int random_X, random_Y;
-        random_Y = rand.nextInt(100);
+        random_Y = rand.nextInt(31);
         random_X = rand.nextInt(61)-30;
         if (p.x + random_X <= metrics.widthPixels/4){  // || p.x >= metrics.widthPixels/4*3) {
             canvas.drawLine(p.x,p.y,metrics.widthPixels/4,p.y+random_Y/2,paintWalk);
