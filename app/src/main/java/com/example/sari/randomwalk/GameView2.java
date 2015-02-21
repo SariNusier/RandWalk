@@ -109,16 +109,17 @@ public class GameView2 extends View implements OnTouchListener {
                 cellPicture2.draw(this.canvas);
                 cellToDraw++;
                 numTF++;
-                float probability = numTF/(numTF +1);
+                float probability = numTF/(numTF +3);
                 Log.d("CellToDRAW","Cell index: "+probability );
-
                 if(Math.random()<=probability){
                     int randPosition;
-                    if(p.x <= metrics.widthPixels/2)
-                        randPosition = rand.nextInt(metrics.widthPixels/4);
+
+                    if(p.x <= metrics.widthPixels/2) {
+                        randPosition = 41 + rand.nextInt(metrics.widthPixels / 4 - 41);
+                    }
                     else
-                        randPosition = (metrics.widthPixels/4*3) + rand.nextInt(metrics.widthPixels/4);
-                    
+                        randPosition = (metrics.widthPixels/4*3) + rand.nextInt(metrics.widthPixels/4-41);
+
                     cellPicture3.setBounds(randPosition - 41,metrics.heightPixels/24*22 - 28,randPosition + 41,metrics.heightPixels/24*22 + 28);
                     cellPicture3.draw(this.canvas);
 
@@ -169,7 +170,7 @@ public class GameView2 extends View implements OnTouchListener {
 
     public void drawTick(Point p){
         int random_X, random_Y;
-        random_Y = rand.nextInt(31);
+        random_Y = rand.nextInt(100);
         random_X = rand.nextInt(61)-30;
         if (p.x + random_X <= metrics.widthPixels/4){  // || p.x >= metrics.widthPixels/4*3) {
             canvas.drawLine(p.x,p.y,metrics.widthPixels/4,p.y+random_Y/2,paintWalk);

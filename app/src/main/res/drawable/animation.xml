@@ -16,5 +16,5 @@
     <item android:drawable="@drawable/animation_frame_14" android:duration="150" />
     <item android:drawable="@drawable/animation_frame_15" android:duration="150" />
     <item android:drawable="@drawable/animation_frame_16" android:duration="150" />
-    <item android:drawable="@drawable/animation_frame_17" android:duration="150" />
+    <item android:drawable="@drawable/animation_frame_17" android:duration="250" />
 </animation-list>

@@ -146,7 +146,7 @@
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:background="@drawable/round_button2"
-                android:onClick="startLevel2Activity" />
+                android:onClick="startAnimation" />
 
             <Button
                 android:layout_width="wrap_content"
