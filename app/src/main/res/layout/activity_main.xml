@@ -160,7 +160,7 @@
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:background="@drawable/round_button2"
-                android:onClick="startAnimation"
+                android:onClick="showDevelopmentDialog"
                 android:nestedScrollingEnabled="false" />
 
             <Button
