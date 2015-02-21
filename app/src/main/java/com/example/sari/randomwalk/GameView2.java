@@ -2,6 +2,7 @@ package com.example.sari.randomwalk;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.gesture.GestureOverlayView;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -14,6 +15,7 @@ import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -44,7 +46,7 @@ public class GameView2 extends View implements OnTouchListener {
     Drawable cellPicture;
     Drawable cellPicture2;
     Drawable cellPicture3;
-
+    GestureDetector gd;
 
     Level2Activity parentActivity;
     SharedPreferences preferences;
@@ -64,6 +66,7 @@ public class GameView2 extends View implements OnTouchListener {
         /*
         <===== INITIALISATIONS =====>
          */
+
         paintWalk = new Paint(); //construct paint for drawing path/walk
         rand = new Random();
         parentActivity =(Level2Activity) context; //casts the context as a Level1Activity to use updateScore()
@@ -90,14 +93,12 @@ public class GameView2 extends View implements OnTouchListener {
         Drawable startSurface = this.getResources().getDrawable(R.drawable.start_surface_2);//area where the player starts
         startSurface.setBounds(0,0,metrics.widthPixels,metrics.heightPixels/12);
         startSurface.draw(canvas);
-
         subLevel = parentActivity.getSubLevel();
         paintWalk.setColor(getResources().getColor(R.color.BlueLine)); //set the color of the walk
         paintWalk.setStrokeWidth(3); //sets the width of the walk
         paintWalk.setPathEffect(new DashPathEffect(new float[]{4, 4}, 0)); //sets the dash effect of the walk
         paintWalk.setStyle(Paint.Style.STROKE);
-
-
+        gd = new GestureDetector(new GestureListener());
     }
         // 2
     @Override
@@ -133,9 +134,10 @@ public class GameView2 extends View implements OnTouchListener {
                 cellPicture.setBounds(p.x - 25,p.y - 25,p.x + 25,p.y+ 25);
                 cellPicture.draw(this.canvas);
                 if(cellToDraw == cellCount){
-                    listenTouch = true;Log.d("PIRATE DRAWN!!","PIRATE DRAWN"+points.size());}
+                    listenTouch = true;
+                }
             }
-             else if (isStarted == true && cellCount == 10 && points.get(cellToDraw).equals(p)) {
+             else if (isStarted == true && (cellCount == 10 || !isPlacing) && points.get(cellToDraw).equals(p)) {
                 drawTick(p);
             }
             isStarted = true;
@@ -150,17 +152,8 @@ public class GameView2 extends View implements OnTouchListener {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(listenTouch == true && MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
 
-            if (event.getY() <= metrics.heightPixels / 12 && event.getX() > metrics.widthPixels/4 && event.getX() < metrics.widthPixels/4*3 && isPlacing) {
-                onCellPlaced(event);
-            }
-            else if(cellCount == 10) {
-                onStartAgain();
-            }
-        }
-        Log.d("ON TOUCH EVENT","ON TOUCH EVENT"+event.toString());
-        return true;
+        return gd.onTouchEvent(event);
     }
 
     @Override
@@ -192,6 +185,7 @@ public class GameView2 extends View implements OnTouchListener {
     public void onBegin(){
 
     }
+
     public void onCellPlaced(MotionEvent event){
 
         paintWalk.setColor(getResources().getColor(R.color.BlueLine));
@@ -204,7 +198,6 @@ public class GameView2 extends View implements OnTouchListener {
         points.add(new Point((int)event.getX(),metrics.widthPixels/12));
         cellPicture.setBounds((int)event.getX() - 25, metrics.heightPixels/24 - 25,(int)event.getX() + 25, metrics.heightPixels/24 + 25);
 
-        Log.d("event X","Event x:"+(int)event.getX()+" "+metrics.heightPixels/12);
         cellPicture.draw(canvas);
 
         invalidate();
@@ -229,6 +222,37 @@ public class GameView2 extends View implements OnTouchListener {
     }
 
     public void onWalkFinished(){
+
+    }
+
+    private class GestureListener extends GestureDetector.SimpleOnGestureListener{
+
+        @Override
+        public boolean onDown(MotionEvent event) {
+            if(listenTouch == true && MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
+
+                if (event.getY() <= metrics.heightPixels / 12 && event.getX() > metrics.widthPixels/4 && event.getX() < metrics.widthPixels/4*3 && isPlacing) {
+                    onCellPlaced(event);
+                }
+
+                else if(cellCount == cellToDraw) {
+                    onStartAgain();
+                    return false;
+                }
+            }
+            return true;
+        }
+        // event when double tap occurs
+        @Override
+        public boolean onDoubleTap(MotionEvent event) {
+            Log.d("DOUBLE","DOUBLE CLICK");
+            if(cellCount >= 3 && event.getY() > metrics.heightPixels / 12 && listenTouch && isPlacing){
+                isPlacing = false;
+                invalidate();
+            }
+
+            return true;
+        }
 
     }
 
