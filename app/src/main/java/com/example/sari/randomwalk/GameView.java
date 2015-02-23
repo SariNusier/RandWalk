@@ -50,6 +50,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
     Bitmap initialBitmap; //this bitmap stores the initial, clean state of the screen
     DisplayMetrics metrics;
     Drawable pirate;
+    int currentScore;
 
     Level1Activity parentActivity;
     SharedPreferences preferences;
@@ -85,6 +86,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
         Drawable startSurface = this.getResources().getDrawable(R.drawable.start_surface);//area where the player starts
         startSurface.setBounds(0,0,metrics.widthPixels/6,metrics.heightPixels);
         startSurface.draw(canvas);
+        currentScore = preferences.getInt("score_1A",0);
         boat = this.getResources().getDrawable(R.drawable.boat); // just boat
         subLevel = parentActivity.getSubLevel();
         Rect boundsBoatA;
@@ -162,11 +164,11 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
             initialBitmap = Bitmap.createBitmap(playingBitmap, 0, 0, playingBitmap.getWidth(), playingBitmap.getHeight(), null, true);
             bitmapSaved = true;
         }
-        if(!preferences.getBoolean("level1BUnlocked",false) && preferences.getInt("score_1A",0)>1000 && subLevel.equals("A"))
+        if((!preferences.getBoolean("level1BUnlocked",false) && preferences.getInt("score_1A",0)>1000 && subLevel.equals("A")) || preferences.getInt("score_1A",0)-currentScore >= 1000)
         {
             editor.putBoolean("level1BUnlocked",true);
             editor.commit();
-            parentActivity.goNextLevel();
+            parentActivity.endLevel();
         }
     }
 

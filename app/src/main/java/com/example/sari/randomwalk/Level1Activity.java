@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,11 +13,13 @@ import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class Level1Activity extends ActionBarActivity {
 
     static TextView textView, textViewIntro;
+    static ImageView imageView;
     static SharedPreferences preferences;
     static String subLevel;
     int clickCounter;
@@ -37,13 +40,16 @@ public class Level1Activity extends ActionBarActivity {
         preferences = getSharedPreferences("GAME_DATA", MODE_PRIVATE);
         textView = (TextView) findViewById(R.id.scoreText);
         textViewIntro = (TextView) findViewById(R.id.textView_intro_level1A);
+        imageView = (ImageView) findViewById(R.id.level1a_tutorial_imageView);
         Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/goudy.ttf");
         textViewIntro.setTypeface(typeface);
         clickCounter = 0;
         updateScore();
+
         if(subLevel.equals("B"))
         {
-
+            Drawable d = getResources().getDrawable(R.drawable.level1b_tutorial);
+            imageView.setBackground(d);
         }
 
 
@@ -150,14 +156,17 @@ public class Level1Activity extends ActionBarActivity {
         System.gc();
 
     }
-
-    public void goNextLevel(){
-
+    public void endLevel(){
         GameView v = (GameView)this.findViewById(R.id.gameView1);
+        View v1 = findViewById(R.id.level1_mainlayout);
         v.initialBitmap.recycle();
         v.playingBitmap.recycle();
         v.destroyDrawingCache();
         System.gc();
+        v1.setVisibility(View.GONE);
+    }
+    public void goNextLevel(View view){
+
         Intent intent = new Intent(this, Level1Activity.class);
         intent.putExtra("SUB_LEVEL","B");
         startActivity(intent);

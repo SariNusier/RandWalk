@@ -46,6 +46,7 @@ public class GameView2 extends View implements OnTouchListener {
     Drawable cellPicture;
     Drawable cellPicture2;
     Drawable cellPicture3;
+    Drawable walkFinished;
     GestureDetector gd;
 
     Level2Activity parentActivity;
@@ -91,6 +92,8 @@ public class GameView2 extends View implements OnTouchListener {
         rightSide.draw(canvas);
         leftSide.draw(canvas);
         Drawable startSurface = this.getResources().getDrawable(R.drawable.start_surface_2);//area where the player starts
+        walkFinished = this.getResources().getDrawable(R.drawable.level2a_final);
+        walkFinished.setBounds(0,0,metrics.widthPixels,metrics.heightPixels);
         startSurface.setBounds(0,0,metrics.widthPixels,metrics.heightPixels/12);
         startSurface.draw(canvas);
         subLevel = parentActivity.getSubLevel();
@@ -126,6 +129,7 @@ public class GameView2 extends View implements OnTouchListener {
 
                 }
                 if(cellToDraw == cellCount) {
+                    walkFinished.draw(this.canvas);
                     listenTouch = true;
                 }
             } else if (p.y > metrics.heightPixels/24*22) {
@@ -134,6 +138,7 @@ public class GameView2 extends View implements OnTouchListener {
                 cellPicture.setBounds(p.x - 25,p.y - 25,p.x + 25,p.y+ 25);
                 cellPicture.draw(this.canvas);
                 if(cellToDraw == cellCount){
+                    walkFinished.draw(this.canvas);
                     listenTouch = true;
                 }
             }

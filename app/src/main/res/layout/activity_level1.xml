@@ -5,61 +5,102 @@
 
     tools:context="com.example.sari.randomwalk.Level1Activity" >
 
-    <LinearLayout android:id="@+id/level1_guide_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/rsz_level1_intro_background"
-        android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/level1_mainlayout">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/level1_guide_layout"
+            android:orientation="vertical">
 
-            android:layout_weight="1">
+            <com.example.sari.randomwalk.GameView
+                android:id="@+id/gameView1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-            <ScrollView android:id="@+id/level1_guide_scrollView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+        </LinearLayout>
 
-                android:layout_weight="1"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp" >
+        <LinearLayout android:id="@+id/level1_guide_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rsz_level1_intro_background"
+            android:orientation="vertical" >
 
-                <TextView android:id="@+id/textView_intro_level1A"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ScrollView android:id="@+id/level1_guide_scrollView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="13dp"
-                    android:text="@string/intro_level1A"
-                    android:textSize="20dp" />
 
-            </ScrollView>
+                    android:layout_weight="1"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp" >
 
-        </RelativeLayout>
+                    <TextView android:id="@+id/textView_intro_level1A"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13dp"
+                        android:text="@string/intro_level1A"
+                        android:textSize="20dp" />
 
+
+
+                </ScrollView>
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/level1_guide_scrollView"
+                    android:id="@+id/level1a_tutorial_imageView"
+                    android:background="@drawable/level1a_tutorial" />
+            </RelativeLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:layout_gravity="right"
+                android:background="@drawable/ic_action_forward"
+                android:onClick="nextPage"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/level1_mainlayout">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/level1a_final"
+            android:layout_weight="1"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.1"
             android:layout_gravity="right"
-            android:background="@drawable/ic_action_forward"
-            android:onClick="nextPage"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:background="@drawable/ic_action_forward"
+            android:layout_weight="0.1"
+            android:onClick="goNextLevel"
             android:layout_alignParentEnd="true" />
+        </LinearLayout>
+    </RelativeLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/level1_guide_layout"
-        android:orientation="vertical">
-
-        <com.example.sari.randomwalk.GameView
-            android:id="@+id/gameView1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
 
 </RelativeLayout>
