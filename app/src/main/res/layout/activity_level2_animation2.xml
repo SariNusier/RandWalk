@@ -1,23 +1,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/beach"
     tools:context="com.example.sari.randomwalk.Level2Animation">
 
-    <View
-        android:id="@+id/animation_view"
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/animation"/>
+        android:id="@+id/animation_view_layout"
+        android:background="@drawable/beach">
+
+        <View
+            android:id="@+id/animation_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/animation"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/animation_view"
-        android:background="@drawable/animation_frame_17">
+        android:layout_above="@id/animation_view_layout"
+        android:background="@drawable/animation_frame_17"
+        android:id="@+id/textView_feather_layout">
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <TextView
          android:id="@+id/textView_feather"
@@ -31,17 +40,35 @@
 
     </ScrollView>
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/textView_feather_layout">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/level2a_intro"
+        />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/animation_view_layout">
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.1"
             android:layout_gravity="right"
             android:background="@drawable/ic_action_forward"
-            android:onClick="startLevel2Activity"
+            android:onClick="onButtonClick"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
-
     </RelativeLayout>
 
 </RelativeLayout>

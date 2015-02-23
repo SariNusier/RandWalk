@@ -17,14 +17,16 @@ import android.widget.TextView;
 
 public class Level2Animation extends Activity {
     AnimationDrawable rocketAnimation;
+    int clickCounter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level2_animation2);
         DisplayMetrics metrics = new DisplayMetrics();
         final View animation = findViewById(R.id.animation_view);
+        final View animationLayout = findViewById(R.id.animation_view_layout);
         //rocketImage.setBackgroundResource(R.drawable.animation);
-
+        clickCounter = 0;
         animation.setRight(metrics.widthPixels);
         animation.setBottom(metrics.heightPixels);
         rocketAnimation = (AnimationDrawable) animation.getBackground();
@@ -41,6 +43,7 @@ public class Level2Animation extends Activity {
                         @Override
                         public void run() {
                             animation.setVisibility(View.GONE);
+                            animationLayout.setVisibility(View.GONE);
                         }
                     });
                 } catch (InterruptedException e) {
@@ -54,6 +57,19 @@ public class Level2Animation extends Activity {
         Intent intent = new Intent(this, Level2Activity.class);
         startActivity(intent);
         this.finish();
+    }
+
+    public void onButtonClick(View v){
+        View animationView = findViewById(R.id.textView_feather_layout);
+        if(clickCounter == 0){
+            clickCounter++;
+            animationView.setVisibility(View.GONE);
+        }
+        else
+        {
+            startLevel2Activity(v);
+            clickCounter--;
+        }
     }
 
 
