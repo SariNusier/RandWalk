@@ -54,12 +54,6 @@
                 </ScrollView>
 
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_above="@+id/level1_guide_scrollView"
-                    android:id="@+id/level1a_tutorial_imageView"
-                    android:background="@drawable/level1a_tutorial" />
             </RelativeLayout>
 
             <Button

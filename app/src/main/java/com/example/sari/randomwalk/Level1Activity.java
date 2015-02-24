@@ -40,7 +40,7 @@ public class Level1Activity extends ActionBarActivity {
         preferences = getSharedPreferences("GAME_DATA", MODE_PRIVATE);
         textView = (TextView) findViewById(R.id.scoreText);
         textViewIntro = (TextView) findViewById(R.id.textView_intro_level1A);
-        imageView = (ImageView) findViewById(R.id.level1a_tutorial_imageView);
+       // imageView = (ImageView) findViewById(R.id.level1a_tutorial_imageView);
         Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/goudy.ttf");
         textViewIntro.setTypeface(typeface);
         clickCounter = 0;
@@ -48,8 +48,9 @@ public class Level1Activity extends ActionBarActivity {
 
         if(subLevel.equals("B"))
         {
-            Drawable d = getResources().getDrawable(R.drawable.level1b_tutorial);
-            imageView.setBackground(d);
+            // Drawable d = getResources().getDrawable(R.drawable.level1b_tutorial);
+//            imageView.setBackground(d);
+            textViewIntro.setText(R.string.intro_level1B);
         }
 
 
@@ -93,7 +94,11 @@ public class Level1Activity extends ActionBarActivity {
 
         if(clickCounter == 0){
             scrollView.setVisibility(View.GONE);
-            layout.setBackgroundColor(Color.WHITE);
+            //layout.setBackgroundColor(Color.WHITE);
+            if(subLevel.equals("A"))
+                layout.setBackground(getResources().getDrawable(R.drawable.level1a_tutorial));
+            else
+                layout.setBackground(getResources().getDrawable(R.drawable.level1b_tutorial));
             clickCounter++;
         }
         else

@@ -45,13 +45,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/textView_feather_layout">
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/level2a_intro"
-        />
-
+        android:layout_above="@+id/textView_feather_layout"
+        android:background="@drawable/level2a_intro">
     </RelativeLayout>
 
     <RelativeLayout
