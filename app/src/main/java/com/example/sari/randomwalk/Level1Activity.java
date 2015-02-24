@@ -30,6 +30,7 @@ public class Level1Activity extends ActionBarActivity {
             "Arrrgh!!!","That Clap of Thunder killed me!"};
     String[] missText = {"Almost there!","Splash! \"Grrr, I'll swim to the boat!\"","The crew dragged you home!","Mermaids rescued you!"};
     String[] homeText = {"This choice seems to work - I must try again!","Yay - let me help my friends as well!","Lucky you! Chances of coming home were not that high!"};
+    String[] restartText = {"Maybe it's the time to change the bar?","Walk the plank if you'd like to visit bar again!","Ahoy! Try again!"};
     /**
      * onCreate method for Level1Activity
      */
@@ -137,6 +138,11 @@ public class Level1Activity extends ActionBarActivity {
             rand = r.nextInt(2);
             textView.setText("Score: " + preferences.getInt(String.format("score_1%s",subLevel), 0)+" - "+homeText[rand]);
         } else
+        if(whatHappened.equals("r")){
+            Random r = new Random();
+            rand = r.nextInt(2);
+            textView.setText("Score: " + preferences.getInt(String.format("score_1%s",subLevel), 0)+" - "+restartText[rand]);
+        }else
             textView.setText("Score: " + preferences.getInt(String.format("score_1%s",subLevel), 0));
         final int oldColor = textView.getCurrentTextColor();
 

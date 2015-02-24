@@ -138,6 +138,9 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
             editor.putInt(String.format("score_1%s",subLevel), 100 + preferences.getInt(String.format("score_1%s",subLevel),0));
             editor.commit();
             parentActivity.updateScore("h");
+            if(levelBCounter ==  10 || ok == 4){
+                parentActivity.updateScore("r");
+            }
             saveTry++;
         }
         else
@@ -154,6 +157,10 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
                 editor.putInt(String.format("score_1%s",subLevel),score + preferences.getInt(String.format("score_1%s",subLevel),0));
                 editor.commit();
                 parentActivity.updateScore("m");
+
+                if(levelBCounter == 10 || ok == 4){
+                    parentActivity.updateScore("r");
+                }
                 saveTry++;
             }
             else
@@ -161,6 +168,10 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
                     Log.d("OUT OF BOUNDS","OUT OF BOUNDS!");
                     if(isStarted)
                         parentActivity.updateScore("o");
+
+                    if(levelBCounter == 10 || ok == 4){
+                        parentActivity.updateScore("r");
+                    }
                     listenTouch = true;
                     saveTry++;
                 }
@@ -198,18 +209,33 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
                 currentScore = preferences.getInt(String.format("score_1%s",subLevel),0);
                 editor.putBoolean("level1BUnlocked",true);
                 editor.commit();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 parentActivity.endLevel();
 
             }
             else
             {
                 currentScore = preferences.getInt(String.format("score_1%s",subLevel),0);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 parentActivity.endLevel();
 
             }
         else if(!preferences.getBoolean("level1BUnblocked",false) && preferences.getInt("score_1A",0) >= 1000 && subLevel.equals("A")){
             editor.putBoolean("level1BUnlocked",true);
             editor.commit();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             parentActivity.endLevel();
         }
 
@@ -250,10 +276,16 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
                     start_Y = 70;
                     listenTouch = false;
                     levelBCounter++;
+                    if(levelBCounter == 10) {
+
+                    }
                     invalidate();
                 }
                 else{
                     canvas.drawBitmap(initialBitmap,0,0,paintWalk);
+                    listenTouch = true;
+                    levelBCounter = 0;
+                    invalidate();
                 }
 
             }
@@ -268,6 +300,9 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
                 listenTouch = false;
                 start_Y = Y;
                 start_X = metrics.widthPixels/12;
+                if(ok ==4){
+                   parentActivity.updateScore("r");
+                }
                 invalidate();
             }
             else {
