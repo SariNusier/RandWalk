@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Random;
+
 public class Level1Activity extends ActionBarActivity {
 
     static TextView textView, textViewIntro;
@@ -23,7 +25,11 @@ public class Level1Activity extends ActionBarActivity {
     static SharedPreferences preferences;
     static String subLevel;
     int clickCounter;
-
+    boolean levelEndend = false;
+    String[] outText = {"Sink me!","Oups, pirate went too far, the crew returned him to the pub.",
+            "Arrrgh!!!","That Clap of Thunder killed me!"};
+    String[] missText = {"Almost there!","Splash! \"Grrr, I'll swim to the boat!\"","The crew dragged you home!","Mermaids rescued you!"};
+    String[] homeText = {"This choice seems to work - I must try again!","Yay - let me help my friends as well!","Lucky you! Chances of coming home were not that high!"};
     /**
      * onCreate method for Level1Activity
      */
@@ -44,7 +50,7 @@ public class Level1Activity extends ActionBarActivity {
         Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/goudy.ttf");
         textViewIntro.setTypeface(typeface);
         clickCounter = 0;
-        updateScore();
+        updateScore("nothing");
 
         if(subLevel.equals("B"))
         {
@@ -112,8 +118,26 @@ public class Level1Activity extends ActionBarActivity {
     /**
      * Refreshes the score's text view, displaying most recent score.
      */
-    public void updateScore(){
-        textView.setText("Score: " + preferences.getInt(String.format("score_1%s",subLevel), 0));
+    public void updateScore(String whatHappened){
+
+        int rand;
+        if(whatHappened.equals("o")){
+            Random r = new Random();
+            rand = r.nextInt(3);
+
+            textView.setText("Score: " + preferences.getInt(String.format("score_1%s",subLevel), 0)+" - "+outText[rand]);
+        } else
+        if(whatHappened.equals("m")){
+            Random r = new Random();
+            rand = r.nextInt(3);
+            textView.setText("Score: " + preferences.getInt(String.format("score_1%s",subLevel), 0)+" - "+missText[rand]);
+        } else
+        if(whatHappened.equals("h")){
+            Random r = new Random();
+            rand = r.nextInt(2);
+            textView.setText("Score: " + preferences.getInt(String.format("score_1%s",subLevel), 0)+" - "+homeText[rand]);
+        } else
+            textView.setText("Score: " + preferences.getInt(String.format("score_1%s",subLevel), 0));
         final int oldColor = textView.getCurrentTextColor();
 
         new Thread(){
@@ -164,17 +188,21 @@ public class Level1Activity extends ActionBarActivity {
     public void endLevel(){
         GameView v = (GameView)this.findViewById(R.id.gameView1);
         View v1 = findViewById(R.id.level1_mainlayout);
+        View v2 = findViewById(R.id.level1_layout_final);
         v.initialBitmap.recycle();
         v.playingBitmap.recycle();
         v.destroyDrawingCache();
         System.gc();
+        if(subLevel.equals("B"))
+            v2.setBackground(getResources().getDrawable(R.drawable.level1b_final));
         v1.setVisibility(View.GONE);
     }
     public void goNextLevel(View view){
-
-        Intent intent = new Intent(this, Level1Activity.class);
-        intent.putExtra("SUB_LEVEL","B");
-        startActivity(intent);
+        if(subLevel.equals("A")) {
+            Intent intent = new Intent(this, Level1Activity.class);
+            intent.putExtra("SUB_LEVEL", "B");
+            startActivity(intent);
+        }
         finish();
     }
 }

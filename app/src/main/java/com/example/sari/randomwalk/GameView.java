@@ -43,6 +43,11 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
     String subLevel;
     Random rand;
 
+    double A; //this is just a constant so that we are able to calculate proper size of the boat
+    int xBoat; //half size of the boat
+    int sig_Y=15;//this is stdev for normal distribution along Y axes
+    int d=3;//this is step along x axis
+
     Drawable boat;
     Paint paintWalk;
     Canvas canvas;
@@ -51,6 +56,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
     DisplayMetrics metrics;
     Drawable pirate;
     int currentScore;
+    int levelBCounter = 0;
 
     Level1Activity parentActivity;
     SharedPreferences preferences;
@@ -86,12 +92,18 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
         Drawable startSurface = this.getResources().getDrawable(R.drawable.start_surface);//area where the player starts
         startSurface.setBounds(0,0,metrics.widthPixels/6,metrics.heightPixels);
         startSurface.draw(canvas);
-        currentScore = preferences.getInt("score_1A",0);
         boat = this.getResources().getDrawable(R.drawable.boat); // just boat
         subLevel = parentActivity.getSubLevel();
+        currentScore = preferences.getInt(String.format("score_1%s",subLevel),0);
         Rect boundsBoatA;
         Rect boundsBoatB;
-        boundsBoatA = new Rect(metrics.widthPixels-100,metrics.heightPixels/2 -50,metrics.widthPixels,metrics.heightPixels/2 +50);
+        //saska
+        A=sig_Y*Math.sqrt(2)*0.272/Math.sqrt(d);
+        xBoat=(int)Math.floor(0.25*(-Math.pow(A,2)+Math.sqrt(Math.pow(A,4)+3.6*metrics.widthPixels*Math.pow(A,2))));
+
+        //boundsBoatA = new Rect(metrics.widthPixels-100,metrics.heightPixels/2 -50,metrics.widthPixels,metrics.heightPixels/2 +50);
+        boundsBoatA = new Rect(metrics.widthPixels-2*xBoat,metrics.heightPixels/2 -xBoat,metrics.widthPixels,metrics.heightPixels/2 +xBoat);
+        //saska
         boundsBoatB = new Rect(metrics.widthPixels-100,metrics.heightPixels/12*9-50,metrics.widthPixels,metrics.heightPixels/12*9+50);
         if(subLevel.equals("A"))
             boat.setBounds(boundsBoatA);
@@ -125,22 +137,30 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
             Log.d("HOME", "You are home");
             editor.putInt(String.format("score_1%s",subLevel), 100 + preferences.getInt(String.format("score_1%s",subLevel),0));
             editor.commit();
-            parentActivity.updateScore();
+            parentActivity.updateScore("h");
             saveTry++;
         }
         else
             if(start_X >= metrics.widthPixels){
                 listenTouch = true;
-                int score = Math.round((5/Math.abs(start_Y - boat.getBounds().centerY()))*1000);
+                //saska
+                int score;
+                if (start_Y==boat.getBounds().centerY())
+                    score = 1000;
+                else
+                    score= Math.round((5/Math.abs(start_Y - boat.getBounds().centerY()))*1000);
+                //saska
                 Log.d("SCORE","Your score is: "+score);
                 editor.putInt(String.format("score_1%s",subLevel),score + preferences.getInt(String.format("score_1%s",subLevel),0));
                 editor.commit();
-                parentActivity.updateScore();
+                parentActivity.updateScore("m");
                 saveTry++;
             }
             else
                 if(start_Y <=0 || start_Y >=metrics.heightPixels){
                     Log.d("OUT OF BOUNDS","OUT OF BOUNDS!");
+                    if(isStarted)
+                        parentActivity.updateScore("o");
                     listenTouch = true;
                     saveTry++;
                 }
@@ -164,12 +184,35 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
             initialBitmap = Bitmap.createBitmap(playingBitmap, 0, 0, playingBitmap.getWidth(), playingBitmap.getHeight(), null, true);
             bitmapSaved = true;
         }
-        if((!preferences.getBoolean("level1BUnlocked",false) && preferences.getInt("score_1A",0)>1000 && subLevel.equals("A")) || preferences.getInt("score_1A",0)-currentScore >= 1000)
+        if(preferences.getInt("score_1A",0)<1000){
+            editor.putBoolean("level1BUnblocked",false);
+        }
+        else
         {
+            editor.putBoolean("level1BUnblocked",true);
+        }
+        if(preferences.getInt(String.format("score_1%s",subLevel),0) - currentScore >= 1000)
+            if(subLevel.equals("A")){
+
+                Log.d("Will end level"," "+(preferences.getInt(String.format("score_1%s",subLevel),0) - currentScore));
+                currentScore = preferences.getInt(String.format("score_1%s",subLevel),0);
+                editor.putBoolean("level1BUnlocked",true);
+                editor.commit();
+                parentActivity.endLevel();
+
+            }
+            else
+            {
+                currentScore = preferences.getInt(String.format("score_1%s",subLevel),0);
+                parentActivity.endLevel();
+
+            }
+        else if(!preferences.getBoolean("level1BUnblocked",false) && preferences.getInt("score_1A",0) >= 1000 && subLevel.equals("A")){
             editor.putBoolean("level1BUnlocked",true);
             editor.commit();
             parentActivity.endLevel();
         }
+
     }
 
     @Override
@@ -202,10 +245,17 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
 
             }
             else if(subLevel.equals("B")){
-                start_X = metrics.widthPixels/12;
-                start_Y = 70;
-                listenTouch = false;
-                invalidate();
+                if(levelBCounter <10){
+                    start_X = metrics.widthPixels/12;
+                    start_Y = 70;
+                    listenTouch = false;
+                    levelBCounter++;
+                    invalidate();
+                }
+                else{
+                    canvas.drawBitmap(initialBitmap,0,0,paintWalk);
+                }
+
             }
             else
             if (ok >= 1 && ok < 4) {
@@ -243,7 +293,7 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
         x = event.values[0];
         drift_X = 0;//x*2;
         y = event.values[1];
-        drift_Y = y*2;
+        drift_Y = y;
         z = event.values[2];
 
     }
@@ -257,13 +307,16 @@ public class GameView extends View implements OnTouchListener, SensorEventListen
             e.printStackTrace();
         }*/
         if(subLevel.equals("A")) {
-            random_X = rand.nextInt(31); //generates two random numbers for X and Y
-            random_Y = rand.nextInt(61)-30;
+            random_X = d;//(int)Math.abs(Math.floor(rand.nextGaussian()*20)); //generates two random numbers for X and Y
+            random_Y = (int)Math.floor(rand.nextGaussian()*sig_Y); //was 30/60 but I think 20/40 looks better
+            //saska
         }
         else
         {
-            random_X = rand.nextInt(21);
-            random_Y = rand.nextInt(41)-20;
+            //saska
+            random_X = d;
+            random_Y = (int)Math.floor(rand.nextGaussian()*15);
+            //saska
         }
 
         canvas.drawLine(start_X, start_Y,start_X+random_X, start_Y + random_Y + drift_Y, paintWalk);
