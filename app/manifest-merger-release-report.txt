@@ -28,7 +28,7 @@ MERGED from com.android.support:support-v4:21.0.3:16:5
 		ADDED from AndroidManifest.xml:9:9
 	android:theme
 		ADDED from AndroidManifest.xml:10:9
-activity#com.randwalk.game.StartActivity
+activity#com.randwalk.game.Activities.StartActivity
 ADDED from AndroidManifest.xml:11:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:14:13
@@ -48,7 +48,7 @@ category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:18:17
 	android:name
 		ADDED from AndroidManifest.xml:18:27
-activity#com.randwalk.game.MainActivity
+activity#com.randwalk.game.Activities.MainActivity
 ADDED from AndroidManifest.xml:21:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:24:13
@@ -56,7 +56,7 @@ ADDED from AndroidManifest.xml:21:9
 		ADDED from AndroidManifest.xml:23:13
 	android:name
 		ADDED from AndroidManifest.xml:22:13
-activity#com.randwalk.game.Level1Activity
+activity#com.randwalk.game.Activities.Level1Activity
 ADDED from AndroidManifest.xml:26:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:30:13
@@ -72,7 +72,7 @@ ADDED from AndroidManifest.xml:31:13
 		ADDED from AndroidManifest.xml:32:17
 	android:value
 		ADDED from AndroidManifest.xml:33:17
-activity#com.randwalk.game.Level2Activity
+activity#com.randwalk.game.Activities.Level2Activity
 ADDED from AndroidManifest.xml:35:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:39:13
@@ -82,7 +82,7 @@ ADDED from AndroidManifest.xml:35:9
 		ADDED from AndroidManifest.xml:38:13
 	android:name
 		ADDED from AndroidManifest.xml:36:13
-activity#com.randwalk.game.SettingsActivity
+activity#com.randwalk.game.Activities.SettingsActivity
 ADDED from AndroidManifest.xml:44:9
 	android:label
 		ADDED from AndroidManifest.xml:46:13
@@ -90,7 +90,7 @@ ADDED from AndroidManifest.xml:44:9
 		ADDED from AndroidManifest.xml:47:13
 	android:name
 		ADDED from AndroidManifest.xml:45:13
-activity#com.randwalk.game.Level2Animation
+activity#com.randwalk.game.Activities.Level2Animation
 ADDED from AndroidManifest.xml:52:9
 	android:label
 		ADDED from AndroidManifest.xml:54:13
