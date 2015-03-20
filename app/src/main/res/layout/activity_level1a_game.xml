@@ -1,4 +1,4 @@
-<com.randwalk.game.newgame.level1.a.views.Level1aMainLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.randwalk.game.newgame.level1.a.activities.Level1aGameActivity"
@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/boat"
-                android:id="@+id/level1a_boat"
+                android:id="@+id/level1a_boat_view"
                 android:layout_weight="8"
                 android:focusableInTouchMode="false" />
 
@@ -64,4 +64,4 @@
         android:id="@+id/level1a_pirate_view"
         android:visibility="invisible"
         android:background="@drawable/rsz_pirate" />
-</com.randwalk.game.newgame.level1.a.views.Level1aMainLayout>
+</RelativeLayout>

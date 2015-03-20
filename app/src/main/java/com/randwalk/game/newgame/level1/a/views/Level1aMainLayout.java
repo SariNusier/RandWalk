@@ -31,15 +31,10 @@ public class Level1aMainLayout extends RelativeLayout{
 
     GestureDetector gd;
     Level1aGameActivity parentActivity;
-    Random rand;
-    Thread animation;
-    int drawing = 0;
-    Animator.AnimatorListener animatorListener;
 
     public Level1aMainLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         parentActivity = (Level1aGameActivity) context;
-        rand = new Random();
         this.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
