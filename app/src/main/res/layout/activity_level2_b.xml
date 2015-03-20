@@ -1,0 +1,66 @@
+<com.randwalk.game.GameViews.Level2bMainLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C2D5F0"
+    tools:context="com.randwalk.game.Activities.Level2BActivity"
+    android:id="@+id/level2B_mainlayout">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/level2b_components_layout">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/level2b_startarea_view"
+            android:background="@drawable/start_surface_2"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="8.5"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="3.5">
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:layout_gravity="left"
+                android:background="@drawable/left_side_2"
+                android:layout_weight="5" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"/>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView2"
+                android:background="@drawable/right_side_2"
+                android:layout_weight="5" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/level2b_dna_view"
+            android:background="@drawable/dna"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_weight="7"/>
+
+    </LinearLayout>
+
+    <com.randwalk.game.GameViews.Level2bWalkView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/level2b_walk_view" />
+
+</com.randwalk.game.GameViews.Level2bMainLayout>

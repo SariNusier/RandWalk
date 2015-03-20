@@ -33,6 +33,7 @@
     </string>
 
     <color name="Level1">#F1D495</color>
+    <color name="Level1_game_background">#DED9D9</color>
     <color name="Level2">#91C8C2</color>
     <color name="BlueLine">#5069a9</color>
     <color name="RedLine">#ef7861</color>
@@ -46,5 +47,7 @@
     <string name="title_activity_level2_animation">Level2Animation</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_level2_b">Level2BActivity</string>
+    <string name="title_activity_level1a_game">Level1aGameActivity</string>
 
 </resources>

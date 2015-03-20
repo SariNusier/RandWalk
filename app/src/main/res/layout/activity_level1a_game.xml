@@ -1,0 +1,67 @@
+<com.randwalk.game.newgame.level1.a.views.Level1aMainLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.randwalk.game.newgame.level1.a.activities.Level1aGameActivity"
+    android:id="@+id/level1a_mainlayout"
+    android:background="@color/Level1_game_background">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/level1a_components_layout">
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/start_surface"
+            android:id="@+id/level1a_startarea_view"
+            android:clickable="false"
+            android:layout_weight="9" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="5" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:layout_marginRight="5dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/boat"
+                android:id="@+id/level1a_boat"
+                android:layout_weight="8"
+                android:focusableInTouchMode="false" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="false"
+        android:id="@+id/level1a_walk_view" />
+
+    <View
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/level1a_pirate_view"
+        android:visibility="invisible"
+        android:background="@drawable/rsz_pirate" />
+</com.randwalk.game.newgame.level1.a.views.Level1aMainLayout>
