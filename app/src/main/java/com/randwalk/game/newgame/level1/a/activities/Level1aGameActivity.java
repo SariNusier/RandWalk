@@ -1,6 +1,7 @@
 package com.randwalk.game.newgame.level1.a.activities;
 
 import android.animation.Animator;
+import android.app.Activity;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.v7.app.ActionBarActivity;
@@ -19,7 +20,7 @@ import com.randwalk.game.newgame.level1.views.PirateView;
 
 import java.util.Random;
 
-public class Level1aGameActivity extends ActionBarActivity {
+public class Level1aGameActivity extends Activity {
     RelativeLayout mainLayout;
     View startAreaView;
     View pirateView;
