@@ -65,7 +65,7 @@ public class Level1aGameActivity extends Activity {
                         pirateView.getY()-25 >=0){
                     //close to boat
                 }
-                else if(pirateView.getY()+25 >= mainLayout.getHeight() || pirateView.getY()-25 <=0){
+                else if(pirateView.getY()+pirateView.getHeight() >= mainLayout.getHeight() || pirateView.getY()-25 <= 0){
                     //out of bounds
                 }
 
@@ -73,7 +73,7 @@ public class Level1aGameActivity extends Activity {
                     Rect r = new Rect();
                     Log.d("PIRATE VIEW POSISTION","POSITION: "+pirateRect.centerX()+" "+boatView.getWidth()+" "+boatView.getGlobalVisibleRect(r)+" "+r);
                     pirateStep();
-                    pirateView.animate().x(currentPiratePos.x).y(currentPiratePos.y).setDuration(100).setListener(animatorListener);
+                    pirateView.animate().x(currentPiratePos.x).y(currentPiratePos.y).setDuration(1).setListener(animatorListener);
                     counter++;
                 }
 
