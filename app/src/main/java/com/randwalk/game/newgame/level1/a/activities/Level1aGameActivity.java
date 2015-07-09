@@ -2,6 +2,9 @@ package com.randwalk.game.newgame.level1.a.activities;
 
 import android.animation.Animator;
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.v7.app.ActionBarActivity;
@@ -12,6 +15,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.randwalk.game.newgame.*;
 import com.randwalk.game.R;
@@ -25,9 +29,14 @@ public class Level1aGameActivity extends Activity {
     View startAreaView;
     View pirateView;
     View boatView;
+    TextView scoreView;
     Point placedPiratePos;
     Point currentPiratePos;
     Animator.AnimatorListener animatorListener;
+
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+
     boolean piratePlaced;
 
     int sig_Y=15;//this is stdev for normal distribution along Y axes
@@ -45,6 +54,10 @@ public class Level1aGameActivity extends Activity {
         piratePlaced = false;
         placedPiratePos = new Point();
         currentPiratePos = new Point();
+        scoreView = (TextView) findViewById(R.id.level1a_score_view);
+        preferences = getSharedPreferences("GAME_DATA", MODE_PRIVATE);
+        editor = preferences.edit();
+        updateScore();
         animatorListener = new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -59,14 +72,15 @@ public class Level1aGameActivity extends Activity {
                 boatView.getGlobalVisibleRect(boatRect);
                 if(boatRect.contains(Math.round(pirateView.getX())+25,Math.round(pirateView.getY())+25)){
                     //in the boat
+                    onTheBoat();
                 }
                 else if(pirateView.getX()+pirateView.getWidth() >= mainLayout.getWidth() &&
                         pirateView.getY()+25 <= mainLayout.getHeight() &&
                         pirateView.getY()-25 >=0){
-                    //close to boat
+                    closeToBoat();
                 }
                 else if(pirateView.getY()+pirateView.getHeight() >= mainLayout.getHeight() || pirateView.getY()-25 <= 0){
-                    //out of bounds
+                    missedTheBoat();
                 }
 
                 else {
@@ -99,7 +113,9 @@ public class Level1aGameActivity extends Activity {
             }
         });
 
-    }
+
+
+    } //end of onCreate()
 
     public void placePirate(MotionEvent event) {
         if(!piratePlaced) {
@@ -133,5 +149,56 @@ public class Level1aGameActivity extends Activity {
         currentPiratePos = new Point(currentPiratePos.x+random_X,currentPiratePos.y + random_Y);
     }
 
+    public void onTheBoat(){
+        increaseScore(100); //TODO calculate score
+    }
 
+    public void closeToBoat(){
+        increaseScore(50);
+    }
+
+    public void missedTheBoat(){
+        increaseScore(0);
+    }
+
+    public void updateScore(){
+        scoreView.setText("Score: " + preferences.getInt("score_1A", 0));
+        final int oldColor = scoreView.getCurrentTextColor();
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+
+                try {
+
+                    runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            scoreView.setTextColor(Color.GREEN);
+                        }
+                    });
+                    sleep(500);
+                    runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            scoreView.setTextColor(oldColor);
+                        }
+                    });
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
+
+    }
+
+    public void increaseScore(int amount){
+        editor.putInt("score_1A",amount + preferences.getInt("score_1A",0));
+        editor.commit();
+        updateScore();
+    }
 }
