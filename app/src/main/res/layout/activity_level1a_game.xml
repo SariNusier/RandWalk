@@ -69,10 +69,18 @@
         android:layout_height="match_parent"
         android:focusableInTouchMode="false"
         android:id="@+id/level1a_path_view" />
+
     <View
-        android:layout_width="40dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
         android:id="@+id/level1a_pirate_view"
         android:visibility="invisible"
         android:background="@drawable/rsz_pirate" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+50"
+        android:textColor="@color/GreenLine"
+        android:visibility="invisible"
+        android:id="@+id/level1a_score_popup"/>
 </RelativeLayout>

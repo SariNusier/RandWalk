@@ -68,6 +68,7 @@
         <activity
             android:name=".newgame.level1.a.activities.Level1aGameActivity"
             android:label="@string/title_activity_level1a_game"
+            android:screenOrientation="portrait"
             android:parentActivityName=".Activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

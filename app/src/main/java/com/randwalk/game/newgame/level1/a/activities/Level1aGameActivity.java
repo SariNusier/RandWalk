@@ -32,10 +32,11 @@ public class Level1aGameActivity extends Activity {
     View boatView;
     Level1aPathView pathView;
     TextView scoreView;
+    TextView scorePopUp;
     Point placedPiratePos;
     Point currentPiratePos;
     Point prevPiratePos;
-    Animator.AnimatorListener animatorListener;
+    Animator.AnimatorListener animatorListener, scorePopUpAnimListener;
 
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
@@ -62,9 +63,32 @@ public class Level1aGameActivity extends Activity {
         currentPiratePos = new Point();
         prevPiratePos = new Point();
         scoreView = (TextView) findViewById(R.id.level1a_score_view);
+        scorePopUp = (TextView) findViewById(R.id.level1a_score_popup);
+
         preferences = getSharedPreferences("GAME_DATA", MODE_PRIVATE);
         editor = preferences.edit();
         updateScore();
+        scorePopUpAnimListener = new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                scorePopUp.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        };
         animatorListener = new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -150,8 +174,10 @@ public class Level1aGameActivity extends Activity {
     }
 
     public void drawPath(){
-        Point start = new Point(prevPiratePos.x+pirateView.getWidth(),prevPiratePos.y);
-        Point end = new Point(currentPiratePos.x+pirateView.getWidth(),currentPiratePos.y);
+        Point start = new Point(prevPiratePos.x+pirateView.getWidth()/2,
+                prevPiratePos.y+pirateView.getHeight()/2);
+        Point end = new Point(currentPiratePos.x+pirateView.getWidth()/2,
+                currentPiratePos.y+pirateView.getHeight()/2);
         pathView.drawLine(start,end);
     }
 
@@ -164,12 +190,19 @@ public class Level1aGameActivity extends Activity {
     }
 
     public void onTheBoat(){
-        increaseScore(100);
+        increaseScore(200);
         walkFinished();
     }
 
     public void closeToBoat(){
-        increaseScore(50);
+        double h = mainLayout.getHeight();
+        double distance;
+        if(currentPiratePos.y < h/2)
+            distance = boatView.getTop()-currentPiratePos.y;
+        else
+            distance = currentPiratePos.y - boatView.getBottom();
+
+        increaseScore((int)(100*(1-(2*distance/h))));
         walkFinished();
     }
 
@@ -217,20 +250,22 @@ public class Level1aGameActivity extends Activity {
         editor.putInt("score_1A",amount + preferences.getInt("score_1A",0));
         editor.commit();
         updateScore();
+        popUpScore(currentPiratePos, amount);
     }
 
     public void walkFinished(){
         drawing = false;
         if(walkCounter >= 2)
-            repostionPirate();
+            repositionPirate();
     }
 
     /**
      * Allows the player to reposition pirate in the starting area.
      */
-    public void repostionPirate(){
+    public void repositionPirate(){
         walkCounter = 0;
         piratePlaced = false;
+        pathView.restart();
     }
 
     /**
@@ -247,5 +282,14 @@ public class Level1aGameActivity extends Activity {
         pirateView.invalidate();
         piratePlaced = true;
         drawWalk();
+    }
+
+    public void popUpScore(Point coordinate, int amount){
+
+        scorePopUp.setX( mainLayout.getWidth() - scorePopUp.getWidth() * 1.5f );
+        scorePopUp.setY(coordinate.y);
+        scorePopUp.setText("+"+amount);
+        scorePopUp.setVisibility(View.VISIBLE);
+        scorePopUp.animate().y(coordinate.y - 150).setDuration(500).setListener(scorePopUpAnimListener);
     }
 }

@@ -19,14 +19,18 @@ public class Level1aPathView extends View {
     Canvas canvas;
     Bitmap walkBitmap;
     Paint walkPaint;
+    WindowManager wm;
+    Display display;
+    Color[] colors;
     public Level1aPathView(Context context, AttributeSet attrs) {
         super(context, attrs);
         walkPaint = new Paint();
         walkPaint.setColor(Color.BLACK);
+        colors = new Color[4]; //TODO Implement more colors.
         walkPaint.setStrokeWidth(3);
         walkPaint.setPathEffect(new DashPathEffect(new float[]{4, 4}, 0));
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
+        wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        display = wm.getDefaultDisplay();
         walkBitmap = Bitmap.createBitmap(display.getWidth(),display.getHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(walkBitmap);
     }
@@ -40,5 +44,11 @@ public class Level1aPathView extends View {
     public void drawLine(Point start,Point end){
         canvas.drawLine(start.x,start.y,end.x,end.y,walkPaint);
         invalidate();
+    }
+
+    public void restart(){
+        walkBitmap.recycle();
+        walkBitmap = Bitmap.createBitmap(display.getWidth(),display.getHeight(), Bitmap.Config.ARGB_8888);
+        canvas.setBitmap(walkBitmap);
     }
 }
