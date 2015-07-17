@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.randwalk.game.newgame.*;
 import com.randwalk.game.R;
 import com.randwalk.game.newgame.level1.a.views.Level1aMainLayout;
+import com.randwalk.game.newgame.level1.a.views.Level1aPathView;
 import com.randwalk.game.newgame.level1.views.PirateView;
 
 import java.util.Random;
@@ -29,9 +30,11 @@ public class Level1aGameActivity extends Activity {
     View startAreaView;
     View pirateView;
     View boatView;
+    Level1aPathView pathView;
     TextView scoreView;
     Point placedPiratePos;
     Point currentPiratePos;
+    Point prevPiratePos;
     Animator.AnimatorListener animatorListener;
 
     SharedPreferences preferences;
@@ -51,9 +54,11 @@ public class Level1aGameActivity extends Activity {
         startAreaView = findViewById(R.id.level1a_startarea_view);
         pirateView = findViewById(R.id.level1a_pirate_view);
         boatView = findViewById(R.id.level1a_boat_view);
+        pathView = (Level1aPathView) findViewById(R.id.level1a_path_view);
         piratePlaced = false;
         placedPiratePos = new Point();
         currentPiratePos = new Point();
+        prevPiratePos = new Point();
         scoreView = (TextView) findViewById(R.id.level1a_score_view);
         preferences = getSharedPreferences("GAME_DATA", MODE_PRIVATE);
         editor = preferences.edit();
@@ -86,8 +91,10 @@ public class Level1aGameActivity extends Activity {
                 else {
                     Rect r = new Rect();
                     Log.d("PIRATE VIEW POSISTION","POSITION: "+pirateRect.centerX()+" "+boatView.getWidth()+" "+boatView.getGlobalVisibleRect(r)+" "+r);
+                    prevPiratePos = currentPiratePos;
                     pirateStep();
                     pirateView.animate().x(currentPiratePos.x).y(currentPiratePos.y).setDuration(1).setListener(animatorListener);
+                    pathView.drawLine(prevPiratePos,currentPiratePos);
                     counter++;
                 }
 
@@ -137,8 +144,10 @@ public class Level1aGameActivity extends Activity {
     }
 
     public void drawWalk(){
+        prevPiratePos = currentPiratePos;
         pirateStep();
         pirateView.animate().x(currentPiratePos.x).y(currentPiratePos.y).setDuration(100).setListener(animatorListener);
+        pathView.drawLine(prevPiratePos,currentPiratePos);
     }
 
     public void pirateStep(){

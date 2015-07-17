@@ -64,12 +64,11 @@
 
     </LinearLayout>
 
-    <View
+    <com.randwalk.game.newgame.level1.a.views.Level1aPathView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusableInTouchMode="false"
-        android:id="@+id/level1a_walk_view" />
-
+        android:id="@+id/level1a_path_view" />
     <View
         android:layout_width="40dp"
         android:layout_height="50dp"
