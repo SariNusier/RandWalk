@@ -41,11 +41,13 @@ public class Level1aGameActivity extends Activity {
     SharedPreferences.Editor editor;
 
     boolean piratePlaced;
+    boolean drawing = false;
 
     int sig_Y=15;//this is stdev for normal distribution along Y axes
     int d=3;//this is step along x axis
 
-    int counter = 0;
+    int walkCounter = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +97,6 @@ public class Level1aGameActivity extends Activity {
                     pirateStep();
                     pirateView.animate().x(currentPiratePos.x).y(currentPiratePos.y).setDuration(1).setListener(animatorListener);
                     drawPath();
-                    counter++;
                 }
 
             }
@@ -116,6 +117,8 @@ public class Level1aGameActivity extends Activity {
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getX()<startAreaView.getWidth() && !piratePlaced)
                     placePirate(event);
+                else if(piratePlaced && walkCounter < 2 && !drawing)
+                    positionPirate();
                 return false;
             }
         });
@@ -126,19 +129,15 @@ public class Level1aGameActivity extends Activity {
 
     public void placePirate(MotionEvent event) {
         if(!piratePlaced) {
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) pirateView.getLayoutParams();
-            params.topMargin = Math.round(event.getY());
-            params.leftMargin = (startAreaView.getWidth() - pirateView.getWidth()) / 2;
-            placedPiratePos.x = startAreaView.getWidth()/2;
             placedPiratePos.y = Math.round(event.getY());
             currentPiratePos = new Point(placedPiratePos);
-            //pirateView.setLayoutParams(params);
             pirateView.setX(placedPiratePos.x);
             pirateView.setY(placedPiratePos.y);
             pirateView.setVisibility(View.VISIBLE);
             mainLayout.invalidate();
             pirateView.invalidate();
             piratePlaced = true;
+            drawing = true;
             drawWalk();
         }
     }
@@ -165,15 +164,18 @@ public class Level1aGameActivity extends Activity {
     }
 
     public void onTheBoat(){
-        increaseScore(100); //TODO calculate score
+        increaseScore(100);
+        walkFinished();
     }
 
     public void closeToBoat(){
         increaseScore(50);
+        walkFinished();
     }
 
     public void missedTheBoat(){
         increaseScore(0);
+        walkFinished();
     }
 
     public void updateScore(){
@@ -215,5 +217,35 @@ public class Level1aGameActivity extends Activity {
         editor.putInt("score_1A",amount + preferences.getInt("score_1A",0));
         editor.commit();
         updateScore();
+    }
+
+    public void walkFinished(){
+        drawing = false;
+        if(walkCounter >= 2)
+            repostionPirate();
+    }
+
+    /**
+     * Allows the player to reposition pirate in the starting area.
+     */
+    public void repostionPirate(){
+        walkCounter = 0;
+        piratePlaced = false;
+    }
+
+    /**
+     * Restarts pirate from the same position as the last try.
+     */
+    public void positionPirate(){
+        drawing = true;
+        walkCounter++;
+        currentPiratePos = new Point(placedPiratePos);
+        pirateView.setX(placedPiratePos.x);
+        pirateView.setY(placedPiratePos.y);
+        pirateView.setVisibility(View.VISIBLE);
+        mainLayout.invalidate();
+        pirateView.invalidate();
+        piratePlaced = true;
+        drawWalk();
     }
 }
