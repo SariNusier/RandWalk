@@ -8,8 +8,9 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 
 /**
  * Created by sari on 17/07/15.
@@ -18,16 +19,15 @@ public class Level1aPathView extends View {
     Canvas canvas;
     Bitmap walkBitmap;
     Paint walkPaint;
-    DisplayMetrics metrics;
-
     public Level1aPathView(Context context, AttributeSet attrs) {
         super(context, attrs);
         walkPaint = new Paint();
         walkPaint.setColor(Color.BLACK);
         walkPaint.setStrokeWidth(3);
         walkPaint.setPathEffect(new DashPathEffect(new float[]{4, 4}, 0));
-        metrics = new DisplayMetrics();
-        walkBitmap = Bitmap.createBitmap(metrics.widthPixels,metrics.heightPixels, Bitmap.Config.ARGB_8888);
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        walkBitmap = Bitmap.createBitmap(display.getWidth(),display.getHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(walkBitmap);
     }
 
