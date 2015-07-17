@@ -94,7 +94,7 @@ public class Level1aGameActivity extends Activity {
                     prevPiratePos = currentPiratePos;
                     pirateStep();
                     pirateView.animate().x(currentPiratePos.x).y(currentPiratePos.y).setDuration(1).setListener(animatorListener);
-                    pathView.drawLine(prevPiratePos,currentPiratePos);
+                    drawPath();
                     counter++;
                 }
 
@@ -147,7 +147,13 @@ public class Level1aGameActivity extends Activity {
         prevPiratePos = currentPiratePos;
         pirateStep();
         pirateView.animate().x(currentPiratePos.x).y(currentPiratePos.y).setDuration(100).setListener(animatorListener);
-        pathView.drawLine(prevPiratePos,currentPiratePos);
+        drawPath();
+    }
+
+    public void drawPath(){
+        Point start = new Point(prevPiratePos.x+pirateView.getWidth(),prevPiratePos.y);
+        Point end = new Point(currentPiratePos.x+pirateView.getWidth(),currentPiratePos.y);
+        pathView.drawLine(start,end);
     }
 
     public void pirateStep(){
