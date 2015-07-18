@@ -47,7 +47,6 @@ public class Level1Activity extends ActionBarActivity {
         preferences = getSharedPreferences("GAME_DATA", MODE_PRIVATE);
         textView = (TextView) findViewById(R.id.scoreText);
         textViewIntro = (TextView) findViewById(R.id.textView_intro_level1A);
-       // imageView = (ImageView) findViewById(R.id.level1a_tutorial_imageView);
         Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/goudy.ttf");
         textViewIntro.setTypeface(typeface);
         clickCounter = 0;

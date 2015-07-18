@@ -64,7 +64,7 @@
 
     </LinearLayout>
 
-    <com.randwalk.game.newgame.level1.a.views.Level1aPathView
+     <com.randwalk.game.newgame.level1.a.views.Level1aPathView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusableInTouchMode="false"
@@ -73,8 +73,9 @@
     <View
         android:layout_width="30dp"
         android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
         android:id="@+id/level1a_pirate_view"
-        android:visibility="invisible"
         android:background="@drawable/rsz_pirate" />
     <TextView
         android:layout_width="wrap_content"
@@ -83,4 +84,34 @@
         android:textColor="@color/GreenLine"
         android:visibility="invisible"
         android:id="@+id/level1a_score_popup"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rsz_level1_intro_background"
+        android:id="@+id/level1a_intro_layout">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/level1a_intro_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:textSize="20sp"
+                android:text="@string/intro_level1A"/>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/level1a_intro_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_action_forward"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:onClick="nextIntro" />
+
+    </RelativeLayout>
+
 </RelativeLayout>

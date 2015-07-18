@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,16 +25,21 @@ import com.randwalk.game.newgame.level1.a.views.Level1aMainLayout;
 import com.randwalk.game.newgame.level1.a.views.Level1aPathView;
 import com.randwalk.game.newgame.level1.views.PirateView;
 
+import org.w3c.dom.Text;
+
 import java.util.Random;
 
 public class Level1aGameActivity extends Activity {
     RelativeLayout mainLayout;
+    RelativeLayout introLayout;
     View startAreaView;
     View pirateView;
     View boatView;
     Level1aPathView pathView;
     TextView scoreView;
     TextView scorePopUp;
+    TextView textViewIntro;
+    Button introButton;
     Point placedPiratePos;
     Point currentPiratePos;
     Point prevPiratePos;
@@ -54,6 +61,7 @@ public class Level1aGameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level1a_game);
         mainLayout = (RelativeLayout) findViewById(R.id.level1a_mainlayout);
+        introLayout = (RelativeLayout) findViewById(R.id.level1a_intro_layout);
         startAreaView = findViewById(R.id.level1a_startarea_view);
         pirateView = findViewById(R.id.level1a_pirate_view);
         boatView = findViewById(R.id.level1a_boat_view);
@@ -64,6 +72,10 @@ public class Level1aGameActivity extends Activity {
         prevPiratePos = new Point();
         scoreView = (TextView) findViewById(R.id.level1a_score_view);
         scorePopUp = (TextView) findViewById(R.id.level1a_score_popup);
+        textViewIntro = (TextView) findViewById(R.id.level1a_intro_textview);
+        introButton = (Button) findViewById(R.id.level1a_intro_button);
+        Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/goudy.ttf");
+        textViewIntro.setTypeface(typeface);
 
         preferences = getSharedPreferences("GAME_DATA", MODE_PRIVATE);
         editor = preferences.edit();
@@ -291,5 +303,21 @@ public class Level1aGameActivity extends Activity {
         scorePopUp.setText("+"+amount);
         scorePopUp.setVisibility(View.VISIBLE);
         scorePopUp.animate().y(coordinate.y - 150).setDuration(500).setListener(scorePopUpAnimListener);
+    }
+
+    public void nextIntro(View v){
+        textViewIntro.setVisibility(View.GONE);
+        introLayout.setBackground(null);
+        introButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                endIntro(v);
+            }
+        });
+    }
+
+    public void endIntro(View v){
+        introLayout.setVisibility(View.GONE);
+        pirateView.setVisibility(View.INVISIBLE);
     }
 }
