@@ -84,6 +84,11 @@
         android:textColor="@color/GreenLine"
         android:visibility="invisible"
         android:id="@+id/level1a_score_popup"/>
+    <TextView
+        android:id="@+id/level1a_guide_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/level1_guideshape"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

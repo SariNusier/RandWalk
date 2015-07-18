@@ -39,6 +39,7 @@ public class Level1aGameActivity extends Activity {
     TextView scoreView;
     TextView scorePopUp;
     TextView textViewIntro;
+    TextView guideText;
     Button introButton;
     Point placedPiratePos;
     Point currentPiratePos;
@@ -48,7 +49,7 @@ public class Level1aGameActivity extends Activity {
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
-    boolean piratePlaced;
+    boolean piratePlaced, isGuideOn;
     boolean drawing = false;
 
     int sig_Y=15;//this is stdev for normal distribution along Y axes
@@ -74,8 +75,10 @@ public class Level1aGameActivity extends Activity {
         scorePopUp = (TextView) findViewById(R.id.level1a_score_popup);
         textViewIntro = (TextView) findViewById(R.id.level1a_intro_textview);
         introButton = (Button) findViewById(R.id.level1a_intro_button);
+        guideText = (TextView) findViewById(R.id.level1a_guide_textview);
         Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/goudy.ttf");
         textViewIntro.setTypeface(typeface);
+        isGuideOn = true;
 
         preferences = getSharedPreferences("GAME_DATA", MODE_PRIVATE);
         editor = preferences.edit();
@@ -164,7 +167,13 @@ public class Level1aGameActivity extends Activity {
     } //end of onCreate()
 
     public void placePirate(MotionEvent event) {
+        if(isGuideOn) {
+            guideText.setText("The pirate is now walking and will try to reach the boat. \nYou can see his the steps left behind him.");
+        }
+        else guideText.setVisibility(View.GONE);
+
         if(!piratePlaced) {
+
             placedPiratePos.y = Math.round(event.getY());
             currentPiratePos = new Point(placedPiratePos);
             pirateView.setX(placedPiratePos.x);
@@ -266,6 +275,9 @@ public class Level1aGameActivity extends Activity {
     }
 
     public void walkFinished(){
+        if(isGuideOn){
+            guideText.setText("Tap anywhere on the screen to make the pirate walk again from the same position.");
+        }
         drawing = false;
         if(walkCounter >= 2)
             repositionPirate();
@@ -275,6 +287,10 @@ public class Level1aGameActivity extends Activity {
      * Allows the player to reposition pirate in the starting area.
      */
     public void repositionPirate(){
+        if(isGuideOn){
+            guideText.setText("Now try to put the pirate in a different place and see if he reaches the boat.");
+            isGuideOn = false;
+        }
         walkCounter = 0;
         piratePlaced = false;
         pathView.restart();
@@ -308,12 +324,16 @@ public class Level1aGameActivity extends Activity {
     public void nextIntro(View v){
         textViewIntro.setVisibility(View.GONE);
         introLayout.setBackground(null);
-        introButton.setOnClickListener(new View.OnClickListener() {
+        /*introButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 endIntro(v);
             }
-        });
+        });*/
+        endIntro(v);
+        guideText.setText("Tap on the shaded area to place the pirate.");
+        guideText.setX(startAreaView.getX() + 5);
+        guideText.setY(mainLayout.getHeight()/4);
     }
 
     public void endIntro(View v){
