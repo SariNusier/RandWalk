@@ -19,10 +19,25 @@
             android:clickable="false"
             android:layout_weight="10" />
 
-        <View
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="5" />
+            android:layout_weight="5"
+            android:layout_margin="5dp">
+
+            <TextView
+                  android:id="@+id/level1a_guide_textview"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="15sp"
+                  android:textColor="@color/GreenLine"
+                  android:background="@drawable/level1_guideshape"/>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
@@ -34,13 +49,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_weight="5" >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/level1a_score_view"
+                android:textSize="20sp"
                 android:text="Score: 10000"/>
-            <View
+
+                <View
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="5" />
@@ -64,7 +82,14 @@
 
     </LinearLayout>
 
-     <com.randwalk.game.newgame.level1.a.views.Level1aPathView
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/level1_highlightshape"
+        android:visibility="invisible"
+        android:id="@+id/level1a_highlight_view"/>
+
+    <com.randwalk.game.newgame.level1.a.views.Level1aPathView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusableInTouchMode="false"
@@ -82,41 +107,37 @@
         android:layout_height="wrap_content"
         android:text="+50"
         android:textColor="@color/GreenLine"
+        android:textSize="20sp"
         android:visibility="invisible"
         android:id="@+id/level1a_score_popup"/>
-    <TextView
-        android:id="@+id/level1a_guide_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/level1_guideshape"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/rsz_level1_intro_background"
-        android:id="@+id/level1a_intro_layout">
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:background="@drawable/rsz_level1_intro_background"
+         android:id="@+id/level1a_intro_layout">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/level1a_intro_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:textSize="20sp"
-                android:text="@string/intro_level1A"/>
-        </ScrollView>
+         <ScrollView
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+             <TextView
+                 android:id="@+id/level1a_intro_textview"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_margin="15dp"
+                 android:textSize="20sp"
+                 android:text="@string/intro_level1A"/>
+         </ScrollView>
 
-        <Button
-            android:id="@+id/level1a_intro_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_action_forward"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:onClick="nextIntro" />
+         <Button
+             android:id="@+id/level1a_intro_button"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:background="@drawable/ic_action_forward"
+             android:layout_alignParentBottom="true"
+             android:layout_alignParentRight="true"
+             android:onClick="nextIntro" />
 
-    </RelativeLayout>
+     </RelativeLayout>
 
 </RelativeLayout>

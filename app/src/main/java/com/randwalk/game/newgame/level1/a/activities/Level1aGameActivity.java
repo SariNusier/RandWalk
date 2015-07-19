@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -44,13 +45,16 @@ public class Level1aGameActivity extends Activity {
     Point placedPiratePos;
     Point currentPiratePos;
     Point prevPiratePos;
-    Animator.AnimatorListener animatorListener, scorePopUpAnimListener;
+    Animator.AnimatorListener animatorListener, scorePopUpAnimListener, highLightAnimListener;
+
+    View highLightView;
 
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
     boolean piratePlaced, isGuideOn;
     boolean drawing = false;
+    boolean fadeIn;
 
     int sig_Y=15;//this is stdev for normal distribution along Y axes
     int d=3;//this is step along x axis
@@ -66,6 +70,7 @@ public class Level1aGameActivity extends Activity {
         startAreaView = findViewById(R.id.level1a_startarea_view);
         pirateView = findViewById(R.id.level1a_pirate_view);
         boatView = findViewById(R.id.level1a_boat_view);
+        highLightView = findViewById(R.id.level1a_highlight_view);
         pathView = (Level1aPathView) findViewById(R.id.level1a_path_view);
         piratePlaced = false;
         placedPiratePos = new Point();
@@ -78,6 +83,9 @@ public class Level1aGameActivity extends Activity {
         guideText = (TextView) findViewById(R.id.level1a_guide_textview);
         Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/goudy.ttf");
         textViewIntro.setTypeface(typeface);
+        scoreView.setTypeface(typeface);
+        scorePopUp.setTypeface(typeface);
+        guideText.setTypeface(typeface);
         isGuideOn = true;
 
         preferences = getSharedPreferences("GAME_DATA", MODE_PRIVATE);
@@ -151,6 +159,37 @@ public class Level1aGameActivity extends Activity {
             }
         };
 
+        highLightAnimListener = new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if(!fadeIn){
+                    highLightView.animate().alpha(0.5f).setDuration(1000).setListener(highLightAnimListener);
+                    fadeIn = true;
+                }
+                else {
+                    highLightView.animate().alpha(0).setDuration(1000).setListener(highLightAnimListener);
+                    fadeIn = false;
+                }
+
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        };
+
         mainLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -163,14 +202,15 @@ public class Level1aGameActivity extends Activity {
         });
 
 
-
     } //end of onCreate()
 
     public void placePirate(MotionEvent event) {
         if(isGuideOn) {
-            guideText.setText("The pirate is now walking and will try to reach the boat. \nYou can see his the steps left behind him.");
+            guideText.setText("The pirate is now walking and will try to reach the boat. \nYou can see the steps left behind him.");
+            highLightPirate();
         }
-        else guideText.setVisibility(View.GONE);
+        else {guideText.setVisibility(View.GONE);
+            highLightView.setVisibility(View.GONE);}
 
         if(!piratePlaced) {
 
@@ -208,6 +248,9 @@ public class Level1aGameActivity extends Activity {
         random_X = d;//(int)Math.abs(Math.floor(rand.nextGaussian()*20)); //generates two random numbers for X and Y
         random_Y = (int)Math.floor(rand.nextGaussian()*sig_Y); //was 30/60 but I think 20/40 looks better
         currentPiratePos = new Point(currentPiratePos.x+random_X,currentPiratePos.y + random_Y);
+        if(isGuideOn){
+            highLightPirate();
+        }
     }
 
     public void onTheBoat(){
@@ -276,7 +319,15 @@ public class Level1aGameActivity extends Activity {
 
     public void walkFinished(){
         if(isGuideOn){
-            guideText.setText("Tap anywhere on the screen to make the pirate walk again from the same position.");
+            if(walkCounter == 0)
+                guideText.setText("Tap anywhere on the screen to make the pirate walk again from the same position.");
+            else guideText.setText("The pirate must try 3 times from the same place before you can change his position.");
+            highLightView.setBackground(getResources().getDrawable(R.drawable.level1_highlightshape));
+            highLightView.setX(mainLayout.getX());
+            highLightView.setY(mainLayout.getY());
+            ViewGroup.LayoutParams params = highLightView.getLayoutParams();
+            params.height = mainLayout.getHeight();
+            params.width = mainLayout.getWidth();
         }
         drawing = false;
         if(walkCounter >= 2)
@@ -289,6 +340,11 @@ public class Level1aGameActivity extends Activity {
     public void repositionPirate(){
         if(isGuideOn){
             guideText.setText("Now try to put the pirate in a different place and see if he reaches the boat.");
+            highLightView.setX(startAreaView.getX());
+            highLightView.setY(startAreaView.getY());
+            ViewGroup.LayoutParams params = highLightView.getLayoutParams();
+            params.height = startAreaView.getHeight();
+            params.width = startAreaView.getWidth();
             isGuideOn = false;
         }
         walkCounter = 0;
@@ -324,20 +380,35 @@ public class Level1aGameActivity extends Activity {
     public void nextIntro(View v){
         textViewIntro.setVisibility(View.GONE);
         introLayout.setBackground(null);
-        /*introButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                endIntro(v);
-            }
-        });*/
+
         endIntro(v);
         guideText.setText("Tap on the shaded area to place the pirate.");
-        guideText.setX(startAreaView.getX() + 5);
-        guideText.setY(mainLayout.getHeight()/4);
+       // guideText.setX(startAreaView.getX() + startAreaView.getWidth() + 5);
+      //  guideText.setY(mainLayout.getHeight() / 4);
+        highLightView.setX(startAreaView.getX());
+        highLightView.setY(startAreaView.getY());
+        ViewGroup.LayoutParams params = highLightView.getLayoutParams();
+        params.height = startAreaView.getHeight();
+        params.width = startAreaView.getWidth();
+        highLightView.setVisibility(View.VISIBLE);
+        highLightView.setAlpha(0.5f);
+        fadeIn = false;
+        highLightView.animate().alpha(0).setDuration(1000).setListener(highLightAnimListener);
+
+
     }
 
     public void endIntro(View v){
         introLayout.setVisibility(View.GONE);
         pirateView.setVisibility(View.INVISIBLE);
+    }
+
+    public void highLightPirate(){
+        highLightView.setBackground(getResources().getDrawable(R.drawable.level1_highlightround));
+        highLightView.setX(pirateView.getX());
+        highLightView.setY(pirateView.getY());
+        ViewGroup.LayoutParams params = highLightView.getLayoutParams();
+        params.height = pirateView.getHeight();
+        params.width = pirateView.getWidth();
     }
 }
