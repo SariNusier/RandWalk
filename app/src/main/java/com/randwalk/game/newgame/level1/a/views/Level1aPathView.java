@@ -3,7 +3,6 @@ package com.randwalk.game.newgame.level1.a.views;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -14,9 +13,7 @@ import android.view.WindowManager;
 
 import com.randwalk.game.R;
 
-/**
- * Created by sari on 17/07/15.
- */
+
 public class Level1aPathView extends View {
     Canvas canvas;
     Bitmap walkBitmap;

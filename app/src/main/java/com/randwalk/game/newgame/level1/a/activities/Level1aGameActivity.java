@@ -2,17 +2,13 @@ package com.randwalk.game.newgame.level1.a.activities;
 
 import android.animation.Animator;
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +16,9 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.randwalk.game.newgame.*;
 import com.randwalk.game.R;
-import com.randwalk.game.newgame.level1.a.views.Level1aMainLayout;
 import com.randwalk.game.newgame.level1.a.views.Level1aPathView;
-import com.randwalk.game.newgame.level1.views.PirateView;
 
-import org.w3c.dom.Text;
 
 import java.util.Random;
 
