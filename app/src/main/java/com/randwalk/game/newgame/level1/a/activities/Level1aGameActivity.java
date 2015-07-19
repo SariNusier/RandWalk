@@ -59,6 +59,7 @@ public class Level1aGameActivity extends Activity {
     int sig_Y=15;//this is stdev for normal distribution along Y axes
     int d=3;//this is step along x axis
 
+    int random_X,random_Y;
     int walkCounter = 0;
 
     @Override
@@ -243,7 +244,6 @@ public class Level1aGameActivity extends Activity {
     }
 
     public void pirateStep(){
-        int random_X,random_Y;
         Random rand = new Random();
         random_X = d;//(int)Math.abs(Math.floor(rand.nextGaussian()*20)); //generates two random numbers for X and Y
         random_Y = (int)Math.floor(rand.nextGaussian()*sig_Y); //was 30/60 but I think 20/40 looks better
@@ -332,6 +332,7 @@ public class Level1aGameActivity extends Activity {
         drawing = false;
         if(walkCounter >= 2)
             repositionPirate();
+        pathView.changeColor();
     }
 
     /**
@@ -356,6 +357,9 @@ public class Level1aGameActivity extends Activity {
      * Restarts pirate from the same position as the last try.
      */
     public void positionPirate(){
+        if(isGuideOn){
+            guideText.setText("The pirate must try 3 times from the same place before you can change his position.");
+        }
         drawing = true;
         walkCounter++;
         currentPiratePos = new Point(placedPiratePos);

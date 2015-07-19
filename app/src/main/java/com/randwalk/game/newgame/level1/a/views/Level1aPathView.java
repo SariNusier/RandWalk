@@ -12,6 +12,8 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.randwalk.game.R;
+
 /**
  * Created by sari on 17/07/15.
  */
@@ -21,16 +23,21 @@ public class Level1aPathView extends View {
     Paint walkPaint;
     WindowManager wm;
     Display display;
-    Color[] colors;
+    int[] colors;
+    int indexColor = 0;
     public Level1aPathView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        walkPaint = new Paint();
-        walkPaint.setColor(Color.BLACK);
-        colors = new Color[4]; //TODO Implement more colors.
-        walkPaint.setStrokeWidth(3);
-        walkPaint.setPathEffect(new DashPathEffect(new float[]{4, 4}, 0));
         wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         display = wm.getDefaultDisplay();
+        walkPaint = new Paint();
+        colors = new int[3];
+        colors[0] = getResources().getColor(R.color.GreenLine);
+        colors[1] = getResources().getColor(R.color.YellowLine);
+        //colors[2] = getResources().getColor(R.color.BlueLine);
+        colors[2] = getResources().getColor(R.color.RedLine);
+        walkPaint.setColor(getColorToUse());
+        walkPaint.setStrokeWidth(3);
+        walkPaint.setPathEffect(new DashPathEffect(new float[]{4, 4}, 0));
         walkBitmap = Bitmap.createBitmap(display.getWidth(),display.getHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(walkBitmap);
     }
@@ -50,5 +57,16 @@ public class Level1aPathView extends View {
         walkBitmap.recycle();
         walkBitmap = Bitmap.createBitmap(display.getWidth(),display.getHeight(), Bitmap.Config.ARGB_8888);
         canvas.setBitmap(walkBitmap);
+    }
+
+    public int getColorToUse(){
+        if(indexColor == 3)
+            indexColor = 0;
+
+        return colors[indexColor++];
+    }
+
+    public void changeColor(){
+        walkPaint.setColor(getColorToUse());
     }
 }
