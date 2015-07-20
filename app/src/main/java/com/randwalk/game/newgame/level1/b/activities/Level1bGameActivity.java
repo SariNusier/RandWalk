@@ -141,14 +141,17 @@ public class Level1bGameActivity extends Activity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                float boat_X = boatView.getX();
-                float boat_Y = boatView.getY();
+                int[] location = new int[2];
+
+                boatView.getLocationOnScreen(location);
+                float boat_X = location[0];
+                float boat_Y = location[1];
                 float boat_W = boatView.getWidth();
                 float boat_H = boatView.getHeight();
                 float pirate_X = pirateView.getX()+pirateView.getWidth()/2;
                 float pirate_Y = pirateView.getY()+pirateView.getHeight()/2;
 
-                if(boat_X <= pirate_X && boat_Y<=pirate_Y && pirate_X <= boat_X+boat_W && pirate_Y <= boat_Y+boat_Y)
+                if(boat_X <= pirate_X && boat_Y<=pirate_Y && pirate_X <= boat_X+boat_W && pirate_Y <= boat_Y+boat_H)
                 {
                     onTheBoat();
                 } else if(pirate_X >= mainLayout.getWidth() &&
