@@ -163,7 +163,7 @@
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:background="@drawable/round_button2"
-                android:onClick="showDevelopmentDialog"
+                android:onClick="startLevel1bActivityTest"
                 android:nestedScrollingEnabled="false" />
 
             <Button

@@ -1,0 +1,146 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.randwalk.game.newgame.level1.b.activities.Level1bGameActivity"
+    android:id="@+id/level1b_mainlayout"
+    android:background="@color/Level1_game_background">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/level1b_components_layout">
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/start_surface"
+            android:id="@+id/level1b_startarea_view"
+            android:clickable="false"
+            android:layout_weight="10" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/level1b_guide_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/GreenLine"
+                android:background="@drawable/level1_guideshape"/>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:layout_marginRight="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="5" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/level1b_score_view"
+                    android:textSize="20sp"
+                    android:text="Score: 10000"/>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/boat"
+                android:id="@+id/level1b_boat_view"
+                android:layout_weight="8"
+                android:focusableInTouchMode="false"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="15dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/level1_highlightshape"
+        android:visibility="invisible"
+        android:id="@+id/level1b_highlight_view"/>
+
+    <com.randwalk.game.newgame.level1.a.views.Level1aPathView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="false"
+        android:id="@+id/level1b_path_view" />
+
+    <View
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
+        android:id="@+id/level1b_pirate_view"
+        android:background="@drawable/rsz_pirate"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+50"
+        android:textColor="@color/GreenLine"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        android:id="@+id/level1b_score_popup"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rsz_level1_intro_background"
+        android:id="@+id/level1b_intro_layout">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/level1b_intro_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:textSize="20sp"
+                android:text="@string/intro_level1B"/>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/level1b_intro_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_action_forward"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:onClick="nextIntro" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

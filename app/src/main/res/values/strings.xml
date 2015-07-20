@@ -28,9 +28,7 @@
     expression products(e.g. proteins) as "noise", regardless of the source. They call "extrinsic"
      the noise due to microscopic cell-to-cell differences of environment and history, "intrinsic" the
     one due to random fluctuations."</string>
-    <string name="level2A_text">
-        You are about to enter one of the parrot\'s feather cell, where you will explore why each of these animals appear so colourful and diverse!\n\nNow instead following a pirate, follow the movements of big molecules - transcription factors inside the cell. As the transcription factors take part in the process called “gene expression” and play important role enabling the creation of mRNAs - try to create as much as possible of them!
-    </string>
+    <string name="level2A_text">        You are about to enter one of the parrot\'s feather cell, where you will explore why each of these animals appear so colourful and diverse!\n\nNow instead following a pirate, follow the movements of big molecules - transcription factors inside the cell. As the transcription factors take part in the process called “gene expression” and play important role enabling the creation of mRNAs - try to create as much as possible of them!</string>
 
     <color name="Level1">#F1D495</color>
     <color name="Level1_game_background">#DED9D9</color>
@@ -49,5 +47,6 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_level2_b">Level2BActivity</string>
     <string name="title_activity_level1a_game">Level1aGameActivity</string>
+    <string name="title_activity_level1b_game">Level 1B</string>
 
 </resources>
