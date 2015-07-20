@@ -113,32 +113,33 @@ public class Level1aGameActivity extends Activity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                Rect boatRect = new Rect();
-                Rect pirateRect = new Rect();
-                pirateView.getGlobalVisibleRect(pirateRect);
-                boatView.getGlobalVisibleRect(boatRect);
-                if(boatRect.contains(Math.round(pirateView.getX())+25,Math.round(pirateView.getY())+25)){
-                    //in the boat
+                int[] location = new int[2];
+
+                boatView.getLocationOnScreen(location);
+                float boat_X = location[0];
+                float boat_Y = location[1];
+                float boat_W = boatView.getWidth();
+                float boat_H = boatView.getHeight();
+                float pirate_X = pirateView.getX()+pirateView.getWidth()/2;
+                float pirate_Y = pirateView.getY()+pirateView.getHeight()/2;
+
+                if(boat_X <= pirate_X && boat_Y<=pirate_Y && pirate_X <= boat_X+boat_W && pirate_Y <= boat_Y+boat_H)
+                {
                     onTheBoat();
-                }
-                else if(pirateView.getX()+pirateView.getWidth() >= mainLayout.getWidth() &&
-                        pirateView.getY()+25 <= mainLayout.getHeight() &&
-                        pirateView.getY()-25 >=0){
+                } else if(pirate_X >= mainLayout.getWidth() &&
+                        pirate_Y <= mainLayout.getHeight() &&
+                        pirate_Y >=0){
                     closeToBoat();
                 }
-                else if(pirateView.getY()+pirateView.getHeight() >= mainLayout.getHeight() || pirateView.getY()-25 <= 0){
+                else if(pirate_Y >= mainLayout.getHeight() || pirate_Y <= 0){
                     missedTheBoat();
-                }
-
-                else {
+                } else {
                     Rect r = new Rect();
-                    Log.d("PIRATE VIEW POSISTION","POSITION: "+pirateRect.centerX()+" "+boatView.getWidth()+" "+boatView.getGlobalVisibleRect(r)+" "+r);
                     prevPiratePos = currentPiratePos;
                     pirateStep();
                     pirateView.animate().x(currentPiratePos.x).y(currentPiratePos.y).setDuration(1).setListener(animatorListener);
                     drawPath();
                 }
-
             }
 
             @Override
