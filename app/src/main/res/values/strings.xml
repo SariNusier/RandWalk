@@ -48,5 +48,6 @@
     <string name="title_activity_level2_b">Level2BActivity</string>
     <string name="title_activity_level1a_game">Level1aGameActivity</string>
     <string name="title_activity_level1b_game">Level 1B</string>
+    <string name="title_activity_level2a_game">Level2</string>
 
 </resources>
