@@ -23,7 +23,8 @@
             android:layout_weight="10">
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id="@+id/level2a_left_view">
                 <View
                     android:id="@+id/level2a_mithcondria_view1"
                     android:layout_width="100dp"
@@ -67,7 +68,8 @@
                 android:layout_weight="10" />
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id="@+id/level2a_right_view">
 
                 <View
                     android:id="@+id/level2a_mithcondria_view2"
@@ -126,4 +128,8 @@
             </LinearLayout>
 
         </LinearLayout>
+    <com.randwalk.game.newgame.level2.views.Level2aPathView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/level2a_path_view" />
 </com.randwalk.game.newgame.level2.views.Level2bMainLayout>
