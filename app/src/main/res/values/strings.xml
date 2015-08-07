@@ -32,6 +32,7 @@
 
     <color name="Level1">#F1D495</color>
     <color name="Level1_game_background">#DED9D9</color>
+    <color name="level2_game_background">#c2d5f0</color>
     <color name="Level2">#91C8C2</color>
     <color name="BlueLine">#5069a9</color>
     <color name="RedLine">#ef7861</color>

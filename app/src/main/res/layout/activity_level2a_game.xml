@@ -1,8 +1,8 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.randwalk.game.newgame.level2.views.Level2bMainLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.randwalk.game.newgame.level2.activities.Level2aGameActivity"
-    android:background="@color/Level2"
+    android:background="@color/level2_game_background"
     android:id="@+id/level2a_mainlayout">
 
     <LinearLayout
@@ -11,19 +11,19 @@
         android:layout_height="match_parent"
         android:id="@+id/level2a_components_layout">
         <View
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/start_surface_2"
-            android:layout_weight="22" />
+            android:layout_weight="22"
+            android:id="@+id/level2a_startarea_view" />
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_weight="10">
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.01">
+                android:layout_height="match_parent">
                 <View
                     android:id="@+id/level2a_mithcondria_view1"
                     android:layout_width="100dp"
@@ -31,8 +31,8 @@
                     android:background="@drawable/mithocondria"/>
                 <View
                     android:id="@+id/level2a_lysosomes_view1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_below="@+id/level2a_mithcondria_view1"
                     android:background="@drawable/lysosomes"/>
                 <View
@@ -43,14 +43,14 @@
                     android:background="@drawable/vacuole"/>
                 <View
                     android:id="@+id/level2a_lysosomes_view2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_below="@+id/level2a_vacuole_view"
                     android:background="@drawable/lysosomes"/>
                 <View
                     android:id="@+id/level2a_lysosomes_view3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_below="@+id/level2a_lysosomes_view2"
                     android:background="@drawable/lysosomes"
                     android:layout_marginLeft="45dp" />
@@ -64,23 +64,66 @@
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="7" />
+                android:layout_weight="10" />
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="5">
+                android:layout_height="match_parent">
+
                 <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/mithocondria"/>
-                </RelativeLayout>
+                    android:id="@+id/level2a_mithcondria_view2"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/mithocondria"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentRight="false"
+                    android:layout_alignParentLeft="false" />
+                <View
+                    android:id="@+id/level2a_perixosome_view1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/level2a_mithcondria_view2"
+                    android:background="@drawable/perixosome"
+                    android:layout_alignParentRight="false"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="30dp" />
+                <View
+                    android:id="@+id/level2a_lysosomes_view4"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/level2a_perixosome_view1"
+                    android:background="@drawable/lysosomes"
+                    android:layout_alignParentRight="false"
+                    android:layout_marginLeft="25dp" />
+                <View
+                    android:id="@+id/level2a_perixosome_view2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/level2a_lysosomes_view4"
+                    android:background="@drawable/perixosome"
+                    android:layout_alignParentRight="false"
+                    android:layout_marginLeft="55dp" />
+                <View
+                    android:id="@+id/level2a_golgi_view"
+                    android:layout_width="50dp"
+                    android:layout_height="100dp"
+                    android:layout_below="@+id/level2a_perixosome_view2"
+                    android:background="@drawable/golgi"
+                    android:layout_alignParentRight="false"
+                    android:layout_marginLeft="50dp" />
+            </RelativeLayout>
             </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/nucleous"
-            android:layout_weight="18" />
+            android:layout_weight="18">
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dna"
+                android:id="@+id/level2a_dna_view" />
+            </LinearLayout>
 
         </LinearLayout>
-</RelativeLayout>
+</com.randwalk.game.newgame.level2.views.Level2bMainLayout>
