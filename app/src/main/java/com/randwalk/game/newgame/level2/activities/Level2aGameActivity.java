@@ -3,6 +3,7 @@ package com.randwalk.game.newgame.level2.activities;
 import android.animation.Animator;
 import android.app.Activity;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.randwalk.game.R;
@@ -18,16 +20,19 @@ import com.randwalk.game.newgame.level2.views.Level2aPathView;
 import com.randwalk.game.newgame.level2.views.TFView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Level2aGameActivity extends Activity {
 
     View dnaLeft,dnaMid,dnaRight;
     View startAreaView;
     View rightSideView, leftSideView;
+    TextView guideText;
     Level2aPathView pathView;
     RelativeLayout mainLayout;
-    Animator.AnimatorListener animatorListener;
+    Animator.AnimatorListener animatorListener, guideAnimationListener;
     int drawIndex;
+    float activeTF = 0;
     ArrayList<TFView> tfViews;
 
     boolean walking = false;
@@ -44,6 +49,8 @@ public class Level2aGameActivity extends Activity {
         rightSideView = findViewById(R.id.level2a_right_view);
         leftSideView = findViewById(R.id.level2a_left_view);
         pathView = (Level2aPathView) findViewById(R.id.level2a_path_view);
+        guideText = (TextView) findViewById(R.id.level2a_guide_textview);
+        guideText.setAlpha(0);
         tfViews = new ArrayList<>();
 
         animatorListener = new Animator.AnimatorListener() {
@@ -97,6 +104,27 @@ public class Level2aGameActivity extends Activity {
 
             }
         };
+        guideAnimationListener = new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                guideText.animate().alpha(0).setDuration(1000);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        };
 
     }
 
@@ -117,14 +145,68 @@ public class Level2aGameActivity extends Activity {
             drawIndex = 0;
             tfViews.get(drawIndex).step(leftSideView,rightSideView);
             tfViews.get(drawIndex).animate().x(tfViews.get(drawIndex).getCoordinates().x).y(tfViews.get(drawIndex).getCoordinates().y).setDuration(1).setListener(animatorListener);
-            pathView.drawLine(tfViews.get(drawIndex).getPrevCoordinates(),tfViews.get(drawIndex).getCoordinates());
+            pathView.drawLine(tfViews.get(drawIndex).getPrevCoordinates(), tfViews.get(drawIndex).getCoordinates());
 
         }
     }
 
     public void insideActiveRegion(){
-        Toast.makeText(this,"In :)",Toast.LENGTH_SHORT).show();
+
+        activeTF++;
+        float probability = activeTF/(activeTF +3);
+        if(Math.random()<=probability){
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(75,50);
+            Toast.makeText(this,"In :)",Toast.LENGTH_SHORT).show();
+            View mRna = new View(this);
+            Random rand = new Random();
+            mRna.setBackground(this.getResources().getDrawable(R.drawable.cell3));
+            if(tfViews.get(drawIndex).getCoordinates().x <= mainLayout.getWidth()/2){
+                params.leftMargin = rand.nextInt(dnaLeft.getWidth()-1) + 1;
+                params.topMargin = rand.nextInt(mainLayout.getHeight() - (mainLayout.getHeight() - dnaLeft.getHeight())) + (mainLayout.getHeight() - dnaLeft.getHeight());
+            }else {
+                params.leftMargin = rand.nextInt(mainLayout.getWidth() - (mainLayout.getWidth() - dnaRight.getWidth())) + (mainLayout.getWidth() - dnaRight.getWidth());
+                params.topMargin = rand.nextInt(mainLayout.getHeight() - (mainLayout.getHeight() - dnaLeft.getHeight())) + (mainLayout.getHeight() - dnaLeft.getHeight());
+            }
+
+            mainLayout.addView(mRna, params);
+        }
+        tfViews.get(drawIndex).setBackground(this.getResources().getDrawable(R.drawable.cell2));
     }
     public void outsideActiveRegion(){Toast.makeText(this,"Out :(",Toast.LENGTH_SHORT).show();}
     public void finishWalk(){Toast.makeText(this,"Done!",Toast.LENGTH_SHORT).show();}
+
+    public void showMithocondria(View v){
+        guideText.setText("Mithocondria");
+        showGuide(v);
+    }
+    public void showLysosomes(View v){
+        guideText.setText("Lysosomes");
+        showGuide(v);
+    }
+    public void showVacuole(View v){
+        guideText.setText("Vacuole");
+        showGuide(v);
+    }
+    public void showEndopl(View v){
+        guideText.setText("Endoplasmic reticulum");
+        showGuide(v);
+    }
+    public void showPerixosome(View v){
+        guideText.setText("Perixosome");
+        showGuide(v);
+    }
+    public void showGolgi(View v){
+        guideText.setText("Golgi apparatus");
+        showGuide(v);
+    }
+
+    public void showGuide(View v){
+        int[] locationV = new int[2];
+        v.getLocationOnScreen(locationV);
+
+        guideText.setX(mainLayout.getWidth()/2 - v.getWidth()/2);
+        guideText.setY(locationV[1] +10);
+        guideText.animate().alpha(1).setDuration(1000).setListener(guideAnimationListener);
+    }
+
 }
