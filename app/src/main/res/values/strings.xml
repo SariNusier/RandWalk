@@ -39,6 +39,19 @@
     <color name="GreenLine">#01a05f</color>
     <color name="YellowLine">#864ca3</color>
 
+    <color name="Bk0">#C1D5F0</color>
+    <color name="Bk1">#CBD5EF</color>
+    <color name="Bk2">#D5D5EF</color>
+    <color name="Bk3">#E7D5EF</color>
+    <color name="Bk4">#F3D5DF</color>
+    <color name="Bk5">#FFD5DF</color>
+    <color name="Bk6">#FFD9D6</color>
+    <color name="Bk7">#FAD5CF</color>
+    <color name="Bk8">#FAD6C8</color>
+    <color name="Bk9">#D5D5EF</color>
+
+
+
     <string name="title_activity_level1">Level1</string>
     <string name="title_activity_level2">Level2</string>
     <string name="title_activity_settings">Settings</string>

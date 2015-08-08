@@ -14,7 +14,8 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:background="@drawable/start_surface_2"
-            android:id="@+id/level2a_startarea_view" />
+            android:id="@+id/level2a_startarea_view"
+            android:layout_marginBottom="5dp" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,10 +28,11 @@
                 android:id="@+id/level2a_left_view">
                 <View
                     android:id="@+id/level2a_mithcondria_view1"
-                    android:layout_width="100dp"
+                    android:layout_width="50dp"
                     android:layout_height="100dp"
-                    android:background="@drawable/mithocondria"
-                    android:onClick="showMithocondria" />
+                    android:background="@drawable/mithocondria2"
+                    android:onClick="showMithocondria"
+                    android:layout_marginLeft="5dp" />
                 <View
                     android:id="@+id/level2a_lysosomes_view1"
                     android:layout_width="40dp"
@@ -87,7 +89,8 @@
                     android:layout_alignParentEnd="false"
                     android:layout_alignParentRight="false"
                     android:layout_alignParentLeft="false"
-                    android:onClick="showMithocondria" />
+                    android:onClick="showMithocondria"
+                    android:layout_marginRight="5dp" />
                 <View
                     android:id="@+id/level2a_perixosome_view1"
                     android:layout_width="40dp"
@@ -123,7 +126,7 @@
                     android:layout_below="@+id/level2a_perixosome_view2"
                     android:background="@drawable/golgi"
                     android:layout_alignParentRight="false"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="45dp"
                     android:onClick="showGolgi" />
             </RelativeLayout>
             </LinearLayout>
@@ -131,11 +134,22 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/level2a_nucleous_view"
             android:background="@drawable/nucleous"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_below="@id/level2a_middle_layout"
             android:layout_alignParentEnd="false"
             android:layout_alignParentBottom="true">
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1">
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -159,21 +173,60 @@
                 android:layout_weight="1"
                 android:layout_gravity="bottom"
                 android:id="@+id/level2a_dna_right_view" />
-
             </LinearLayout>
-
+            </LinearLayout>
+        <TextView
+            android:id="@+id/level2a_guide_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:background="@drawable/level1_guideshape"/>
+        <TextView
+            android:id="@+id/level2a_end_guide_textview"
+            android:text="asdlaksdjalksjdalksjdlkajsdlkajsdlkajsdlkjaslkdjaslkdjalksdj aslkdjalskjdlaksjdlkasjd laksjdlaksjdlkasjd lkasd asdlkjaslkdjasl dalskdjalskdj laksjd alskdjlak sjdlkasjdlkasj d"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/level2a_startarea_view"
+            android:textSize="15sp"
+            android:background="@drawable/level1_guideshape"
+            android:layout_marginTop="10dp" />
         </RelativeLayout>
-    <com.randwalk.game.newgame.level2.views.Level2aPathView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/level2a_path_view" />
-    <TextView
-        android:id="@+id/level2a_guide_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:textColor="@color/GreenLine"
-        android:background="@drawable/level1_guideshape"/>
+     <com.randwalk.game.newgame.level2.views.Level2aPathView
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:id="@+id/level2a_path_view" />
+
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:background="@drawable/animation_frame_17"
+         android:id="@+id/level2a_intro_layout">
+
+         <ScrollView
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+             <TextView
+                 android:id="@+id/level2a_intro_textview"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_margin="15dp"
+                 android:textSize="20sp"
+                 android:textColor="#ffffff"
+                 android:text="@string/level2A_text"/>
+         </ScrollView>
+
+         <Button
+             android:id="@+id/level2a_intro_button"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:background="@drawable/ic_action_forward"
+             android:layout_alignParentBottom="true"
+             android:layout_alignParentRight="true"
+             android:onClick="nextIntro" />
+
+     </RelativeLayout>
+
+
 
 </com.randwalk.game.newgame.level2.views.Level2bMainLayout>
 

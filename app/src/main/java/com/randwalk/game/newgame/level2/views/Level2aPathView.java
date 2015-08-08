@@ -54,6 +54,7 @@ public class Level2aPathView extends View {
         walkBitmap.recycle();
         walkBitmap = Bitmap.createBitmap(display.getWidth(),display.getHeight(), Bitmap.Config.ARGB_8888);
         canvas.setBitmap(walkBitmap);
+        invalidate();
     }
 
     public int getColorToUse(){

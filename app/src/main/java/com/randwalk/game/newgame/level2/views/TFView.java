@@ -15,7 +15,7 @@ public class TFView extends View {
     Point coordinates;
     Point prevCoordinates;
     int sig_Y=15;//this is stdev for normal distribution along Y axes
-    int d=3;//this is step along x axis
+    int d=50;//this is step along x axis
     int random_X,random_Y;
     boolean bounced = false;
 

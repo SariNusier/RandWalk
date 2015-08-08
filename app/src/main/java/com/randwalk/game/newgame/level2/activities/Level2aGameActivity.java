@@ -1,8 +1,11 @@
 package com.randwalk.game.newgame.level2.activities;
 
 import android.animation.Animator;
+import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -11,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,15 +31,18 @@ public class Level2aGameActivity extends Activity {
     View dnaLeft,dnaMid,dnaRight;
     View startAreaView;
     View rightSideView, leftSideView;
-    TextView guideText;
+    TextView guideText, endGuideText, textViewIntro;
     Level2aPathView pathView;
     RelativeLayout mainLayout;
     Animator.AnimatorListener animatorListener, guideAnimationListener;
     int drawIndex;
-    float activeTF = 0;
+    float activeTF = 0, mRnaC = 0;
     ArrayList<TFView> tfViews;
+    ArrayList<View> mrnas;
+    int[] colors = {R.color.Bk0,R.color.Bk1,R.color.Bk2,R.color.Bk3,R.color.Bk4,R.color.Bk5,R.color.Bk6,R.color.Bk7,R.color.Bk8,R.color.Bk9};
 
     boolean walking = false;
+    boolean toRestart = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +57,16 @@ public class Level2aGameActivity extends Activity {
         leftSideView = findViewById(R.id.level2a_left_view);
         pathView = (Level2aPathView) findViewById(R.id.level2a_path_view);
         guideText = (TextView) findViewById(R.id.level2a_guide_textview);
+        endGuideText = (TextView) findViewById(R.id.level2a_end_guide_textview);
+        Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/goudy.ttf");
+        textViewIntro = (TextView) findViewById(R.id.level2a_intro_textview);
+        textViewIntro.setTypeface(typeface);
+        endGuideText.setVisibility(View.INVISIBLE);
+
+
         guideText.setAlpha(0);
         tfViews = new ArrayList<>();
+        mrnas = new ArrayList<>();
 
         animatorListener = new Animator.AnimatorListener() {
             @Override
@@ -129,7 +144,12 @@ public class Level2aGameActivity extends Activity {
     }
 
     public void placeTF(MotionEvent event){
-        if(event.getY() <= startAreaView.getHeight() && tfViews.size()<10 && !walking) {
+        if(toRestart){
+            restart();
+            toRestart = false;
+        }
+        if(event.getY() <= startAreaView.getHeight() && event.getX() > leftSideView.getWidth() && event.getX() < rightSideView.getX()
+                && tfViews.size()<10 && !walking) {
             tfViews.add(new TFView(this, new Point((int) event.getX(), startAreaView.getHeight() / 2)));
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
             params.leftMargin = Math.round(event.getX());
@@ -157,9 +177,10 @@ public class Level2aGameActivity extends Activity {
         if(Math.random()<=probability){
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(75,50);
             Toast.makeText(this,"In :)",Toast.LENGTH_SHORT).show();
-            View mRna = new View(this);
             Random rand = new Random();
-            mRna.setBackground(this.getResources().getDrawable(R.drawable.cell3));
+            mRnaC++;
+            mrnas.add(new View(this));
+            mrnas.get(mrnas.size()-1).setBackground(this.getResources().getDrawable(R.drawable.cell3));
             if(tfViews.get(drawIndex).getCoordinates().x <= mainLayout.getWidth()/2){
                 params.leftMargin = rand.nextInt(dnaLeft.getWidth()-1) + 1;
                 params.topMargin = rand.nextInt(mainLayout.getHeight() - (mainLayout.getHeight() - dnaLeft.getHeight())) + (mainLayout.getHeight() - dnaLeft.getHeight());
@@ -168,12 +189,34 @@ public class Level2aGameActivity extends Activity {
                 params.topMargin = rand.nextInt(mainLayout.getHeight() - (mainLayout.getHeight() - dnaLeft.getHeight())) + (mainLayout.getHeight() - dnaLeft.getHeight());
             }
 
-            mainLayout.addView(mRna, params);
+            mainLayout.addView(mrnas.get(mrnas.size()-1), params);
         }
         tfViews.get(drawIndex).setBackground(this.getResources().getDrawable(R.drawable.cell2));
     }
     public void outsideActiveRegion(){Toast.makeText(this,"Out :(",Toast.LENGTH_SHORT).show();}
-    public void finishWalk(){Toast.makeText(this,"Done!",Toast.LENGTH_SHORT).show();}
+    public void finishWalk(){
+        Toast.makeText(this,"Done!",Toast.LENGTH_SHORT).show();
+        toRestart = true;
+        mainLayout.setBackgroundColor(getResources().getColor(colors[mrnas.size()]));
+        showEndGuide();
+
+        pathView.restart();
+
+    }
+
+    public void restart(){
+        for(TFView v:tfViews)
+            mainLayout.removeView(v);
+        for(View v:mrnas)
+            mainLayout.removeView(v);
+        walking = false;
+        activeTF = 0;
+        mRnaC = 0;
+        tfViews.clear();
+        mrnas.clear();
+        endGuideText.setVisibility(View.INVISIBLE);
+        mainLayout.setBackgroundColor(getResources().getColor(R.color.level2_game_background));
+    }
 
     public void showMithocondria(View v){
         guideText.setText("Mithocondria");
@@ -207,6 +250,19 @@ public class Level2aGameActivity extends Activity {
         guideText.setX(mainLayout.getWidth()/2 - v.getWidth()/2);
         guideText.setY(locationV[1] +10);
         guideText.animate().alpha(1).setDuration(1000).setListener(guideAnimationListener);
+    }
+
+    public void showEndGuide(){
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(endGuideText.getLayoutParams());
+        params.leftMargin = leftSideView.getWidth();
+        params.rightMargin = rightSideView.getWidth();
+        params.topMargin = startAreaView.getHeight();
+        endGuideText.setLayoutParams(params);
+        endGuideText.setVisibility(View.VISIBLE);
+    }
+
+    public void nextIntro(View v){
+        findViewById(R.id.level2a_intro_layout).setVisibility(View.GONE);
     }
 
 }
