@@ -77,8 +77,8 @@
         <activity
             android:name=".newgame.level1.b.activities.Level1bGameActivity"
             android:label="@string/title_activity_level1b_game"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".Activities.MainActivity" >
+            android:parentActivityName=".Activities.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.randwalk.game.Activities.MainActivity" />
@@ -86,7 +86,15 @@
         <activity
             android:name=".newgame.level2.activities.Level2aGameActivity"
             android:label="@string/title_activity_level2a_game"
-            android:screenOrientation="portrait"
+            android:parentActivityName=".Activities.MainActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.randwalk.game.Activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".newgame.level2.activities.Level2cGameActivity"
+            android:label="@string/title_activity_level2c_game"
             android:parentActivityName=".Activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

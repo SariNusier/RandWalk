@@ -38,7 +38,6 @@
     <color name="RedLine">#ef7861</color>
     <color name="GreenLine">#01a05f</color>
     <color name="YellowLine">#864ca3</color>
-
     <color name="Bk0">#C1D5F0</color>
     <color name="Bk1">#CBD5EF</color>
     <color name="Bk2">#D5D5EF</color>
@@ -49,8 +48,6 @@
     <color name="Bk7">#FAD5CF</color>
     <color name="Bk8">#FAD6C8</color>
     <color name="Bk9">#D5D5EF</color>
-
-
 
     <string name="title_activity_level1">Level1</string>
     <string name="title_activity_level2">Level2</string>
@@ -63,5 +60,6 @@
     <string name="title_activity_level1a_game">Level1aGameActivity</string>
     <string name="title_activity_level1b_game">Level 1B</string>
     <string name="title_activity_level2a_game">Level2</string>
+    <string name="title_activity_level2c_game">Level 2C</string>
 
 </resources>

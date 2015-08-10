@@ -18,6 +18,7 @@ public class TFView extends View {
     int d=50;//this is step along x axis
     int random_X,random_Y;
     boolean bounced = false;
+    public boolean finished = false;
 
     public TFView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -31,6 +32,7 @@ public class TFView extends View {
         //prevCoordinates = coordinates;
         Drawable background = this.getResources().getDrawable(R.drawable.cell1);
         this.setBackground(background);
+
     }
 
     public Point getCoordinates(){
@@ -79,6 +81,49 @@ public class TFView extends View {
             coordinates.y = coordinates.y + random_Y/2;
             bounced = false;
         }
+    }
+
+    public void step(View leftSide, View rightSide, Level2aPathView pathView) {
+        if (!bounced){
+            Random rand = new Random();
+            int[] location= new int[2];
+            int bound;
+            prevCoordinates = new Point(coordinates.x, coordinates.y);
+            Log.d("INSIDE TFView", "THIS IS THE PREV" + prevCoordinates);
+            random_Y = d;//(int)Math.abs(Math.floor(rand.nextGaussian()*20)); //generates two random numbers for X and Y
+            random_X = (int) Math.floor(rand.nextGaussian() * sig_Y); //was 30/60 but I think 20/40 looks better
+            rightSide.getLocationOnScreen(location);
+            if(coordinates.x + random_X >= location[0]){
+                //bounce to the left
+                bound = location[0];
+                coordinates.x = bound;
+                coordinates.y = coordinates.y + random_Y/2;
+                bounced = true;
+            }
+            else {
+                leftSide.getLocationOnScreen(location);
+                if(coordinates.x +random_X <= location[0]+leftSide.getWidth()){
+                    bound = location[0]+leftSide.getWidth();
+                    coordinates.x = bound;
+                    coordinates.y = coordinates.y +random_Y/2;
+                    bounced = true;
+                } else {
+                    coordinates.x = coordinates.x + random_X;
+                    coordinates.y = coordinates.y + random_Y;
+                    Log.d("INSIDE TFView", "THIS IS AFTER GENERATION" + coordinates + " " + prevCoordinates);
+                }
+            }
+        } else {
+            coordinates.x = prevCoordinates.x;
+            coordinates.y = coordinates.y + random_Y/2;
+            bounced = false;
+        }
+
+            animate().x(coordinates.x).y(coordinates.y).setDuration(1);
+            pathView.drawLine(getPrevCoordinates(), getCoordinates());
+        if(!finished)
+            step(leftSide,rightSide,pathView);
+
     }
 
     public void bounceStep(){

@@ -20,6 +20,9 @@ import com.randwalk.game.Dialogs.ScoreLevel2Dialog;
 import com.randwalk.game.newgame.level1.a.activities.Level1aGameActivity;
 import com.randwalk.game.newgame.level1.b.activities.Level1bGameActivity;
 import com.randwalk.game.newgame.level2.activities.Level2aGameActivity;
+import com.randwalk.game.newgame.level2.activities.Level2cGameActivity;
+
+import java.util.Random;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -153,7 +156,7 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    public void startLevel1ActivityTest(View view){
+    public void startLevel1aActivityTest(View view){
         startActivity(new Intent(this, Level1aGameActivity.class));
     }
 
@@ -162,7 +165,18 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void startLevel2aActivityTest(View view){
-        startActivity(new Intent(this, Level2aGameActivity.class));
+        Button b = (Button) view;
+        Intent intent = new Intent(this, Level2aGameActivity.class);
+        intent.putExtra("SUB_LEVEL",b.getText());
+        startActivity(intent);
+    }
+
+    public void startLevel2cActivity(View view){
+        Intent intent = new Intent(this, Level2cGameActivity.class);
+        Random r = new Random();
+        intent.putExtra("left_TFs",r.nextInt(4)+1);
+        intent.putExtra("right_TFs",r.nextInt(4)+1);
+        startActivity(intent);
     }
 
 }

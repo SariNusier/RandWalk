@@ -225,6 +225,25 @@
              android:onClick="nextIntro" />
 
      </RelativeLayout>
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:id="@+id/level2_line_view"
+         android:visibility="gone">
+         <View
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight="5" />
+         <View
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:background="@drawable/splitline"
+             android:layout_weight="9.7" />
+         <View
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight="5" />
+     </LinearLayout>
 
 
 

@@ -5,10 +5,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.randwalk.game.Activities.Level2BActivity;
 import com.randwalk.game.R;
@@ -72,6 +74,14 @@ public class Level2bMainLayout extends RelativeLayout implements View.OnTouchLis
         public boolean onDoubleTap(MotionEvent event) {
             parentActivity.startWalk();
             return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            Toast.makeText(getContext(),"FLING",Toast.LENGTH_SHORT).show();
+            parentActivity.splitLevel();
+            return super.onFling(e1, e2, velocityX, velocityY);
+            //return true;
         }
 
     }

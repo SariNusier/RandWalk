@@ -1,28 +1,19 @@
 package com.randwalk.game.newgame.level2.activities;
 
 import android.animation.Animator;
-import android.app.ActionBar;
 import android.app.Activity;
-import android.graphics.Color;
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.randwalk.game.R;
 import com.randwalk.game.newgame.level2.views.Level2aPathView;
 import com.randwalk.game.newgame.level2.views.TFView;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -35,18 +26,20 @@ public class Level2aGameActivity extends Activity {
     Level2aPathView pathView;
     RelativeLayout mainLayout;
     Animator.AnimatorListener animatorListener, guideAnimationListener;
-    int drawIndex;
+    int drawIndex , animationDuration;
     float activeTF = 0, mRnaC = 0;
     ArrayList<TFView> tfViews;
     ArrayList<View> mrnas;
     int[] colors = {R.color.Bk0,R.color.Bk1,R.color.Bk2,R.color.Bk3,R.color.Bk4,R.color.Bk5,R.color.Bk6,R.color.Bk7,R.color.Bk8,R.color.Bk9};
-
+    String subLevel;
     boolean walking = false;
     boolean toRestart = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent i = getIntent();
+        subLevel = i.getStringExtra("SUB_LEVEL");
         setContentView(R.layout.activity_level2a_game);
         dnaLeft = findViewById(R.id.level2a_dna_left_view);
         dnaMid = findViewById(R.id.level2a_dna_mid_view);
@@ -62,6 +55,11 @@ public class Level2aGameActivity extends Activity {
         textViewIntro = (TextView) findViewById(R.id.level2a_intro_textview);
         textViewIntro.setTypeface(typeface);
         endGuideText.setVisibility(View.INVISIBLE);
+        Log.d("SUBLEVEL:", subLevel);
+        if(subLevel.equals("A"))
+            animationDuration = 1;
+        else
+            animationDuration = 100;
 
 
         guideText.setAlpha(0);
@@ -94,17 +92,20 @@ public class Level2aGameActivity extends Activity {
                     if(drawIndex == tfViews.size()-1)
                         finishWalk();
                     else{
-                        drawIndex++;
+                        if(subLevel.equals("A"))
+                            drawIndex++;
                         tfViews.get(drawIndex).step(leftSideView,rightSideView);
-                        tfViews.get(drawIndex).animate().x(tfViews.get(drawIndex).getCoordinates().x).y(tfViews.get(drawIndex).getCoordinates().y).setDuration(1).setListener(animatorListener);
+                        tfViews.get(drawIndex).animate().x(tfViews.get(drawIndex).getCoordinates().x).y(tfViews.get(drawIndex).getCoordinates().y).setDuration(animationDuration).setListener(animatorListener);
                         pathView.drawLine(tfViews.get(drawIndex).getPrevCoordinates(),tfViews.get(drawIndex).getCoordinates());
+                        incrementDrawIndex();
                     }
 
                 } else
                 {
                     tfViews.get(drawIndex).step(leftSideView,rightSideView);
-                    tfViews.get(drawIndex).animate().x(tfViews.get(drawIndex).getCoordinates().x).y(tfViews.get(drawIndex).getCoordinates().y).setDuration(1).setListener(animatorListener);
+                    tfViews.get(drawIndex).animate().x(tfViews.get(drawIndex).getCoordinates().x).y(tfViews.get(drawIndex).getCoordinates().y).setDuration(animationDuration).setListener(animatorListener);
                     pathView.drawLine(tfViews.get(drawIndex).getPrevCoordinates(),tfViews.get(drawIndex).getCoordinates());
+                    incrementDrawIndex();
                 }
 
             }
@@ -160,13 +161,15 @@ public class Level2aGameActivity extends Activity {
 
     public void startWalk(){
         if(tfViews.size()>=5 && !walking) {
-            Toast.makeText(this, "WALKING", Toast.LENGTH_LONG).show();
             walking = true;
             drawIndex = 0;
             tfViews.get(drawIndex).step(leftSideView,rightSideView);
-            tfViews.get(drawIndex).animate().x(tfViews.get(drawIndex).getCoordinates().x).y(tfViews.get(drawIndex).getCoordinates().y).setDuration(1).setListener(animatorListener);
+            tfViews.get(drawIndex).animate().x(tfViews.get(drawIndex).getCoordinates().x).y(tfViews.get(drawIndex).getCoordinates().y).setDuration(animationDuration).setListener(animatorListener);
             pathView.drawLine(tfViews.get(drawIndex).getPrevCoordinates(), tfViews.get(drawIndex).getCoordinates());
-
+            if(subLevel.equals("B")) {
+                incrementDrawIndex();
+                findViewById(R.id.level2_line_view).setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -176,7 +179,6 @@ public class Level2aGameActivity extends Activity {
         float probability = activeTF/(activeTF +3);
         if(Math.random()<=probability){
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(75,50);
-            Toast.makeText(this,"In :)",Toast.LENGTH_SHORT).show();
             Random rand = new Random();
             mRnaC++;
             mrnas.add(new View(this));
@@ -193,9 +195,8 @@ public class Level2aGameActivity extends Activity {
         }
         tfViews.get(drawIndex).setBackground(this.getResources().getDrawable(R.drawable.cell2));
     }
-    public void outsideActiveRegion(){Toast.makeText(this,"Out :(",Toast.LENGTH_SHORT).show();}
+    public void outsideActiveRegion(){}
     public void finishWalk(){
-        Toast.makeText(this,"Done!",Toast.LENGTH_SHORT).show();
         toRestart = true;
         mainLayout.setBackgroundColor(getResources().getColor(colors[mrnas.size()]));
         showEndGuide();
@@ -263,6 +264,33 @@ public class Level2aGameActivity extends Activity {
 
     public void nextIntro(View v){
         findViewById(R.id.level2a_intro_layout).setVisibility(View.GONE);
+    }
+
+    public void incrementDrawIndex() {
+        if (subLevel.equals("B")){
+            if (drawIndex == tfViews.size() - 1) {
+                drawIndex = 0;
+            } else drawIndex++;
+        }
+
+    }
+
+    public void splitLevel(){
+        if(subLevel.equals("B") && walking){
+            int leftSideTFs = 0;
+            int rightSideTFs = 0;
+            Intent intent = new Intent(this,Level2cGameActivity.class);
+            for(TFView v: tfViews){
+                if(v.getCoordinates().x<=mainLayout.getWidth()/2)
+                    leftSideTFs++;
+                else
+                    rightSideTFs++;
+            }
+            intent.putExtra("left_TFs",leftSideTFs);
+            intent.putExtra("right_TFs",rightSideTFs);
+            startActivity(intent);
+            finish();
+        }
     }
 
 }

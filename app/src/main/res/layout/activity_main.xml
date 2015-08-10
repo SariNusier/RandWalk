@@ -44,7 +44,8 @@
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:background="@drawable/round_button"
-                android:onClick="startLevel1Activity" />
+                android:onClick="startLevel1aActivityTest"
+                android:nestedScrollingEnabled="false" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -58,7 +59,7 @@
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:background="@drawable/round_button"
-                android:onClick="startLevel1Activity" />
+                android:onClick="startLevel1bActivityTest" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -149,7 +150,7 @@
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:background="@drawable/round_button2"
-                android:onClick="startAnimation" />
+                android:onClick="startLevel2aActivityTest" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -163,7 +164,7 @@
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:background="@drawable/round_button2"
-                android:onClick="startLevel1bActivityTest"
+                android:onClick="startLevel2aActivityTest"
                 android:nestedScrollingEnabled="false" />
 
             <Button
@@ -178,7 +179,8 @@
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:background="@drawable/round_button2"
-                android:onClick="startLevel1ActivityTest" />
+                android:onClick="startLevel2cActivity"
+                android:nestedScrollingEnabled="false" />
 
             <Button
                 android:layout_width="wrap_content"
