@@ -37,7 +37,7 @@
                     <View
                         android:id="@+id/level2c_mithcondria_view1_top"
                         android:layout_width="25dp"
-                        android:layout_height="50dp"
+                        android:layout_height="40dp"
                         android:background="@drawable/mithocondria2"
                         android:onClick="showMithocondria"
                         android:layout_marginLeft="5dp" />
@@ -74,8 +74,8 @@
                         android:onClick="showLysosomes" />
                     <View
                         android:id="@+id/level2c_endopl_view_top"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_below="@+id/level2c_lysosomes_view3_top"
                         android:background="@drawable/endopl"
                         android:onClick="showEndopl" />
@@ -107,7 +107,7 @@
                         android:background="@drawable/perixosome"
                         android:layout_alignParentRight="false"
                         android:layout_marginLeft="50dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="5dp"
                         android:onClick="showPerixosome" />
                     <View
                         android:id="@+id/level2c_lysosomes_view4_top"
@@ -130,7 +130,7 @@
                     <View
                         android:id="@+id/level2c_golgi_view_top"
                         android:layout_width="25dp"
-                        android:layout_height="50dp"
+                        android:layout_height="35dp"
                         android:layout_below="@+id/level2c_perixosome_view2_top"
                         android:background="@drawable/golgi"
                         android:layout_alignParentRight="false"
@@ -225,7 +225,7 @@
                     <View
                         android:id="@+id/level2c_mithcondria_view1_bottom"
                         android:layout_width="25dp"
-                        android:layout_height="50dp"
+                        android:layout_height="40dp"
                         android:background="@drawable/mithocondria2"
                         android:onClick="showMithocondria"
                         android:layout_marginLeft="5dp" />
@@ -262,8 +262,8 @@
                         android:onClick="showLysosomes" />
                     <View
                         android:id="@+id/level2c_endopl_view_bottom"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_below="@+id/level2c_lysosomes_view3_bottom"
                         android:background="@drawable/endopl"
                         android:onClick="showEndopl" />
@@ -295,7 +295,7 @@
                         android:background="@drawable/perixosome"
                         android:layout_alignParentRight="false"
                         android:layout_marginLeft="50dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="5dp"
                         android:onClick="showPerixosome" />
                     <View
                         android:id="@+id/level2c_lysosomes_view4_bottom"
@@ -318,7 +318,7 @@
                     <View
                         android:id="@+id/level2c_golgi_view_bottom"
                         android:layout_width="25dp"
-                        android:layout_height="50dp"
+                        android:layout_height="35dp"
                         android:layout_below="@+id/level2c_perixosome_view2_bottom"
                         android:background="@drawable/golgi"
                         android:layout_alignParentRight="false"
