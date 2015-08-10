@@ -7,6 +7,7 @@ import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -34,6 +35,7 @@ public class Level2aGameActivity extends Activity {
     String subLevel;
     boolean walking = false;
     boolean toRestart = true;
+    int tfSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class Level2aGameActivity extends Activity {
         textViewIntro = (TextView) findViewById(R.id.level2a_intro_textview);
         textViewIntro.setTypeface(typeface);
         endGuideText.setVisibility(View.INVISIBLE);
+        tfSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
         Log.d("SUBLEVEL:", subLevel);
         if(subLevel.equals("A"))
             animationDuration = 1;
@@ -152,7 +155,7 @@ public class Level2aGameActivity extends Activity {
         if(event.getY() <= startAreaView.getHeight() && event.getX() > leftSideView.getWidth() && event.getX() < rightSideView.getX()
                 && tfViews.size()<10 && !walking) {
             tfViews.add(new TFView(this, new Point((int) event.getX(), startAreaView.getHeight() / 2)));
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(50, 50);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(tfSize, tfSize);
             params.leftMargin = Math.round(event.getX());
             params.topMargin = startAreaView.getHeight() / 2;
             mainLayout.addView(tfViews.get(tfViews.size() - 1), params);

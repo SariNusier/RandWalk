@@ -1,12 +1,383 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent"
     tools:context="com.randwalk.game.newgame.level2.activities.Level2cGameActivity">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <com.randwalk.game.newgame.level2.views.Level2cMainLayout  android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/level2_game_background"
+        android:id="@+id/level2c_mainlayout_top"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/level2c_components_layout_top">
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:background="@drawable/start_surface_2"
+                android:id="@+id/level2c_startarea_view_top"
+                android:layout_marginBottom="5dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/level2c_startarea_view_top"
+                android:id="@+id/level2c_middle_layout_top">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/level2c_left_view_top">
+                    <View
+                        android:id="@+id/level2c_mithcondria_view1_top"
+                        android:layout_width="25dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/mithocondria2"
+                        android:onClick="showMithocondria"
+                        android:layout_marginLeft="5dp" />
+                    <View
+                        android:id="@+id/level2c_lysosomes_view1_top"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_below="@+id/level2c_mithcondria_view1_top"
+                        android:background="@drawable/lysosomes"
+                        android:layout_marginLeft="10dp"
+                        android:onClick="showLysosomes" />
+                    <View
+                        android:id="@+id/level2c_vacuole_view_top"
+                        android:layout_width="50dp"
+                        android:layout_height="25dp"
+                        android:layout_below="@+id/level2c_lysosomes_view1_top"
+                        android:background="@drawable/vacuole"
+                        android:onClick="showVacuole" />
+                    <View
+                        android:id="@+id/level2c_lysosomes_view2_top"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_below="@+id/level2c_vacuole_view_top"
+                        android:background="@drawable/lysosomes"
+                        android:layout_marginLeft="5dp"
+                        android:onClick="showLysosomes" />
+                    <View
+                        android:id="@+id/level2c_lysosomes_view3_top"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_below="@+id/level2c_lysosomes_view2_top"
+                        android:background="@drawable/lysosomes"
+                        android:layout_marginLeft="45dp"
+                        android:onClick="showLysosomes" />
+                    <View
+                        android:id="@+id/level2c_endopl_view_top"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/level2c_lysosomes_view3_top"
+                        android:background="@drawable/endopl"
+                        android:onClick="showEndopl" />
+                </RelativeLayout>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="10" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/level2c_right_view_top">
+
+                    <View
+                        android:id="@+id/level2c_mithcondria_view2_top"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/mithocondria"
+                        android:layout_alignParentEnd="false"
+                        android:layout_alignParentRight="false"
+                        android:layout_alignParentLeft="false"
+                        android:onClick="showMithocondria"
+                        android:layout_marginRight="5dp" />
+                    <View
+                        android:id="@+id/level2c_perixosome_view1_top"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_below="@+id/level2c_mithcondria_view2_top"
+                        android:background="@drawable/perixosome"
+                        android:layout_alignParentRight="false"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginTop="15dp"
+                        android:onClick="showPerixosome" />
+                    <View
+                        android:id="@+id/level2c_lysosomes_view4_top"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_below="@+id/level2c_perixosome_view1_top"
+                        android:background="@drawable/lysosomes"
+                        android:layout_alignParentRight="false"
+                        android:layout_marginLeft="25dp"
+                        android:onClick="showLysosomes" />
+                    <View
+                        android:id="@+id/level2c_perixosome_view2_top"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_below="@+id/level2c_lysosomes_view4_top"
+                        android:background="@drawable/perixosome"
+                        android:layout_alignParentRight="false"
+                        android:layout_marginLeft="55dp"
+                        android:onClick="showPerixosome" />
+                    <View
+                        android:id="@+id/level2c_golgi_view_top"
+                        android:layout_width="25dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/level2c_perixosome_view2_top"
+                        android:background="@drawable/golgi"
+                        android:layout_alignParentRight="false"
+                        android:layout_marginLeft="45dp"
+                        android:onClick="showGolgi" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/level2c_nucleous_view_top"
+                android:background="@drawable/nucleous"
+                android:orientation="vertical"
+                android:layout_below="@id/level2c_middle_layout_top"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentBottom="true">
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/dna_l"
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/level2c_dna_left_view_top" />
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/dna_c"
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/level2c_dna_mid_view_top" />
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/dna_r"
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/level2c_dna_right_view_top" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+       <!-- <com.randwalk.game.newgame.level2.views.Level2aPathView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/level2c_path_view_top" />-->
+    </com.randwalk.game.newgame.level2.views.Level2cMainLayout>
+
+
+
+
+    <com.randwalk.game.newgame.level2.views.Level2cMainLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/level2_game_background"
+        android:id="@+id/level2c_mainlayout_bottom"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/level2c_components_layout_bottom">
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:background="@drawable/start_surface_2"
+                android:id="@+id/level2c_startarea_view_bottom"
+                android:layout_marginBottom="5dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/level2c_startarea_view_bottom"
+                android:id="@+id/level2c_middle_layout_bottom">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/level2c_left_view_bottom">
+                    <View
+                        android:id="@+id/level2c_mithcondria_view1_bottom"
+                        android:layout_width="25dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/mithocondria2"
+                        android:onClick="showMithocondria"
+                        android:layout_marginLeft="5dp" />
+                    <View
+                        android:id="@+id/level2c_lysosomes_view1_bottom"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_below="@+id/level2c_mithcondria_view1_bottom"
+                        android:background="@drawable/lysosomes"
+                        android:layout_marginLeft="10dp"
+                        android:onClick="showLysosomes" />
+                    <View
+                        android:id="@+id/level2c_vacuole_view_bottom"
+                        android:layout_width="50dp"
+                        android:layout_height="25dp"
+                        android:layout_below="@+id/level2c_lysosomes_view1_bottom"
+                        android:background="@drawable/vacuole"
+                        android:onClick="showVacuole" />
+                    <View
+                        android:id="@+id/level2c_lysosomes_view2_bottom"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_below="@+id/level2c_vacuole_view_bottom"
+                        android:background="@drawable/lysosomes"
+                        android:layout_marginLeft="5dp"
+                        android:onClick="showLysosomes" />
+                    <View
+                        android:id="@+id/level2c_lysosomes_view3_bottom"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_below="@+id/level2c_lysosomes_view2_bottom"
+                        android:background="@drawable/lysosomes"
+                        android:layout_marginLeft="45dp"
+                        android:onClick="showLysosomes" />
+                    <View
+                        android:id="@+id/level2c_endopl_view_bottom"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/level2c_lysosomes_view3_bottom"
+                        android:background="@drawable/endopl"
+                        android:onClick="showEndopl" />
+                </RelativeLayout>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="10" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/level2c_right_view_bottom">
+
+                    <View
+                        android:id="@+id/level2c_mithcondria_view2_bottom"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/mithocondria"
+                        android:layout_alignParentEnd="false"
+                        android:layout_alignParentRight="false"
+                        android:layout_alignParentLeft="false"
+                        android:onClick="showMithocondria"
+                        android:layout_marginRight="5dp" />
+                    <View
+                        android:id="@+id/level2c_perixosome_view1_bottom"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_below="@+id/level2c_mithcondria_view2_bottom"
+                        android:background="@drawable/perixosome"
+                        android:layout_alignParentRight="false"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginTop="15dp"
+                        android:onClick="showPerixosome" />
+                    <View
+                        android:id="@+id/level2c_lysosomes_view4_bottom"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_below="@+id/level2c_perixosome_view1_bottom"
+                        android:background="@drawable/lysosomes"
+                        android:layout_alignParentRight="false"
+                        android:layout_marginLeft="25dp"
+                        android:onClick="showLysosomes" />
+                    <View
+                        android:id="@+id/level2c_perixosome_view2_bottom"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_below="@+id/level2c_lysosomes_view4_bottom"
+                        android:background="@drawable/perixosome"
+                        android:layout_alignParentRight="false"
+                        android:layout_marginLeft="55dp"
+                        android:onClick="showPerixosome" />
+                    <View
+                        android:id="@+id/level2c_golgi_view_bottom"
+                        android:layout_width="25dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/level2c_perixosome_view2_bottom"
+                        android:background="@drawable/golgi"
+                        android:layout_alignParentRight="false"
+                        android:layout_marginLeft="45dp"
+                        android:onClick="showGolgi" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/level2c_nucleous_view_bottom"
+                android:background="@drawable/nucleous"
+                android:orientation="vertical"
+                android:layout_below="@id/level2c_middle_layout_bottom"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentBottom="true">
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/dna_l"
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/level2c_dna_left_view_bottom" />
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/dna_c"
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/level2c_dna_mid_view_bottom" />
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/dna_r"
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/level2c_dna_right_view_bottom" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+       <!-- <com.randwalk.game.newgame.level2.views.Level2aPathView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/level2c_path_view_bottom" />-->
+    </com.randwalk.game.newgame.level2.views.Level2cMainLayout>
+</LinearLayout>
+
 
 </RelativeLayout>
