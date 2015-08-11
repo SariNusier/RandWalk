@@ -40,6 +40,8 @@ public class SettingsFragment extends PreferenceFragment {
                                 editor.putInt("score_1A",0);
                                 editor.putInt("score_1B",0);
                                 editor.putInt("score_1C",0);
+                                editor.putBoolean("level1BUnlocked",false);
+                                editor.putBoolean("level1CUnlocked",false);
                                 editor.commit(); //commits changes
                             }
 

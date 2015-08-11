@@ -25,7 +25,6 @@ import com.randwalk.game.R;
 import java.util.ArrayList;
 import java.util.Random;
 
-//BEWARE OF THIS CLASS. IT WAS WRITTEN BY A SHIT PROGRAMMER SO DO NOT ENTER. IF YOU WANT TO IMPLEMENT SOMETHING LIKE THIS YOU WOULD BE BETTER OFF CREATING EVERYTHING YOURSELF.
 public class GameView2 extends View implements OnTouchListener {
 
 

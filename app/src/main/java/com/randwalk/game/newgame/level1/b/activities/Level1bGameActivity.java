@@ -3,6 +3,7 @@ package com.randwalk.game.newgame.level1.b.activities;
 import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -25,6 +26,7 @@ import com.randwalk.game.Other.EndpointsAsyncTask;
 import com.randwalk.game.Other.Try;
 import com.randwalk.game.R;
 import com.randwalk.game.newgame.level1.a.views.Level1aPathView;
+import com.randwalk.game.newgame.level1.c.activities.Level1cGameActivity;
 
 
 import java.util.Random;
@@ -302,6 +304,8 @@ public class Level1bGameActivity extends Activity {
         editor.apply();
         updateScore();
         popUpScore(currentPiratePos, amount);
+        if(!preferences.getBoolean("level1CUnlocked",false) && preferences.getInt("score_1C",0)>=10)
+            goToLevel1C();
     }
 
     public void walkFinished(){
@@ -381,4 +385,9 @@ public class Level1bGameActivity extends Activity {
         introLayout.setVisibility(View.GONE);
     }
 
+    public void goToLevel1C(){
+        editor.putBoolean("level1CUnlocked",true);
+        startActivity(new Intent(this, Level1cGameActivity.class));
+        finish();
+    }
 }

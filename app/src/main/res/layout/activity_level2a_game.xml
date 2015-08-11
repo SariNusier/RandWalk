@@ -183,11 +183,11 @@
             android:background="@drawable/level1_guideshape"/>
         <TextView
             android:id="@+id/level2a_end_guide_textview"
-            android:text="asdlaksdjalksjdalksjdlkajsdlkajsdlkajsdlkjaslkdjaslkdjalksdj aslkdjalskjdlaksjdlkasjd laksjdlaksjdlkasjd lkasd asdlkjaslkdjasl dalskdjalskdj laksjd alskdjlak sjdlkasjdlkasj d"
+            android:text="@string/level2a_endText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/level2a_startarea_view"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:background="@drawable/level1_guideshape"
             android:layout_marginTop="10dp" />
         </RelativeLayout>

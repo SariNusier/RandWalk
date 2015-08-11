@@ -230,7 +230,7 @@ public class Level1cGameActivity extends Activity {
 
     public void placePirate(MotionEvent event) {
         if(isGuideOn) {
-            guideText.setText("The pirate is now walking and will try to reach the boat. \nYou can see the steps left behind him.");
+            guideText.setText("Tap on the screen as fast as you can to make the pirate walk!");
             highLightView.setVisibility(View.GONE);
         }
         else {guideText.setVisibility(View.GONE);
@@ -339,17 +339,6 @@ public class Level1cGameActivity extends Activity {
     }
 
     public void walkFinished(){
-        if(isGuideOn){
-            if(walkCounter == 0)
-                guideText.setText("Tap anywhere on the screen to make the pirate walk again from the same position.");
-            else guideText.setText("The pirate must try 3 times from the same place before you can change his position.");
-            //  highLightView.setBackground(getResources().getDrawable(R.drawable.level1_highlightshape));
-            //  highLightView.setX(mainLayout.getX());
-            //  highLightView.setY(mainLayout.getY());
-            //  ViewGroup.LayoutParams params = highLightView.getLayoutParams();
-            //  params.height = mainLayout.getHeight();
-            //  params.width = mainLayout.getWidth();
-        }
         drawing = false;
         finalPointX = pirateView.getX();
         finalPointY = pathView.getY();
@@ -385,9 +374,6 @@ public class Level1cGameActivity extends Activity {
      * Restarts pirate from the same position as the last try.
      */
     public void positionPirate(){
-        if(isGuideOn){
-            guideText.setText("The pirate must try 3 times from the same place before you can change his position.");
-        }
         drawing = true;
         walkCounter++;
         currentPiratePos = new Point(placedPiratePos);

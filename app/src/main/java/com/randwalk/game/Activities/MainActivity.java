@@ -38,11 +38,16 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
-        if(preferences.getInt("score_1A",0) <= 1000){
+        if(preferences.getInt("score_1A",0) <= 10){
             editor.putBoolean("level1BUnlocked",false);
         }
         else
             editor.putBoolean("level1BUnlocked",true);
+
+        if(preferences.getInt("score_1C",0) <=10){
+            editor.putBoolean("levelCUnlocked",false);
+        } else
+            editor.putBoolean("level2Cunlocked",true);
 
         editor.commit();
 
@@ -189,7 +194,13 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void startLevel1cActivity(View view){
-        Intent intent = new Intent(this, Level1cGameActivity.class);
-        startActivity(intent);
+        if(preferences.getBoolean("level1CUnlocked",false))
+        {
+            startActivity(new Intent(this, Level1cGameActivity.class));
+        } else {
+            FragmentManager manager = getFragmentManager();
+            LockedDialog dialog = new LockedDialog();
+            dialog.show(manager, "Level 1C Locked");
+        }
     }
 }
