@@ -2,8 +2,23 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Preference
+        android:key="reset_score_1A"
+        android:title="Reset score for level 1A"
+        android:summary="Reset your score for Level 1A"
+        />
+    <Preference
+        android:key="reset_score_1B"
+        android:title="Reset score for level 1B"
+        android:summary="Reset your score for Level 1B"
+        />
+    <Preference
         android:key="reset_score"
-        android:title="Reset score"
-        android:summary="Reset your score for"
+        android:title="Reset score for level 1"
+        android:summary="Reset your score for Level 1"
+        />
+    <CheckBoxPreference
+        android:key="guide"
+        android:title="Show guides"
+        android:defaultValue="true"
         />
 </PreferenceScreen>

@@ -82,13 +82,13 @@
         </LinearLayout>
 
     </LinearLayout>
-
+<!--
     <View
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/level1_highlightshape"
         android:visibility="invisible"
-        android:id="@+id/level1b_highlight_view"/>
+        android:id="@+id/level1b_highlight_view"/>-->
 
     <com.randwalk.game.newgame.level1.a.views.Level1aPathView
         android:layout_width="match_parent"

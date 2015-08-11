@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,7 +27,7 @@ import java.util.Random;
 
 
 public class MainActivity extends ActionBarActivity {
-
+    SharedPreferences preferences;
     /**
      * onCreate method for Main Activity
      */
@@ -34,7 +35,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SharedPreferences preferences = getSharedPreferences("GAME_DATA",Context.MODE_PRIVATE);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
         if(preferences.getInt("score_1A",0) <= 1000){
             editor.putBoolean("level1BUnlocked",false);
@@ -161,7 +162,14 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void startLevel1bActivityTest(View view){
-        startActivity(new Intent(this, Level1bGameActivity.class));
+        if(preferences.getBoolean("level1BUnlocked",false))
+        {
+            startActivity(new Intent(this, Level1bGameActivity.class));
+        } else {
+            FragmentManager manager = getFragmentManager();
+            LockedDialog dialog = new LockedDialog();
+            dialog.show(manager, "Level 1B Locked");
+        }
     }
 
     public void startLevel2aActivityTest(View view){

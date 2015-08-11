@@ -2,13 +2,13 @@ package com.randwalk.game.newgame.level1.a.activities;
 
 import android.animation.Animator;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
+import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.randwalk.game.R;
 import com.randwalk.game.newgame.level1.a.views.Level1aPathView;
+import com.randwalk.game.newgame.level1.b.activities.Level1bGameActivity;
 
 
 import java.util.Random;
@@ -44,7 +45,7 @@ public class Level1aGameActivity extends Activity {
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
-    boolean piratePlaced, isGuideOn;
+    boolean piratePlaced, isGuideOn, prefGuide;
     boolean drawing = false;
     boolean fadeIn;
 
@@ -81,8 +82,9 @@ public class Level1aGameActivity extends Activity {
         guideText.setTypeface(typeface);
         isGuideOn = true;
 
-        preferences = getSharedPreferences("GAME_DATA", MODE_PRIVATE);
-        editor = preferences.edit();
+        //preferences = getSharedPreferences("GAME_DATA", MODE_PRIVATE);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        isGuideOn = preferences.getBoolean("guide",true);
         updateScore();
         scorePopUpAnimListener = new Animator.AnimatorListener() {
             @Override
@@ -134,7 +136,6 @@ public class Level1aGameActivity extends Activity {
                 else if(pirate_Y >= mainLayout.getHeight() || pirate_Y <= 0){
                     missedTheBoat();
                 } else {
-                    Rect r = new Rect();
                     prevPiratePos = currentPiratePos;
                     pirateStep();
                     pirateView.animate().x(currentPiratePos.x).y(currentPiratePos.y).setDuration(1).setListener(animatorListener);
@@ -201,7 +202,7 @@ public class Level1aGameActivity extends Activity {
     public void placePirate(MotionEvent event) {
         if(isGuideOn) {
             guideText.setText("The pirate is now walking and will try to reach the boat. \nYou can see the steps left behind him.");
-            highLightPirate();
+            highLightView.setVisibility(View.GONE);
         }
         else {guideText.setVisibility(View.GONE);
             highLightView.setVisibility(View.GONE);}
@@ -241,9 +242,6 @@ public class Level1aGameActivity extends Activity {
         random_X = d;//(int)Math.abs(Math.floor(rand.nextGaussian()*20)); //generates two random numbers for X and Y
         random_Y = (int)Math.floor(rand.nextGaussian()*sig_Y); //was 30/60 but I think 20/40 looks better
         currentPiratePos = new Point(currentPiratePos.x+random_X,currentPiratePos.y + random_Y);
-        if(isGuideOn){
-            highLightPirate();
-        }
     }
 
     public void onTheBoat(){
@@ -304,10 +302,13 @@ public class Level1aGameActivity extends Activity {
     }
 
     public void increaseScore(int amount){
+        editor = preferences.edit();
         editor.putInt("score_1A",amount + preferences.getInt("score_1A",0));
-        editor.commit();
+        editor.apply();
         updateScore();
         popUpScore(currentPiratePos, amount);
+        if(!preferences.getBoolean("level1BUnlocked",false) && preferences.getInt("score_1A",0)>=1000)
+            goToLevel1B();
     }
 
     public void walkFinished(){
@@ -315,12 +316,12 @@ public class Level1aGameActivity extends Activity {
             if(walkCounter == 0)
                 guideText.setText("Tap anywhere on the screen to make the pirate walk again from the same position.");
             else guideText.setText("The pirate must try 3 times from the same place before you can change his position.");
-            highLightView.setBackground(getResources().getDrawable(R.drawable.level1_highlightshape));
-            highLightView.setX(mainLayout.getX());
-            highLightView.setY(mainLayout.getY());
-            ViewGroup.LayoutParams params = highLightView.getLayoutParams();
-            params.height = mainLayout.getHeight();
-            params.width = mainLayout.getWidth();
+          //  highLightView.setBackground(getResources().getDrawable(R.drawable.level1_highlightshape));
+          //  highLightView.setX(mainLayout.getX());
+          //  highLightView.setY(mainLayout.getY());
+          //  ViewGroup.LayoutParams params = highLightView.getLayoutParams();
+          //  params.height = mainLayout.getHeight();
+          //  params.width = mainLayout.getWidth();
         }
         drawing = false;
         if(walkCounter >= 2)
@@ -334,6 +335,7 @@ public class Level1aGameActivity extends Activity {
     public void repositionPirate(){
         if(isGuideOn){
             guideText.setText("Now try to put the pirate in a different place and see if he reaches the boat.");
+            highLightView.setVisibility(View.VISIBLE);
             highLightView.setX(startAreaView.getX());
             highLightView.setY(startAreaView.getY());
             ViewGroup.LayoutParams params = highLightView.getLayoutParams();
@@ -400,12 +402,10 @@ public class Level1aGameActivity extends Activity {
         pirateView.setVisibility(View.INVISIBLE);
     }
 
-    public void highLightPirate(){
-        highLightView.setBackground(getResources().getDrawable(R.drawable.level1_highlightround));
-        highLightView.setX(pirateView.getX());
-        highLightView.setY(pirateView.getY());
-        ViewGroup.LayoutParams params = highLightView.getLayoutParams();
-        params.height = pirateView.getHeight();
-        params.width = pirateView.getWidth();
+    public void goToLevel1B(){
+        editor.putBoolean("level1BUnlocked",true);
+        startActivity(new Intent(this, Level1bGameActivity.class));
+        finish();
     }
+
 }
