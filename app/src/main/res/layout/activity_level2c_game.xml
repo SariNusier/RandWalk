@@ -185,10 +185,10 @@
             </LinearLayout>
         </RelativeLayout>
 
-       <!-- <com.randwalk.game.newgame.level2.views.Level2aPathView
+        <com.randwalk.game.newgame.level2.views.Level2aPathView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/level2c_path_view_top" />-->
+            android:id="@+id/level2c_path_view_top" />
     </com.randwalk.game.newgame.level2.views.Level2cMainLayout>
 
 
@@ -372,10 +372,10 @@
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
-       <!-- <com.randwalk.game.newgame.level2.views.Level2aPathView
+        <com.randwalk.game.newgame.level2.views.Level2aPathView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/level2c_path_view_bottom" />-->
+            android:id="@+id/level2c_path_view_bottom" />
     </com.randwalk.game.newgame.level2.views.Level2cMainLayout>
 </LinearLayout>
 

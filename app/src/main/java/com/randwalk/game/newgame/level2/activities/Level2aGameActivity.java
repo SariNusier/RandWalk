@@ -35,7 +35,7 @@ public class Level2aGameActivity extends Activity {
     String subLevel;
     boolean walking = false;
     boolean toRestart = true;
-    int tfSize;
+    int tfSize, finishedCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -274,6 +274,9 @@ public class Level2aGameActivity extends Activity {
             if (drawIndex == tfViews.size() - 1) {
                 drawIndex = 0;
             } else drawIndex++;
+            if(tfViews.get(drawIndex).finished){
+                incrementDrawIndex();
+            }
         }
 
     }
