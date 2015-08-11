@@ -2,6 +2,7 @@ package com.randwalk.game.newgame.level1.a.activities;
 
 import android.animation.Animator;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.randwalk.game.Other.EndpointsAsyncTask;
+import com.randwalk.game.Other.Try;
 import com.randwalk.game.R;
 import com.randwalk.game.newgame.level1.a.views.Level1aPathView;
 import com.randwalk.game.newgame.level1.b.activities.Level1bGameActivity;
@@ -52,6 +56,7 @@ public class Level1aGameActivity extends Activity {
     int sig_Y=15;//this is stdev for normal distribution along Y axes
     int d=3;//this is step along x axis
 
+    float startingPoint, finalPointX, finalPointY, length = 0;
     int random_X,random_Y;
     int walkCounter = 0;
 
@@ -219,6 +224,7 @@ public class Level1aGameActivity extends Activity {
             piratePlaced = true;
             drawing = true;
             drawWalk();
+            startingPoint = event.getY();
         }
     }
 
@@ -242,6 +248,7 @@ public class Level1aGameActivity extends Activity {
         random_X = d;//(int)Math.abs(Math.floor(rand.nextGaussian()*20)); //generates two random numbers for X and Y
         random_Y = (int)Math.floor(rand.nextGaussian()*sig_Y); //was 30/60 but I think 20/40 looks better
         currentPiratePos = new Point(currentPiratePos.x+random_X,currentPiratePos.y + random_Y);
+        //length += Math.sqrt(Math.pow(random_X+drift_X,2)+Math.pow(random_Y+drift_Y,2));
     }
 
     public void onTheBoat(){
@@ -324,9 +331,15 @@ public class Level1aGameActivity extends Activity {
           //  params.width = mainLayout.getWidth();
         }
         drawing = false;
+        finalPointX = pirateView.getX();
+        finalPointY = pathView.getY();
+        Try save = new Try(this, "0", preferences.getInt("score_1A", 0), startingPoint, finalPointX, finalPointY, length, "A");
+        new EndpointsAsyncTask().execute(new Pair<Context, Try>(this, save));
         if(walkCounter >= 2)
             repositionPirate();
         pathView.changeColor();
+
+
     }
 
     /**

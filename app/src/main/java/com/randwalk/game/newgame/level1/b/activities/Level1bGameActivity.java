@@ -13,6 +13,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.randwalk.game.Other.EndpointsAsyncTask;
+import com.randwalk.game.Other.Try;
 import com.randwalk.game.R;
 import com.randwalk.game.newgame.level1.a.views.Level1aPathView;
 
@@ -55,6 +58,7 @@ public class Level1bGameActivity extends Activity {
     float drift_X = 0;
     float drift_Y = 0;
 
+    float startingPoint, finalPointX, finalPointY, length = 0;
     int sig_Y=15;//this is stdev for normal distribution along Y axes
     int d=3;//this is step along x axis
     int random_X,random_Y;
@@ -89,6 +93,7 @@ public class Level1bGameActivity extends Activity {
 
         placedPiratePos.x = (int)pirateView.getX();
         placedPiratePos.y = (int)pirateView.getY();
+        startingPoint = placedPiratePos.y;
         sensorEventListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
@@ -305,6 +310,10 @@ public class Level1bGameActivity extends Activity {
                 guideText.setText("Tap anywhere on the screen to make the pirate walk again from the same position.");
         }
         drawing = false;
+        finalPointX = pirateView.getX();
+        finalPointY = pathView.getY();
+        Try save = new Try(this, "0", preferences.getInt("score_1A", 0), startingPoint, finalPointX, finalPointY, length, "B");
+        new EndpointsAsyncTask().execute(new Pair<Context, Try>(this, save));
         if(walkCounter >= 2)
             repositionPirate();
         pathView.changeColor();
