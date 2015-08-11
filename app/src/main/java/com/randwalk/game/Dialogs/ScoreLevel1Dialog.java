@@ -29,7 +29,8 @@ public class ScoreLevel1Dialog extends DialogFragment {
         textView = (TextView) view.findViewById(R.id.scoreLevel1TextView);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
        // textView.setText(textView.getText()+" "+preferences.getInt("score",0));    //gets score and shows it into Level 1's score textview
-        textView.setText("Your score for level 1A: "+preferences.getInt("score_1A",0)+"\n"+"Your score for level 1B: "+preferences.getInt("score_1B",0));
+        textView.setText("Your score for level 1A: "+preferences.getInt("score_1A",0)+"\n"+"Your score for level 1B: "+preferences.getInt("score_1B",0)
+                +"\n"+"Your score for level 1C: "+preferences.getInt("score_1C",0));
         return view;
     }
 

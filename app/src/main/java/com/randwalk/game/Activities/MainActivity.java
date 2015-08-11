@@ -20,6 +20,7 @@ import com.randwalk.game.Dialogs.ScoreLevel1Dialog;
 import com.randwalk.game.Dialogs.ScoreLevel2Dialog;
 import com.randwalk.game.newgame.level1.a.activities.Level1aGameActivity;
 import com.randwalk.game.newgame.level1.b.activities.Level1bGameActivity;
+import com.randwalk.game.newgame.level1.c.activities.Level1cGameActivity;
 import com.randwalk.game.newgame.level2.activities.Level2aGameActivity;
 import com.randwalk.game.newgame.level2.activities.Level2cGameActivity;
 
@@ -187,4 +188,8 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
+    public void startLevel1cActivity(View view){
+        Intent intent = new Intent(this, Level1cGameActivity.class);
+        startActivity(intent);
+    }
 }

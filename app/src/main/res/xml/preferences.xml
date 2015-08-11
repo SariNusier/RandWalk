@@ -11,6 +11,12 @@
         android:title="Reset score for level 1B"
         android:summary="Reset your score for Level 1B"
         />
+
+    <Preference
+        android:key="reset_score_1C"
+        android:title="Reset score for level 1C"
+        android:summary="Reset your score for Level 1C"
+        />
     <Preference
         android:key="reset_score"
         android:title="Reset score for level 1"

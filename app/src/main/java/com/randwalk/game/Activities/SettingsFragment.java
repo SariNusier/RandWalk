@@ -22,6 +22,7 @@ public class SettingsFragment extends PreferenceFragment {
         Preference preferenceRestartScore = findPreference("reset_score"); //finds the preference based on the key
         Preference preferenceRestartScore1A = findPreference("reset_score_1A");
         Preference preferenceRestartScore1B = findPreference("reset_score_1B");
+        Preference preferenceRestartScore1C = findPreference("reset_score_1C");
 
         preferenceRestartScore.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
@@ -36,8 +37,9 @@ public class SettingsFragment extends PreferenceFragment {
                                 //SharedPreferences preferences = getActivity().getSharedPreferences("GAME_DATA", Context.MODE_PRIVATE);
                                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
                                 SharedPreferences.Editor editor = preferences.edit();
-                                editor.putInt("score_1A",0); //restarts score
+                                editor.putInt("score_1A",0);
                                 editor.putInt("score_1B",0);
+                                editor.putInt("score_1C",0);
                                 editor.commit(); //commits changes
                             }
 
@@ -84,6 +86,29 @@ public class SettingsFragment extends PreferenceFragment {
                                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
                                 SharedPreferences.Editor editor = preferences.edit();
                                 editor.putInt("score_1B",0);
+                                editor.commit(); //commits changes
+                            }
+
+                        })
+                        .setNegativeButton("No", null).show();
+                return false;
+            }
+        });
+
+        preferenceRestartScore1C.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                new AlertDialog.Builder(getActivity()).setTitle("Reset Score")
+                        .setMessage("Are you sure you want to reset your score for level 1C?")
+                        .setPositiveButton("Yes",new DialogInterface.OnClickListener() { //if sure
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //SharedPreferences preferences = getActivity().getSharedPreferences("GAME_DATA", Context.MODE_PRIVATE);
+                                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putInt("score_1C",0);
                                 editor.commit(); //commits changes
                             }
 
