@@ -304,7 +304,7 @@ public class Level1bGameActivity extends Activity {
         editor.apply();
         updateScore();
         popUpScore(currentPiratePos, amount);
-        if(!preferences.getBoolean("level1CUnlocked",false) && preferences.getInt("score_1C",0)>=10)
+        if(!preferences.getBoolean("level1CUnlocked",false) && preferences.getInt("score_1B",0)>=10)
             goToLevel1C();
     }
 

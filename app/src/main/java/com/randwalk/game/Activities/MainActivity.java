@@ -15,6 +15,7 @@ import android.widget.Button;
 import com.randwalk.game.Dialogs.DevelopmentDialog;
 import com.randwalk.game.Dialogs.LearnMoreDialog;
 import com.randwalk.game.Dialogs.LockedDialog;
+import com.randwalk.game.Dialogs.LockedDialogC;
 import com.randwalk.game.R;
 import com.randwalk.game.Dialogs.ScoreLevel1Dialog;
 import com.randwalk.game.Dialogs.ScoreLevel2Dialog;
@@ -168,14 +169,14 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void startLevel1bActivityTest(View view){
-        if(preferences.getBoolean("level1BUnlocked",false))
-        {
+        //if(preferences.getBoolean("level1BUnlocked",false))
+        //{
             startActivity(new Intent(this, Level1bGameActivity.class));
-        } else {
-            FragmentManager manager = getFragmentManager();
-            LockedDialog dialog = new LockedDialog();
-            dialog.show(manager, "Level 1B Locked");
-        }
+        //} else {
+          //  FragmentManager manager = getFragmentManager();
+           // LockedDialog dialog = new LockedDialog();
+            //dialog.show(manager, "Level 1B Locked");
+        //}
     }
 
     public void startLevel2aActivityTest(View view){
@@ -194,13 +195,13 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void startLevel1cActivity(View view){
-        if(preferences.getBoolean("level1CUnlocked",false))
-        {
+        //if(preferences.getBoolean("level1CUnlocked",false))
+       // {
             startActivity(new Intent(this, Level1cGameActivity.class));
-        } else {
-            FragmentManager manager = getFragmentManager();
-            LockedDialog dialog = new LockedDialog();
-            dialog.show(manager, "Level 1C Locked");
-        }
+        //} else {
+          //  FragmentManager manager = getFragmentManager();
+            //LockedDialogC dialog = new LockedDialogC();
+            //dialog.show(manager, "Level 1C Locked");
+       // }
     }
 }
