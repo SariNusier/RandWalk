@@ -181,17 +181,17 @@ public class Level2aGameActivity extends Activity {
         activeTF++;
         float probability = activeTF/(activeTF +3);
         if(Math.random()<=probability){
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(75,50);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(tfSize+tfSize/2,tfSize);
             Random rand = new Random();
             mRnaC++;
             mrnas.add(new View(this));
             mrnas.get(mrnas.size()-1).setBackground(this.getResources().getDrawable(R.drawable.cell3));
             if(tfViews.get(drawIndex).getCoordinates().x <= mainLayout.getWidth()/2){
-                params.leftMargin = rand.nextInt(dnaLeft.getWidth()-1) + 1;
-                params.topMargin = rand.nextInt(mainLayout.getHeight() - (mainLayout.getHeight() - dnaLeft.getHeight())) + (mainLayout.getHeight() - dnaLeft.getHeight());
+                params.leftMargin = rand.nextInt(dnaLeft.getWidth()-(tfSize+tfSize/2)-1) + 1;
+                params.topMargin = rand.nextInt(mainLayout.getHeight() - tfSize - (mainLayout.getHeight() - dnaLeft.getHeight())) + (mainLayout.getHeight() - dnaLeft.getHeight());
             }else {
-                params.leftMargin = rand.nextInt(mainLayout.getWidth() - (mainLayout.getWidth() - dnaRight.getWidth())) + (mainLayout.getWidth() - dnaRight.getWidth());
-                params.topMargin = rand.nextInt(mainLayout.getHeight() - (mainLayout.getHeight() - dnaLeft.getHeight())) + (mainLayout.getHeight() - dnaLeft.getHeight());
+                params.leftMargin = rand.nextInt(mainLayout.getWidth() - (tfSize+tfSize/2) - (mainLayout.getWidth() - dnaRight.getWidth())) + (mainLayout.getWidth() - dnaRight.getWidth());
+                params.topMargin = rand.nextInt(mainLayout.getHeight() - tfSize - (mainLayout.getHeight() - dnaLeft.getHeight())) + (mainLayout.getHeight() - dnaLeft.getHeight());
             }
 
             mainLayout.addView(mrnas.get(mrnas.size()-1), params);

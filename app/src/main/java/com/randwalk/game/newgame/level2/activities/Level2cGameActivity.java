@@ -336,11 +336,11 @@ public class Level2cGameActivity extends Activity {
             mrnasTop.add(new View(this));
             mrnasTop.get(mrnasTop.size()-1).setBackground(this.getResources().getDrawable(R.drawable.cell3));
             if(tfViewsTop.get(drawIndexTop).getCoordinates().x <= mainLayoutTop.getWidth()/2){
-                params.leftMargin = rand.nextInt(dnaLeftTop.getWidth()-1) + 1;
-                params.topMargin = rand.nextInt(mainLayoutTop.getHeight() - (mainLayoutTop.getHeight() - dnaLeftTop.getHeight())) + (mainLayoutTop.getHeight() - dnaLeftTop.getHeight());
+                params.leftMargin = rand.nextInt(dnaLeftTop.getWidth()-(tfSize+tfSize/2)-1) + 1;
+                params.topMargin = rand.nextInt(mainLayoutTop.getHeight()-(tfSize) - (mainLayoutTop.getHeight() - dnaLeftTop.getHeight())) + (mainLayoutTop.getHeight() - dnaLeftTop.getHeight());
             }else {
-                params.leftMargin = rand.nextInt(mainLayoutTop.getWidth() - (mainLayoutTop.getWidth() - dnaRightTop.getWidth())) + (mainLayoutTop.getWidth() - dnaRightTop.getWidth());
-                params.topMargin = rand.nextInt(mainLayoutTop.getHeight() - (mainLayoutTop.getHeight() - dnaLeftTop.getHeight())) + (mainLayoutTop.getHeight() - dnaLeftTop.getHeight());
+                params.leftMargin = rand.nextInt(mainLayoutTop.getWidth()-(tfSize+tfSize/2) - (mainLayoutTop.getWidth() - dnaRightTop.getWidth())) + (mainLayoutTop.getWidth() - dnaRightTop.getWidth());
+                params.topMargin = rand.nextInt(mainLayoutTop.getHeight()-(tfSize) - (mainLayoutTop.getHeight() - dnaLeftTop.getHeight())) + (mainLayoutTop.getHeight() - dnaLeftTop.getHeight());
             }
 
             mainLayoutTop.addView(mrnasTop.get(mrnasTop.size()-1), params);
@@ -359,11 +359,11 @@ public class Level2cGameActivity extends Activity {
             mrnasBot.add(new View(this));
             mrnasBot.get(mrnasBot.size()-1).setBackground(this.getResources().getDrawable(R.drawable.cell3));
             if(tfViewsBot.get(drawIndexBot).getCoordinates().x <= mainLayoutBot.getWidth()/2){
-                params.leftMargin = rand.nextInt(dnaLeftBot.getWidth()-1) + 1;
-                params.topMargin = rand.nextInt(mainLayoutBot.getHeight() - (mainLayoutBot.getHeight() - dnaLeftBot.getHeight())) + (mainLayoutBot.getHeight() - dnaLeftBot.getHeight());
+                params.leftMargin = rand.nextInt(dnaLeftBot.getWidth()-(tfSize+tfSize/2)-1) + 1;
+                params.topMargin = rand.nextInt(mainLayoutBot.getHeight() - (tfSize) - (mainLayoutBot.getHeight() - dnaLeftBot.getHeight())) + (mainLayoutBot.getHeight() - dnaLeftBot.getHeight());
             }else {
-                params.leftMargin = rand.nextInt(mainLayoutBot.getWidth() - (mainLayoutBot.getWidth() - dnaRightBot.getWidth())) + (mainLayoutBot.getWidth() - dnaRightBot.getWidth());
-                params.topMargin = rand.nextInt(mainLayoutBot.getHeight() - (mainLayoutBot.getHeight() - dnaLeftBot.getHeight())) + (mainLayoutBot.getHeight() - dnaLeftBot.getHeight());
+                params.leftMargin = rand.nextInt(mainLayoutBot.getWidth() - (tfSize+tfSize/2) - (mainLayoutBot.getWidth() - dnaRightBot.getWidth())) + (mainLayoutBot.getWidth() - dnaRightBot.getWidth());
+                params.topMargin = rand.nextInt(mainLayoutBot.getHeight() - (tfSize) - (mainLayoutBot.getHeight() - dnaLeftBot.getHeight())) + (mainLayoutBot.getHeight() - dnaLeftBot.getHeight());
             }
 
             mainLayoutBot.addView(mrnasBot.get(mrnasBot.size()-1), params);
