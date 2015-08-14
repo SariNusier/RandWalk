@@ -417,6 +417,7 @@ public class Level1aGameActivity extends Activity {
 
     public void goToLevel1B(){
         editor.putBoolean("level1BUnlocked",true);
+        editor.commit();
         startActivity(new Intent(this, Level1bGameActivity.class));
         finish();
     }

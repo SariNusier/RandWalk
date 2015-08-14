@@ -45,10 +45,10 @@ public class MainActivity extends ActionBarActivity {
         else
             editor.putBoolean("level1BUnlocked",true);
 
-        if(preferences.getInt("score_1C",0) <=10){
-            editor.putBoolean("levelCUnlocked",false);
+        if(preferences.getInt("score_1B",0) <=10){
+            editor.putBoolean("level1CUnlocked",false);
         } else
-            editor.putBoolean("level2Cunlocked",true);
+            editor.putBoolean("level1CUnlocked",true);
 
         editor.commit();
 
@@ -169,14 +169,14 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void startLevel1bActivityTest(View view){
-        //if(preferences.getBoolean("level1BUnlocked",false))
-        //{
+        if(preferences.getBoolean("level1BUnlocked",false))
+        {
             startActivity(new Intent(this, Level1bGameActivity.class));
-        //} else {
-          //  FragmentManager manager = getFragmentManager();
-           // LockedDialog dialog = new LockedDialog();
-            //dialog.show(manager, "Level 1B Locked");
-        //}
+        } else {
+            FragmentManager manager = getFragmentManager();
+            LockedDialog dialog = new LockedDialog();
+            dialog.show(manager, "Level 1B Locked");
+        }
     }
 
     public void startLevel2aActivityTest(View view){
@@ -195,13 +195,13 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void startLevel1cActivity(View view){
-        //if(preferences.getBoolean("level1CUnlocked",false))
-       // {
+        if(preferences.getBoolean("level1CUnlocked",false))
+       {
             startActivity(new Intent(this, Level1cGameActivity.class));
-        //} else {
-          //  FragmentManager manager = getFragmentManager();
-            //LockedDialogC dialog = new LockedDialogC();
-            //dialog.show(manager, "Level 1C Locked");
-       // }
+        } else {
+           FragmentManager manager = getFragmentManager();
+            LockedDialogC dialog = new LockedDialogC();
+            dialog.show(manager, "Level 1C Locked");
+        }
     }
 }
