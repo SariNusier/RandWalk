@@ -6,17 +6,22 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.randwalk.game.R;
 import com.randwalk.game.newgame.level2.views.Level2aPathView;
 import com.randwalk.game.newgame.level2.views.TFView;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
 
 public class Level2aGameActivity extends Activity {
 
@@ -26,6 +31,7 @@ public class Level2aGameActivity extends Activity {
     TextView guideText, endGuideText, textViewIntro;
     Level2aPathView pathView;
     RelativeLayout mainLayout;
+    ProgressBar pb;
     Animator.AnimatorListener animatorListener, guideAnimationListener;
     int drawIndex , animationDuration;
     float activeTF = 0, mRnaC = 0;
@@ -35,6 +41,7 @@ public class Level2aGameActivity extends Activity {
     String subLevel;
     boolean walking = false;
     boolean toRestart = true;
+    boolean allowedToSplit = false;
     int tfSize, finishedCounter;
 
     @Override
@@ -55,14 +62,19 @@ public class Level2aGameActivity extends Activity {
         endGuideText = (TextView) findViewById(R.id.level2a_end_guide_textview);
         Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/goudy.ttf");
         textViewIntro = (TextView) findViewById(R.id.level2a_intro_textview);
+        pb = (ProgressBar) findViewById(R.id.level2a_prograssbar);
         textViewIntro.setTypeface(typeface);
         endGuideText.setVisibility(View.INVISIBLE);
         tfSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
         Log.d("SUBLEVEL:", subLevel);
         if(subLevel.equals("A"))
             animationDuration = 1;
-        else
+        else{
             animationDuration = 100;
+            endGuideText.setTypeface(null, Typeface.BOLD);
+            showEndGuide("Position TFs on the shaded line and tap to start their movement.");
+        }
+
 
 
         guideText.setAlpha(0);
@@ -145,6 +157,9 @@ public class Level2aGameActivity extends Activity {
             }
         };
 
+
+
+
     }
 
     public void placeTF(MotionEvent event){
@@ -172,6 +187,22 @@ public class Level2aGameActivity extends Activity {
             if(subLevel.equals("B")) {
                 incrementDrawIndex();
                 findViewById(R.id.level2_line_view).setVisibility(View.VISIBLE);
+                pb.setVisibility(View.VISIBLE);
+                showEndGuide("When the time is over, swipe on the dashed line to divide the cell.");
+                new CountDownTimer(10000, 100) {
+
+                    public void onTick(long millisUntilFinished) {
+                        pb.setProgress(100 - (int)(millisUntilFinished/100));
+                        if(millisUntilFinished<5000){
+                           showEndGuide("The cell is almost ready to divide...");
+                        }
+                    }
+
+                    public void onFinish() {
+                        showEndGuide("GO!");
+                        allowedToSplit = true;
+                    }
+                }.start();
             }
         }
     }
@@ -202,7 +233,7 @@ public class Level2aGameActivity extends Activity {
     public void finishWalk(){
         toRestart = true;
         mainLayout.setBackgroundColor(getResources().getColor(colors[mrnas.size()]));
-        showEndGuide();
+        showEndGuide(getResources().getString(R.string.level2a_endText));
 
         pathView.restart();
 
@@ -218,7 +249,8 @@ public class Level2aGameActivity extends Activity {
         mRnaC = 0;
         tfViews.clear();
         mrnas.clear();
-        endGuideText.setVisibility(View.INVISIBLE);
+        if(subLevel.equals("A"))
+            endGuideText.setVisibility(View.INVISIBLE);
         mainLayout.setBackgroundColor(getResources().getColor(R.color.level2_game_background));
     }
 
@@ -266,7 +298,8 @@ public class Level2aGameActivity extends Activity {
         guideText.animate().alpha(1).setDuration(1000).setListener(guideAnimationListener);
     }
 
-    public void showEndGuide(){
+    public void showEndGuide(String text){
+        endGuideText.setText(text);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(endGuideText.getLayoutParams());
         params.leftMargin = leftSideView.getWidth();
         params.rightMargin = rightSideView.getWidth();
@@ -292,7 +325,7 @@ public class Level2aGameActivity extends Activity {
     }
 
     public void splitLevel(){
-        if(subLevel.equals("B") && walking){
+        if(subLevel.equals("B") && walking && allowedToSplit){
             int leftSideTFs = 0;
             int rightSideTFs = 0;
             Intent intent = new Intent(this,Level2cGameActivity.class);

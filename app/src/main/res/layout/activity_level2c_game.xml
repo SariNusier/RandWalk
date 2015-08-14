@@ -379,5 +379,33 @@
     </com.randwalk.game.newgame.level2.views.Level2cMainLayout>
 </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/animation_frame_17"
+        android:id="@+id/level2c_intro_layout">
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/level2c_intro_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:text="Now the two cells evolve independently! Observe how different mRNAs lead to different colours"/>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/level2c_intro_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_action_forward"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:onClick="nextIntro" />
+
+    </RelativeLayout>
 </RelativeLayout>

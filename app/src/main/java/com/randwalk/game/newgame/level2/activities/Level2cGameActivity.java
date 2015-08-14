@@ -424,4 +424,8 @@ public class Level2cGameActivity extends Activity {
         }
     }
 
+    public void nextIntro(View v){
+        findViewById(R.id.level2c_intro_layout).setVisibility(View.GONE);
+    }
+
 }
