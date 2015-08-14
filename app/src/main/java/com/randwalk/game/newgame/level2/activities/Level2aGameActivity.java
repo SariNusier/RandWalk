@@ -247,6 +247,16 @@ public class Level2aGameActivity extends Activity {
         showGuide(v);
     }
 
+    public void showNucleous(View v){
+        guideText.setText("Nucleous");
+        int[] locationV = new int[2];
+        v.getLocationOnScreen(locationV);
+
+        guideText.setX(mainLayout.getWidth()/2 - guideText.getWidth()/2);
+        guideText.setY(locationV[1] - guideText.getHeight());
+        guideText.animate().alpha(1).setDuration(1000).setListener(guideAnimationListener);
+    }
+
     public void showGuide(View v){
         int[] locationV = new int[2];
         v.getLocationOnScreen(locationV);
