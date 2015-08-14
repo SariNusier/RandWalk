@@ -15,6 +15,7 @@ import android.widget.Button;
 import com.randwalk.game.Dialogs.DevelopmentDialog;
 import com.randwalk.game.Dialogs.LearnMoreDialog;
 import com.randwalk.game.Dialogs.LockedDialog;
+import com.randwalk.game.Dialogs.LockedDialog2C;
 import com.randwalk.game.Dialogs.LockedDialogC;
 import com.randwalk.game.R;
 import com.randwalk.game.Dialogs.ScoreLevel1Dialog;
@@ -187,11 +188,19 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void startLevel2cActivity(View view){
-        Intent intent = new Intent(this, Level2cGameActivity.class);
-        Random r = new Random();
-        intent.putExtra("left_TFs",r.nextInt(4)+1);
-        intent.putExtra("right_TFs",r.nextInt(4)+1);
-        startActivity(intent);
+        if(preferences.getBoolean("level2CUnlocked",false)){
+            Intent intent = new Intent(this, Level2cGameActivity.class);
+            Random r = new Random();
+            intent.putExtra("left_TFs",r.nextInt(4)+1);
+            intent.putExtra("right_TFs",r.nextInt(4)+1);
+            startActivity(intent);
+        }
+        else
+        {
+            FragmentManager manager = getFragmentManager();
+            LockedDialog2C dialog = new LockedDialog2C();
+            dialog.show(manager, "Level 2C Locked");
+        }
     }
 
     public void startLevel1cActivity(View view){

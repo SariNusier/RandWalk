@@ -3,8 +3,10 @@ package com.randwalk.game.newgame.level2.activities;
 import android.animation.Animator;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -64,6 +66,11 @@ public class Level2cGameActivity extends Activity {
         tfViewsTop = new ArrayList<>();
         mrnasTop = new ArrayList<>();
         mrnasBot = new ArrayList<>();
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("level2CUnlocked",true);
+        editor.commit();
          w = getWindowManager().getDefaultDisplay().getWidth();
 
         h = getWindowManager().getDefaultDisplay().getHeight();
