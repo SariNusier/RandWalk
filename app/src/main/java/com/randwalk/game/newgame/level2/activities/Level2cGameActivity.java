@@ -2,6 +2,8 @@ package com.randwalk.game.newgame.level2.activities;
 
 import android.animation.Animator;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
@@ -33,6 +35,7 @@ public class Level2cGameActivity extends Activity {
     int[] colors = {R.color.Bk0,R.color.Bk1,R.color.Bk2,R.color.Bk3,R.color.Bk4,R.color.Bk5,R.color.Bk6,R.color.Bk7,R.color.Bk8,R.color.Bk9};
     int tfSize, drawIndexTop = 0, drawIndexBot = 0;
     int finishCounterTop = 0, finishCounterBot = 0;
+    public int finished = 0;
     boolean walking = false;
     ArrayList<View> mrnasTop, mrnasBot;
     float activeTFTop = 0, activeTFBot = 0;
@@ -214,10 +217,12 @@ public class Level2cGameActivity extends Activity {
 
     public void finishWalkTop(){
         mainLayoutTop.setBackgroundColor(getResources().getColor(colors[mrnasTop.size()]));
+        finished++;
     }
 
     public void finishWalkBot(){
         mainLayoutBot.setBackgroundColor(getResources().getColor(colors[mrnasBot.size()]));
+        finished++;
     }
 
 
@@ -433,6 +438,37 @@ public class Level2cGameActivity extends Activity {
 
     public void nextIntro(View v){
         findViewById(R.id.level2c_intro_layout).setVisibility(View.GONE);
+    }
+
+    public void endLevel(){
+//        new AlertDialog.Builder(this).
+
+        new AlertDialog.Builder(this).setTitle("Game Over")
+                .setMessage("Where would you like to restart from?")
+                .setPositiveButton("Level 2B", new DialogInterface.OnClickListener() { //if sure
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Intent intent = new Intent(getApplicationContext(), Level2aGameActivity.class);
+                        intent.putExtra("SUB_LEVEL","B");
+                        startActivity(intent);
+                        finish();
+                    }
+
+                })
+                .setNegativeButton("Level 2C", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getApplicationContext(), Level2cGameActivity.class);
+                        Random r = new Random();
+                        intent.putExtra("left_TFs",r.nextInt(4)+1);
+                        intent.putExtra("right_TFs",r.nextInt(4)+1);
+                        startActivity(intent);
+                        finish();
+                    }
+                }).show();
     }
 
 }

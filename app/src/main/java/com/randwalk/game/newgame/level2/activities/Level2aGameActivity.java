@@ -228,6 +228,7 @@ public class Level2aGameActivity extends Activity {
             mainLayout.addView(mrnas.get(mrnas.size()-1), params);
         }
         tfViews.get(drawIndex).setBackground(this.getResources().getDrawable(R.drawable.cell2));
+        mainLayout.setBackgroundColor(getResources().getColor(colors[mrnas.size()]));
     }
     public void outsideActiveRegion(){}
     public void finishWalk(){

@@ -73,8 +73,13 @@ public class Level2cMainLayout extends RelativeLayout implements View.OnTouchLis
         // event when double tap occurs
         @Override
         public boolean onDoubleTap(MotionEvent event) {
-            parentActivity.startWalkTop();
-            parentActivity.startWalkBot();
+            if(parentActivity.finished == 2){
+                parentActivity.endLevel();
+            }
+             else {
+                parentActivity.startWalkTop();
+                parentActivity.startWalkBot();
+            }
             return true;
         }
 

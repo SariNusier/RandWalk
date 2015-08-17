@@ -69,12 +69,13 @@
                     android:background="@drawable/endopl"
                     android:onClick="showEndopl" />
             </RelativeLayout>
-            <View
+            <ImageView
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="10"
-                android:background="@drawable/start_surface_2"
+                android:src="@drawable/start_surface_2"
                 android:id="@+id/level2a_startarea_view"
+                android:scaleType="centerCrop"
                 android:layout_marginBottom="5dp" />
             <RelativeLayout
                 android:layout_width="wrap_content"
