@@ -168,7 +168,7 @@ public class Level2aGameActivity extends Activity {
             toRestart = false;
         }
         if(event.getY() <= startAreaView.getHeight() && event.getX() > leftSideView.getWidth() && event.getX() < rightSideView.getX()
-                && tfViews.size()<10 && !walking) {
+                && tfViews.size()<8 && !walking) {
             tfViews.add(new TFView(this, new Point((int) event.getX(), startAreaView.getHeight() / 2)));
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(tfSize, tfSize);
             params.leftMargin = Math.round(event.getX());
