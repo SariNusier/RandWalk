@@ -14,7 +14,8 @@
             android:padding="10dp"
             android:paddingTop="15dp"
             android:text="@string/about_us_main_menu"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:autoLink="web"/>
 
     </ScrollView>
 

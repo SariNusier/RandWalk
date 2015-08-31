@@ -29,6 +29,7 @@ public class AboutUsDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setTitle("About Us");
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.shape1);
         return dialog;
     }
 

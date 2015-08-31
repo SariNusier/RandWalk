@@ -12,18 +12,11 @@
     <string name="intro_level2A"></string>
     <string name="guite_level2a"></string>
     <string name="learn_more_main_menu">
-        Pirate’s walk:\n A mathematician would describe the pirate\'s movement as a “random walk” - because all the steps pirate takes have different lengths and seem to be in arbitrary direction. These processes, which include series of chance moves, are widespread in both daily life and scientific research: click here to learn about some examples.
-\n\nParrot\’s feather:\n Scientists have recently thought that randomness in the process of gene expression can be a major source of phenotype variability. It means that every individual in a population of living organisms is unique and differs from anyone else, even its twin or clone, in appearance and behaviour. Click here to learn about this phenomenon.
+        Pirate’s walk:\n A mathematician would describe the pirate\'s movement as a “random walk” - because all the steps pirate takes have different lengths and seem to be in arbitrary direction. These processes, which include series of chance moves, are widespread in both daily life and scientific research: follow the link to see some examples: http://goo.gl/6ljFpC .
+\n\nParrot\’s feather:\n Scientists have recently thought that randomness in the process of gene expression can be a major source of phenotype variability. It means that every individual in a population of living organisms is unique and differs from anyone else, even its twin or clone, in appearance and behaviour. Follow the link to learn about this phenomenon http://goo.gl/eLEFNc .
     </string>
     <string name="about_us_main_menu">
-        The team:\nThe project “Random Walks” is created by Aleksandra Aloric, Silvia Bartolucci and Barbara Bravi, PhD students in the Disordered Systems group, King\'s College Mathematics department.\nThe app is developed by Sari Nusier, a Bachelor student of Computer Science and Management at King\'s College London.\nThe graphics is designed by Anne Odling Smee, Director of Design Science.\n\nFor more information visit our webpage.\n\nAcknowledgements:\nKing\’s College Cultural Institute Early Career Researchers (ECR) scheme and NETADIS (FP7 – Grant 290038).\n\n\n\n\n\n\n\nDisordered Systems:/n http://www.kcl.ac.uk/nms/depts/mathematics/research/disorderedsys/index.aspx\n\n
-
-Design Science:\nhttp://design-science.co.uk\n\n
-
-Cultural Institute:\nhttp://www.kcl.ac.uk/cultural/culturalinstitute/index.aspx\n\n
-
-NETADIS:\nhttps://netadis.wordpress.com\n\n
-
+        The team:\nThe project “Random Walks” is created by Aleksandra Aloric, Silvia Bartolucci and Barbara Bravi, PhD students in the Disordered Systems group, King\'s College Mathematics department.\nThe app is developed by Sari Nusier, a Bachelor student of Computer Science and Management at King\'s College London.\nThe graphics is designed by Anne Odling Smee, Director of Design Science.\n\nFor more information visit our website at http://goo.gl/DFq44C.\n\nAcknowledgements:\nKing\’s College Cultural Institute Early Career Researchers (ECR) scheme and NETADIS (FP7 – Grant 290038).\n\n\n\n\n\n\n\nDisordered Systems:\n http://www.kcl.ac.uk/nms/depts/mathematics/research/disorderedsys/index.aspx\n\nDesign Science:\nhttp://design-science.co.uk\n\nCultural Institute:\nhttp://www.kcl.ac.uk/cultural/culturalinstitute/index.aspx\n\nNETADIS:\nhttps://netadis.wordpress.com\n\n
     </string>
     <string name="level2A_text">        You are about to enter one of the parrot\'s feather cell, where you will explore why each of these animals appear so colourful and diverse!\n\nNow instead following a pirate, follow the movements of big molecules - transcription factors inside the cell. As the transcription factors take part in the process called “gene expression” and play important role enabling the creation of mRNAs - try to create as much as possible of them!</string>
     <string name= "level2a_endText">Transcription factors are constantly colliding with organelles and other smaller molecules

@@ -29,6 +29,7 @@ public class LearnMoreDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setTitle("Learn More");
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.shape2);
         return dialog;
     }
 
