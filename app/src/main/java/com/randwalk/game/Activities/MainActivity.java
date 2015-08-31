@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.randwalk.game.Dialogs.AboutUsDialog;
 import com.randwalk.game.Dialogs.DevelopmentDialog;
 import com.randwalk.game.Dialogs.LearnMoreDialog;
 import com.randwalk.game.Dialogs.LockedDialog;
@@ -73,7 +74,8 @@ public class MainActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int idItemSelected = item.getItemId(); //gets the id of the item that was selected
-
+        if(idItemSelected == R.id.action_about_us)
+            showAboutUsDialog();
         if(idItemSelected == R.id.action_learn_more)
             showLearnMoreDialog(); //calls the method that shows the dialog with the "about" text
         if(idItemSelected == R.id.action_settings)
@@ -90,6 +92,12 @@ public class MainActivity extends ActionBarActivity {
         FragmentManager manager = getFragmentManager();
         LearnMoreDialog dialog = new LearnMoreDialog();
         dialog.show(manager,"Learn More");
+    }
+
+    public void showAboutUsDialog(){
+        FragmentManager manager = getFragmentManager();
+        AboutUsDialog dialog = new AboutUsDialog();
+        dialog.show(manager,"About Us");
     }
 
     /**

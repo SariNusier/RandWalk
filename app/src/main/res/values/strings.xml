@@ -11,23 +11,20 @@
     <string name="intro_level1B">\n\n\n\nThis time, pirate is not moving alone, he has your help! You will be able to help by tilting the phone and thus forcing his direction towards the boat. \n\n\n\nHowever, he\'s very strong and the movement has a great deal of randomness still. Try couple of times - until you arrive home and understand how the walk is modified by your help - the drift.</string>
     <string name="intro_level2A"></string>
     <string name="guite_level2a"></string>
-    <string name="learn_more_main_menu">        The parrot\’s feather coloration
-        pattern doesn\’t look like a
-        perfect copy of its parents\’ one, with whom it shares the genetic heritage. Genetic
-        differences occur due to a rearrangement of DNA during the reproduction (“crossover”) and
-        unpredictable mutations.\n \n
-        In general, patterns of pigmentation in multicoloured animals is not controlled only by their set of genes
-        (“genotype”) but also the history and the environment contribute to their variability. \n
-        Even if we could select the same genes, follow the same history, expose cells to the same
-    environment, still organisms would display some difference in their observable features ("phenotype").
-    \n \n Scientists have recently thought that randomness in the process of gene expression can be a
-     major source of phenotype variability. It means that, if molecules of a specific type exist in few copies inside a cell,
-     random effects stemming from their random walks can become important. \n \n What does it imply at the end of the day? Every
-     individual in a population of living organisms is unique and differs from anyone else, even its twin or clone,
-     in appearance and behaviour. \n \n Biologists refer to variation in measured levels of gene
-    expression products(e.g. proteins) as "noise", regardless of the source. They call "extrinsic"
-     the noise due to microscopic cell-to-cell differences of environment and history, "intrinsic" the
-    one due to random fluctuations."</string>
+    <string name="learn_more_main_menu">
+        Pirate’s walk:\n A mathematician would describe the pirate\'s movement as a “random walk” - because all the steps pirate takes have different lengths and seem to be in arbitrary direction. These processes, which include series of chance moves, are widespread in both daily life and scientific research: click here to learn about some examples.
+\n\nParrot\’s feather:\n Scientists have recently thought that randomness in the process of gene expression can be a major source of phenotype variability. It means that every individual in a population of living organisms is unique and differs from anyone else, even its twin or clone, in appearance and behaviour. Click here to learn about this phenomenon.
+    </string>
+    <string name="about_us_main_menu">
+        The team:\nThe project “Random Walks” is created by Aleksandra Aloric, Silvia Bartolucci and Barbara Bravi, PhD students in the Disordered Systems group, King\'s College Mathematics department.\nThe app is developed by Sari Nusier, a Bachelor student of Computer Science and Management at King\'s College London.\nThe graphics is designed by Anne Odling Smee, Director of Design Science.\n\nFor more information visit our webpage.\n\nAcknowledgements:\nKing\’s College Cultural Institute Early Career Researchers (ECR) scheme and NETADIS (FP7 – Grant 290038).\n\n\n\n\n\n\n\nDisordered Systems:/n http://www.kcl.ac.uk/nms/depts/mathematics/research/disorderedsys/index.aspx\n\n
+
+Design Science:\nhttp://design-science.co.uk\n\n
+
+Cultural Institute:\nhttp://www.kcl.ac.uk/cultural/culturalinstitute/index.aspx\n\n
+
+NETADIS:\nhttps://netadis.wordpress.com\n\n
+
+    </string>
     <string name="level2A_text">        You are about to enter one of the parrot\'s feather cell, where you will explore why each of these animals appear so colourful and diverse!\n\nNow instead following a pirate, follow the movements of big molecules - transcription factors inside the cell. As the transcription factors take part in the process called “gene expression” and play important role enabling the creation of mRNAs - try to create as much as possible of them!</string>
     <string name= "level2a_endText">Transcription factors are constantly colliding with organelles and other smaller molecules
     which forces them to "random walk" and have variable chances to reach the promoter region. Also mRNAs are created with a certain probability (see learn more):
