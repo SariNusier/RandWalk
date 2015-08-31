@@ -62,7 +62,7 @@ public class Level2aGameActivity extends Activity {
         endGuideText = (TextView) findViewById(R.id.level2a_end_guide_textview);
         Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/goudy.ttf");
         textViewIntro = (TextView) findViewById(R.id.level2a_intro_textview);
-        pb = (ProgressBar) findViewById(R.id.level2a_prograssbar);
+        pb = (ProgressBar) findViewById(R.id.level2a_progressbar);
         textViewIntro.setTypeface(typeface);
         endGuideText.setVisibility(View.INVISIBLE);
         tfSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());

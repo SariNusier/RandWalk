@@ -140,7 +140,9 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/level2a_nucleous_view"
             android:visibility="invisible"
-            android:id="@+id/level2a_prograssbar"/>
+            android:id="@+id/level2a_progressbar"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
