@@ -169,6 +169,7 @@
                 android:background="@drawable/dna_l"
                 android:layout_weight="1"
                 android:layout_gravity="bottom"
+                android:onClick="showDNA"
                 android:id="@+id/level2a_dna_left_view" />
 
             <View
@@ -177,6 +178,7 @@
                 android:background="@drawable/dna_c"
                 android:layout_weight="1"
                 android:layout_gravity="bottom"
+                android:onClick="showDNA"
                 android:id="@+id/level2a_dna_mid_view" />
 
             <View
@@ -185,6 +187,7 @@
                 android:background="@drawable/dna_r"
                 android:layout_weight="1"
                 android:layout_gravity="bottom"
+                android:onClick="showDNA"
                 android:id="@+id/level2a_dna_right_view" />
             </LinearLayout>
             </LinearLayout>

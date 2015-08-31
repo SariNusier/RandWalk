@@ -279,6 +279,10 @@ public class Level2aGameActivity extends Activity {
         guideText.setText("Golgi apparatus");
         showGuide(v);
     }
+    public void showDNA(View v){
+        guideText.setText("DNA");
+        showGuide(v);
+    }
 
     public void showNucleous(View v){
         guideText.setText("Nucleous");
