@@ -7,12 +7,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.randwalk.game.R;
 import com.randwalk.game.newgame.level2.views.Level2aPathView;
@@ -29,6 +31,7 @@ public class Level2cGameActivity extends Activity {
     ArrayList<TFView> tfViewsTop, tfViewsBot;
     View startAreaViewTop, startAreaViewBot, leftSideViewTop, rightSideViewTop, leftSideViewBot, rightSideViewBot,
     dnaMidTop, dnaMidBot, dnaLeftTop, dnaLeftBot, dnaRightTop, dnaRightBot;
+    TextView textViewIntro;
     Level2aPathView pathViewTop, pathViewBot;
     Animator.AnimatorListener animatorListenerTop, animatorListenerBot;
     int w, h;
@@ -65,6 +68,9 @@ public class Level2cGameActivity extends Activity {
         dnaLeftBot = findViewById(R.id.level2c_dna_left_view_bottom);
         dnaRightTop = findViewById(R.id.level2c_dna_right_view_top);
         dnaRightBot = findViewById(R.id.level2c_dna_right_view_bottom);
+        Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/goudy.ttf");
+        textViewIntro = (TextView) findViewById(R.id.level2c_intro_textview);
+        textViewIntro.setTypeface(typeface);
         tfViewsBot = new ArrayList<>();
         tfViewsTop = new ArrayList<>();
         mrnasTop = new ArrayList<>();
