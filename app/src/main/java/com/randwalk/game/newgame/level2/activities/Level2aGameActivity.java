@@ -144,7 +144,7 @@ public class Level2aGameActivity extends Activity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                guideText.animate().alpha(0).setDuration(1000);
+                guideText.animate().alpha(0).setDuration(2000);
             }
 
             @Override
@@ -284,6 +284,10 @@ public class Level2aGameActivity extends Activity {
         guideText.setText("DNA");
         showGuide(v);
     }
+    public void showDnaPromoter(View v){
+        guideText.setText("DNA promoter region");
+        showGuide(v);
+    }
 
     public void showNucleous(View v){
         guideText.setText("Nucleous");
@@ -301,7 +305,7 @@ public class Level2aGameActivity extends Activity {
 
         guideText.setX(mainLayout.getWidth()/2 - v.getWidth()/2);
         guideText.setY(locationV[1] +10);
-        guideText.animate().alpha(1).setDuration(1000).setListener(guideAnimationListener);
+        guideText.animate().alpha(1).setDuration(2000).setListener(guideAnimationListener);
     }
 
     public void showEndGuide(String text){

@@ -178,7 +178,7 @@
                 android:background="@drawable/dna_c"
                 android:layout_weight="1"
                 android:layout_gravity="bottom"
-                android:onClick="showDNA"
+                android:onClick="showDnaPromoter"
                 android:id="@+id/level2a_dna_mid_view" />
 
             <View
