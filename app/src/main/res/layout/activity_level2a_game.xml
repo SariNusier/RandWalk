@@ -227,6 +227,7 @@
                  android:layout_margin="15dp"
                  android:textSize="20sp"
                  android:textColor="#ffffff"
+                 android:autoLink="web"
                  android:text="@string/level2A_text"/>
          </ScrollView>
 

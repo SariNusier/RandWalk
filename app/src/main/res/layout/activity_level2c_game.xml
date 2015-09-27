@@ -395,7 +395,7 @@
                 android:layout_margin="15dp"
                 android:textSize="20sp"
                 android:textColor="#ffffff"
-                android:text="Now the two cells evolve independently! Observe how different mRNAs lead to different colours"/>
+                android:text="@string/level2C_text"/>
         </ScrollView>
 
         <Button

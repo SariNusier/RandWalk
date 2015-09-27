@@ -72,7 +72,8 @@ public class Level2aGameActivity extends Activity {
         else{
             animationDuration = 100;
             endGuideText.setTypeface(null, Typeface.BOLD);
-            showEndGuide("Position TFs on the shaded line and tap to start their movement.");
+            showEndGuide("Tap to position 10 transcription factors in the shaded region and double tap to start their random walk.");
+            textViewIntro.setText(getResources().getString(R.string.level2B_text));
         }
 
 
