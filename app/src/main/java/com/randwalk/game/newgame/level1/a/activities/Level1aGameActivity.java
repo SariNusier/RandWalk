@@ -10,7 +10,9 @@ import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.util.Pair;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +56,7 @@ public class Level1aGameActivity extends Activity {
     boolean fadeIn;
 
     int sig_Y=15;//this is stdev for normal distribution along Y axes
-    int d=3;//this is step along x axis
+    int d = 3;//this is step along x axis
 
     float startingPoint, finalPointX, finalPointY, length = 0;
     int random_X,random_Y;
@@ -64,6 +66,7 @@ public class Level1aGameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level1a_game);
+        d = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, d, getResources().getDisplayMetrics());
         mainLayout = (RelativeLayout) findViewById(R.id.level1a_mainlayout);
         introLayout = (RelativeLayout) findViewById(R.id.level1a_intro_layout);
         startAreaView = findViewById(R.id.level1a_startarea_view);

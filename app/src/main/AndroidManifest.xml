@@ -104,7 +104,8 @@
         <activity
             android:name=".newgame.level1.c.activities.Level1cGameActivity"
             android:label="@string/title_activity_level1c_game"
-            android:parentActivityName=".Activities.MainActivity" >
+            android:parentActivityName=".Activities.MainActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.randwalk.game.Activities.MainActivity" />

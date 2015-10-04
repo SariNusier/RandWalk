@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 
 import com.randwalk.game.R;
@@ -15,7 +16,7 @@ public class TFView extends View {
     Point coordinates;
     Point prevCoordinates;
     int sig_Y=15;//this is stdev for normal distribution along Y axes
-    int d=50;//this is step along x axis
+    int d=16;//this is step along x axis
     int random_X,random_Y;
     boolean bounced = false;
     public boolean finished = false;
@@ -24,6 +25,7 @@ public class TFView extends View {
         super(context, attrs);
         Drawable background = this.getResources().getDrawable(R.drawable.cell1);
         this.setBackground(background);
+        d = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, d, getResources().getDisplayMetrics());
     }
 
     public TFView(Context context, Point coordinates){
@@ -32,7 +34,7 @@ public class TFView extends View {
         //prevCoordinates = coordinates;
         Drawable background = this.getResources().getDrawable(R.drawable.cell1);
         this.setBackground(background);
-
+        d = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, d, getResources().getDisplayMetrics());
     }
 
     public Point getCoordinates(){

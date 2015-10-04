@@ -15,6 +15,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Pair;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,7 @@ public class Level1bGameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level1b_game);
+        d = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, d, getResources().getDisplayMetrics());
         mainLayout = (RelativeLayout) findViewById(R.id.level1b_mainlayout);
         introLayout = (RelativeLayout) findViewById(R.id.level1b_intro_layout);
         startAreaView = findViewById(R.id.level1b_startarea_view);

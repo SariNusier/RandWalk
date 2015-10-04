@@ -7,6 +7,7 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,6 +22,7 @@ public class Level1aPathView extends View {
     WindowManager wm;
     Display display;
     int[] colors;
+    int strokeWidth = 1;
     int indexColor = 0;
     public Level1aPathView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -33,7 +35,8 @@ public class Level1aPathView extends View {
         //colors[2] = getResources().getColor(R.color.BlueLine);
         colors[2] = getResources().getColor(R.color.RedLine);
         walkPaint.setColor(getColorToUse());
-        walkPaint.setStrokeWidth(3);
+        strokeWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, strokeWidth, getResources().getDisplayMetrics());
+        walkPaint.setStrokeWidth(strokeWidth);
         walkPaint.setPathEffect(new DashPathEffect(new float[]{4, 4}, 0));
         walkBitmap = Bitmap.createBitmap(display.getWidth(),display.getHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(walkBitmap);
