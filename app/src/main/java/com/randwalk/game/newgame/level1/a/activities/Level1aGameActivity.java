@@ -387,7 +387,7 @@ public class Level1aGameActivity extends Activity {
 
         scorePopUp.setX( mainLayout.getWidth() - scorePopUp.getWidth() * 1.5f );
         scorePopUp.setY(coordinate.y);
-        scorePopUp.setText("+"+amount);
+        scorePopUp.setText("+" + amount);
         scorePopUp.setVisibility(View.VISIBLE);
         scorePopUp.animate().y(coordinate.y - 150).setDuration(500).setListener(scorePopUpAnimListener);
     }
@@ -423,12 +423,5 @@ public class Level1aGameActivity extends Activity {
         editor.commit();
         startActivity(new Intent(this, Level1bGameActivity.class));
         finish();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        pathView.recycleBM();
-        System.gc();
     }
 }

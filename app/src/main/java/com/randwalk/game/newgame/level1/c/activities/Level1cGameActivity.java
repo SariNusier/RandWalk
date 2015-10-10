@@ -425,10 +425,4 @@ public class Level1cGameActivity extends Activity {
         startActivity(new Intent(this, Level1bGameActivity.class));
         finish();
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        pathView.recycleBM();
-    }
 }
