@@ -426,4 +426,9 @@ public class Level1cGameActivity extends Activity {
         finish();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        pathView.recycleBM();
+    }
 }

@@ -2,11 +2,13 @@ package com.randwalk.game.newgame.level2.views;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
@@ -58,6 +60,11 @@ public class Level2aPathView extends View {
         walkBitmap = Bitmap.createBitmap(display.getWidth(),display.getHeight(), Bitmap.Config.ARGB_8888);
         canvas.setBitmap(walkBitmap);
         invalidate();
+    }
+
+    public void recycleBM() {
+        walkBitmap.recycle();
+        Log.d("Recycled bitmap","");
     }
 
     public int getColorToUse(){

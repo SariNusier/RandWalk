@@ -352,4 +352,10 @@ public class Level2aGameActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        pathView.recycleBM();
+        Log.d("Calling onPause","OnPause");
+    }
 }

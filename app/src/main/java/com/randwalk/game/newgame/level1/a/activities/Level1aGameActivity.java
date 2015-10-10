@@ -425,4 +425,10 @@ public class Level1aGameActivity extends Activity {
         finish();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        pathView.recycleBM();
+        System.gc();
+    }
 }

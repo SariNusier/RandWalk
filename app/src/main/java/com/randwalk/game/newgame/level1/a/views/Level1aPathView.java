@@ -7,6 +7,7 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
@@ -57,6 +58,11 @@ public class Level1aPathView extends View {
         walkBitmap.recycle();
         walkBitmap = Bitmap.createBitmap(display.getWidth(),display.getHeight(), Bitmap.Config.ARGB_8888);
         canvas.setBitmap(walkBitmap);
+    }
+
+    public void recycleBM() {
+        walkBitmap.recycle();
+        Log.d("Recycled bitmap", "");
     }
 
     public int getColorToUse(){
