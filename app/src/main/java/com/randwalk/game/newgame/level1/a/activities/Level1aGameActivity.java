@@ -10,15 +10,19 @@ import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.Pair;
 import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.randwalk.game.Other.EndpointsAsyncTask;
 import com.randwalk.game.Other.Try;
@@ -30,6 +34,9 @@ import com.randwalk.game.newgame.level1.b.activities.Level1bGameActivity;
 import java.util.Random;
 
 public class Level1aGameActivity extends Activity {
+
+    final int MAXIMUM_TRANSITION_SCORE = 10;
+
     RelativeLayout mainLayout;
     RelativeLayout introLayout;
     View startAreaView;
@@ -40,18 +47,23 @@ public class Level1aGameActivity extends Activity {
     TextView scorePopUp;
     TextView textViewIntro;
     TextView guideText;
+    TextView popIn;
     Button introButton;
     Point placedPiratePos;
     Point currentPiratePos;
     Point prevPiratePos;
     Animator.AnimatorListener animatorListener, scorePopUpAnimListener, highLightAnimListener;
-
+    String[] outText = {"Sink me!","Oups, pirate went too far, the crew returned him to the pub.",
+            "Arrrgh!!!","That Clap of Thunder killed me!"};
+    String[] missText = {"Almost there!","Splash! \"Grrr, I'll swim to the boat!\"","The crew dragged you home!","Mermaids rescued you!"};
+    String[] homeText = {"This choice seems to work - I must try again!","Yay - let me help my friends as well!","Lucky you! Chances of coming home were not that high!"};
+    String[] restartText = {"Maybe it's the time to change the bar?","Walk the plank if you'd like to visit bar again!","Ahoy! Try again!"};
     View highLightView;
-
+    Toast toast;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
-    boolean piratePlaced, isGuideOn, prefGuide;
+    boolean piratePlaced, isGuideOn, prefGuide, endTextToShow = false;
     boolean drawing = false;
     boolean fadeIn;
 
@@ -65,6 +77,7 @@ public class Level1aGameActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.gc();
         setContentView(R.layout.activity_level1a_game);
         d = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, d, getResources().getDisplayMetrics());
         mainLayout = (RelativeLayout) findViewById(R.id.level1a_mainlayout);
@@ -89,6 +102,16 @@ public class Level1aGameActivity extends Activity {
         scorePopUp.setTypeface(typeface);
         guideText.setTypeface(typeface);
         isGuideOn = true;
+
+        LayoutInflater mInflater = getLayoutInflater();
+        View mLayout = mInflater.inflate(R.layout.level1_toast, (ViewGroup) findViewById(R.id.level1_toast));
+        popIn = (TextView) mLayout.findViewById(R.id.toast_text);
+        toast = new Toast(getApplicationContext());
+        toast.setView(mLayout);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM, 0, d);
+
+
 
         //preferences = getSharedPreferences("GAME_DATA", MODE_PRIVATE);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -257,6 +280,9 @@ public class Level1aGameActivity extends Activity {
     public void onTheBoat(){
         increaseScore(200);
         walkFinished();
+        Random r = new Random();
+        popIn.setText(homeText[r.nextInt(homeText.length - 1)]);
+        toast.show();
     }
 
     public void closeToBoat(){
@@ -267,16 +293,23 @@ public class Level1aGameActivity extends Activity {
         else
             distance = currentPiratePos.y - boatView.getBottom();
 
-        increaseScore((int)(100*(1-(2*distance/h))));
+        increaseScore((int) (100 * (1 - (2 * distance / h))));
+
+        Random r = new Random();
+        popIn.setText(missText[r.nextInt(missText.length - 1)]);
+        toast.show();
         walkFinished();
     }
 
     public void missedTheBoat(){
         increaseScore(0);
         walkFinished();
+        Random r = new Random();
+        popIn.setText(outText[r.nextInt(outText.length - 1)]);
+        toast.show();
     }
 
-    public void updateScore(){
+    public void updateScore() {
         scoreView.setText("Score: " + preferences.getInt("score_1A", 0));
         final int oldColor = scoreView.getCurrentTextColor();
         new Thread(){
@@ -317,8 +350,10 @@ public class Level1aGameActivity extends Activity {
         editor.apply();
         updateScore();
         popUpScore(currentPiratePos, amount);
-        if(!preferences.getBoolean("level1BUnlocked",false) && preferences.getInt("score_1A",0)>=10)
+        if(!preferences.getBoolean("level1BUnlocked",false) && preferences.getInt("score_1A",0) >= MAXIMUM_TRANSITION_SCORE) {
+            endTextToShow = true;
             goToLevel1B();
+        }
     }
 
     public void walkFinished(){
@@ -383,9 +418,9 @@ public class Level1aGameActivity extends Activity {
         drawWalk();
     }
 
-    public void popUpScore(Point coordinate, int amount){
+    public void popUpScore(Point coordinate, int amount) {
 
-        scorePopUp.setX( mainLayout.getWidth() - scorePopUp.getWidth() * 1.5f );
+        scorePopUp.setX(mainLayout.getWidth() - scorePopUp.getWidth() * 1.5f );
         scorePopUp.setY(coordinate.y);
         scorePopUp.setText("+" + amount);
         scorePopUp.setVisibility(View.VISIBLE);
@@ -393,35 +428,46 @@ public class Level1aGameActivity extends Activity {
     }
 
     public void nextIntro(View v){
-        textViewIntro.setVisibility(View.GONE);
-        introLayout.setBackground(null);
-
-        endIntro(v);
-        guideText.setText("Tap on the shaded area to place the pirate.");
-       // guideText.setX(startAreaView.getX() + startAreaView.getWidth() + 5);
-      //  guideText.setY(mainLayout.getHeight() / 4);
-        highLightView.setX(startAreaView.getX());
-        highLightView.setY(startAreaView.getY());
-        ViewGroup.LayoutParams params = highLightView.getLayoutParams();
-        params.height = startAreaView.getHeight();
-        params.width = startAreaView.getWidth();
-        highLightView.setVisibility(View.VISIBLE);
-        highLightView.setAlpha(0.5f);
-        fadeIn = false;
-        highLightView.animate().alpha(0).setDuration(1000).setListener(highLightAnimListener);
-
+        if(endTextToShow) {
+            endTextToShow = false;
+            goToLevel1B();
+        }
+        else {
+            endIntro(v);
+            guideText.setText("Tap on the shaded area to place the pirate.");
+            // guideText.setX(startAreaView.getX() + startAreaView.getWidth() + 5);
+            //  guideText.setY(mainLayout.getHeight() / 4);
+            highLightView.setX(startAreaView.getX());
+            highLightView.setY(startAreaView.getY());
+            ViewGroup.LayoutParams params = highLightView.getLayoutParams();
+            params.height = startAreaView.getHeight();
+            params.width = startAreaView.getWidth();
+            highLightView.setVisibility(View.VISIBLE);
+            highLightView.setAlpha(0.5f);
+            fadeIn = false;
+            highLightView.animate().alpha(0).setDuration(1000).setListener(highLightAnimListener);
+        }
 
     }
 
     public void endIntro(View v){
-        introLayout.setVisibility(View.GONE);
+        introLayout.setVisibility(View.INVISIBLE);
         pirateView.setVisibility(View.INVISIBLE);
     }
 
     public void goToLevel1B(){
-        editor.putBoolean("level1BUnlocked",true);
-        editor.commit();
-        startActivity(new Intent(this, Level1bGameActivity.class));
-        finish();
+        if(endTextToShow)
+            showEndText();
+        else {
+            editor.putBoolean("level1BUnlocked", true);
+            editor.commit();
+            startActivity(new Intent(this, Level1bGameActivity.class));
+            finish();
+        }
+    }
+
+    public void showEndText(){
+        introLayout.setVisibility(View.VISIBLE);
+        textViewIntro.setText(R.string.end_level1A);
     }
 }

@@ -46,6 +46,7 @@ public class Level2cGameActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.gc();
         setContentView(R.layout.activity_level2c_game);
         Intent i = getIntent();
         leftTFs = i.getIntExtra("left_TFs",0);

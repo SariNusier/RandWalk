@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_weight="0.05"
-            android:text="Level 1"
+            android:text="The Pirate"
             android:textSize="25dp"
             android:textAlignment="center"
             android:textColor="#000"/>
@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_weight="0.05"
-            android:text="Level 2"
+            android:text="The Parrot"
             android:textSize="25dp"
             android:textAlignment="center"
             android:textColor="#000" />

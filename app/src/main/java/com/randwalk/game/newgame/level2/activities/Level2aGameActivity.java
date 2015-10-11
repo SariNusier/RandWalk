@@ -9,8 +9,11 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,11 +45,15 @@ public class Level2aGameActivity extends Activity {
     boolean walking = false;
     boolean toRestart = true;
     boolean allowedToSplit = false;
+    boolean showCloseToDivision = true;
     int tfSize, finishedCounter;
+    Toast toast;
+    TextView popIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.gc();
         Intent i = getIntent();
         subLevel = i.getStringExtra("SUB_LEVEL");
         setContentView(R.layout.activity_level2a_game);
@@ -65,6 +72,14 @@ public class Level2aGameActivity extends Activity {
         pb = (ProgressBar) findViewById(R.id.level2a_progressbar);
         textViewIntro.setTypeface(typeface);
         endGuideText.setVisibility(View.INVISIBLE);
+
+        LayoutInflater mInflater = getLayoutInflater();
+        View mLayout = mInflater.inflate(R.layout.level2_toast, (ViewGroup) findViewById(R.id.level2_toast));
+        popIn = (TextView) mLayout.findViewById(R.id.toast_text_2);
+        toast = new Toast(getApplicationContext());
+        toast.setView(mLayout);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM,0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics()));
         tfSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
         Log.d("SUBLEVEL:", subLevel);
         if(subLevel.equals("A"))
@@ -72,7 +87,6 @@ public class Level2aGameActivity extends Activity {
         else{
             animationDuration = 100;
             endGuideText.setTypeface(null, Typeface.BOLD);
-            showEndGuide("Tap to position 10 transcription factors in the shaded region and double tap to start their random walk.");
             textViewIntro.setText(getResources().getString(R.string.level2B_text));
         }
 
@@ -195,13 +209,17 @@ public class Level2aGameActivity extends Activity {
                     public void onTick(long millisUntilFinished) {
                         pb.setProgress(100 - (int)(millisUntilFinished/100));
                         if(millisUntilFinished<5000){
-                           showEndGuide("The cell is almost ready to divide...");
+                            if(showCloseToDivision){
+                            showEndGuide("The cell is almost ready to divide...");
+                            showCloseToDivision = false;
+                            }
                         }
                     }
 
                     public void onFinish() {
                         showEndGuide("GO!");
                         allowedToSplit = true;
+                        showCloseToDivision = true;
                     }
                 }.start();
             }
@@ -213,6 +231,11 @@ public class Level2aGameActivity extends Activity {
         activeTF++;
         float probability = activeTF/(activeTF +3);
         if(Math.random()<=probability){
+            if(subLevel.equals("A")){
+                popIn.setText("Wow... creation of mRNA!");
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.show();
+            }
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(tfSize+tfSize/2,tfSize);
             Random rand = new Random();
             mRnaC++;
@@ -227,15 +250,25 @@ public class Level2aGameActivity extends Activity {
             }
 
             mainLayout.addView(mrnas.get(mrnas.size()-1), params);
+        } else if (subLevel.equals("A")){
+            popIn.setText("Yuppi! One TF has just bound the promoter region!");
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.show();
         }
         tfViews.get(drawIndex).setBackground(this.getResources().getDrawable(R.drawable.cell2));
         mainLayout.setBackgroundColor(getResources().getColor(colors[mrnas.size()]));
     }
-    public void outsideActiveRegion(){}
+    public void outsideActiveRegion(){
+        if(subLevel.equals("A")) {
+            popIn.setText("Oh, TF didn't hit the promoter region...");
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
     public void finishWalk(){
         toRestart = true;
         mainLayout.setBackgroundColor(getResources().getColor(colors[mrnas.size()]));
-        showEndGuide(getResources().getString(R.string.level2a_endText));
+        showEndGuideFixed(getResources().getString(R.string.level2a_endText));
 
         pathView.restart();
 
@@ -304,11 +337,18 @@ public class Level2aGameActivity extends Activity {
         v.getLocationOnScreen(locationV);
 
         guideText.setX(mainLayout.getWidth()/2 - v.getWidth()/2);
-        guideText.setY(locationV[1] +10);
+        guideText.setY(locationV[1] + 10);
         guideText.animate().alpha(1).setDuration(2000).setListener(guideAnimationListener);
     }
 
     public void showEndGuide(String text){
+
+        endGuideText.setVisibility(View.INVISIBLE);
+        popIn.setText(text);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.show();
+    }
+    public void showEndGuideFixed(String text){
         endGuideText.setText(text);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(endGuideText.getLayoutParams());
         params.leftMargin = leftSideView.getWidth();
@@ -320,6 +360,7 @@ public class Level2aGameActivity extends Activity {
 
     public void nextIntro(View v){
         findViewById(R.id.level2a_intro_layout).setVisibility(View.GONE);
+        showEndGuide("Tap to position 5-10 transcription factors in the shaded region and double tap to start their random walk.");
     }
 
     public void incrementDrawIndex() {

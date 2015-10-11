@@ -68,6 +68,7 @@ public class Level1cGameActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.gc();
         setContentView(R.layout.activity_level1c_game);
         mainLayout = (RelativeLayout) findViewById(R.id.level1c_mainlayout);
         introLayout = (RelativeLayout) findViewById(R.id.level1c_intro_layout);

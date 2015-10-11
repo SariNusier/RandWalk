@@ -16,12 +16,15 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Pair;
 import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.randwalk.game.Other.EndpointsAsyncTask;
 import com.randwalk.game.Other.Try;
@@ -43,13 +46,19 @@ public class Level1bGameActivity extends Activity {
     TextView scorePopUp;
     TextView textViewIntro;
     TextView guideText;
+    TextView popIn;
+    Toast toast;
     Button introButton;
     Point placedPiratePos;
     Point currentPiratePos;
     Point prevPiratePos;
     Animator.AnimatorListener animatorListener, scorePopUpAnimListener, highLightAnimListener;
     SensorEventListener sensorEventListener;
-    //View highLightView;
+
+    String[] outText = {"Sink me!","Oups, pirate went too far, the crew returned him to the pub.",
+            "Arrrgh!!!","That Clap of Thunder killed me!"};
+    String[] missText = {"Almost there!","Splash! \"Grrr, I'll swim to the boat!\"","The crew dragged you home!","Mermaids rescued you!"};
+    String[] homeText = {"This choice seems to work - I must try again!","Yay - let me help my friends as well!","Lucky you! Chances of coming home were not that high!"};
 
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
@@ -70,6 +79,7 @@ public class Level1bGameActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.gc();
         setContentView(R.layout.activity_level1b_game);
         d = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, d, getResources().getDisplayMetrics());
         mainLayout = (RelativeLayout) findViewById(R.id.level1b_mainlayout);
@@ -94,6 +104,14 @@ public class Level1bGameActivity extends Activity {
         scorePopUp.setTypeface(typeface);
         guideText.setTypeface(typeface);
         isGuideOn = true;
+
+        LayoutInflater mInflater = getLayoutInflater();
+        View mLayout = mInflater.inflate(R.layout.level1_toast, (ViewGroup) findViewById(R.id.level1_toast));
+        popIn = (TextView) mLayout.findViewById(R.id.toast_text);
+        toast = new Toast(getApplicationContext());
+        toast.setView(mLayout);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM, 0, d*3);
 
         placedPiratePos.x = (int)pirateView.getX();
         placedPiratePos.y = (int)pirateView.getY();
@@ -245,6 +263,9 @@ public class Level1bGameActivity extends Activity {
 
     public void onTheBoat(){
         increaseScore(200);
+        Random r = new Random();
+        popIn.setText(homeText[r.nextInt(homeText.length - 1)]);
+        toast.show();
         walkFinished();
     }
 
@@ -257,11 +278,17 @@ public class Level1bGameActivity extends Activity {
             distance = currentPiratePos.y - boatView.getBottom();
 
         increaseScore((int)(100*(1-(2*distance/h))));
+        Random r = new Random();
+        popIn.setText(missText[r.nextInt(missText.length - 1)]);
+        toast.show();
         walkFinished();
     }
 
     public void missedTheBoat(){
         increaseScore(0);
+        Random r = new Random();
+        popIn.setText(outText[r.nextInt(outText.length - 1)]);
+        toast.show();
         walkFinished();
     }
 
