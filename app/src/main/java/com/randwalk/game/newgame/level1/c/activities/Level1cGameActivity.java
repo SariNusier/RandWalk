@@ -14,13 +14,19 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Pair;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.randwalk.game.Other.EndpointsAsyncTask;
 import com.randwalk.game.Other.Try;
@@ -32,6 +38,8 @@ import com.randwalk.game.newgame.level1.b.activities.Level1bGameActivity;
 import java.util.Random;
 
 public class Level1cGameActivity extends Activity {
+    final int MAXIMUM_DOUBLECLICK_TIME = 300;
+
     RelativeLayout mainLayout;
     RelativeLayout introLayout;
     View startAreaView;
@@ -46,12 +54,16 @@ public class Level1cGameActivity extends Activity {
     Point placedPiratePos;
     Point currentPiratePos;
     Point prevPiratePos;
+    TextView popIn;
+    Toast toast;
     Animator.AnimatorListener animatorListener, scorePopUpAnimListener, highLightAnimListener;
     SensorEventListener sensorEventListener;
     View highLightView;
     float drift_Y;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    String[] tooSlowText = {"Hurry up!","Faster!"};
+    String[] goodText = {"Towards the boat!","Keep Going!"};
 
     boolean piratePlaced, isGuideOn, prefGuide;
     boolean drawing = false;
@@ -60,9 +72,10 @@ public class Level1cGameActivity extends Activity {
     int sig_Y=15;//this is stdev for normal distribution along Y axes
     int d=3;//this is step along x axis
     long step1 = 0, time;
+    int maximumPossibleStep;
 
     float startingPoint, finalPointX, finalPointY, length = 0;
-    int random_X,random_Y;
+    long random_X,random_Y;
     int walkCounter = 0;
 
     @Override
@@ -70,7 +83,9 @@ public class Level1cGameActivity extends Activity {
         super.onCreate(savedInstanceState);
         System.gc();
         setContentView(R.layout.activity_level1c_game);
+
         mainLayout = (RelativeLayout) findViewById(R.id.level1c_mainlayout);
+
         introLayout = (RelativeLayout) findViewById(R.id.level1c_intro_layout);
         startAreaView = findViewById(R.id.level1c_startarea_view);
         pirateView = findViewById(R.id.level1c_pirate_view);
@@ -92,6 +107,16 @@ public class Level1cGameActivity extends Activity {
         scorePopUp.setTypeface(typeface);
         guideText.setTypeface(typeface);
         isGuideOn = true;
+
+        LayoutInflater mInflater = getLayoutInflater();
+        View mLayout = mInflater.inflate(R.layout.level1_toast,
+                (ViewGroup) findViewById(R.id.level1_toast));
+        popIn = (TextView) mLayout.findViewById(R.id.toast_text);
+        toast = new Toast(getApplicationContext());
+        toast.setView(mLayout);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM, 0, d*3);
+
         sensorEventListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
@@ -107,7 +132,8 @@ public class Level1cGameActivity extends Activity {
         };
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(sensorEventListener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(sensorEventListener, accelerometer,
+                                       SensorManager.SENSOR_DELAY_NORMAL);
         //preferences = getSharedPreferences("GAME_DATA", MODE_PRIVATE);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         isGuideOn = preferences.getBoolean("guide",true);
@@ -151,7 +177,8 @@ public class Level1cGameActivity extends Activity {
                 float pirate_X = pirateView.getX()+pirateView.getWidth()/2;
                 float pirate_Y = pirateView.getY()+pirateView.getHeight()/2;
 
-                if(boat_X <= pirate_X && boat_Y<=pirate_Y && pirate_X <= boat_X+boat_W && pirate_Y <= boat_Y+boat_H)
+                if(boat_X <= pirate_X && boat_Y<=pirate_Y &&
+                   pirate_X <= boat_X+boat_W && pirate_Y <= boat_Y+boat_H)
                 {
                     onTheBoat();
                 } else if(pirate_X >= mainLayout.getWidth() &&
@@ -184,11 +211,13 @@ public class Level1cGameActivity extends Activity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 if(!fadeIn){
-                    highLightView.animate().alpha(0.5f).setDuration(1000).setListener(highLightAnimListener);
+                    highLightView.animate().alpha(0.5f).setDuration(1000)
+                            .setListener(highLightAnimListener);
                     fadeIn = true;
                 }
                 else {
-                    highLightView.animate().alpha(0).setDuration(1000).setListener(highLightAnimListener);
+                    highLightView.animate().alpha(0).setDuration(1000)
+                            .setListener(highLightAnimListener);
                     fadeIn = false;
                 }
 
@@ -262,20 +291,34 @@ public class Level1cGameActivity extends Activity {
 
     public void pirateStep(long distance){
         Random rand = new Random();
-        if(distance > 200){
+        if(distance > MAXIMUM_DOUBLECLICK_TIME){
             step1 = 0;
+            popIn.setText(tooSlowText[(new Random()).nextInt(2)]);
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.show();
         } else {
+            Log.d("TIME DIF:", ""+distance);
             prevPiratePos = currentPiratePos;
-            random_X = (int) distance/5;//(int)Math.abs(Math.floor(rand.nextGaussian()*20)); //generates two random numbers for X and Y
+            maximumPossibleStep = mainLayout.getWidth()/5;
+            random_X = (maximumPossibleStep*50)/distance;//(int)Math.abs(Math.floor(rand.nextGaussian()*20)); //generates two random numbers for X and Y
             random_Y = (int)Math.floor(rand.nextGaussian()*sig_Y); //was 30/60 but I think 20/40 looks better
-            currentPiratePos = new Point(currentPiratePos.x+random_X,currentPiratePos.y + random_Y + (int) drift_Y);
-            pirateView.animate().x(currentPiratePos.x).y(currentPiratePos.y).setDuration(100).setListener(animatorListener);
+            currentPiratePos = new Point((int)(currentPiratePos.x+random_X),
+                                         (int)(currentPiratePos.y + random_Y +  drift_Y*20));
+            Log.d("DRIFT :", ""+drift_Y+" "+random_X);
+            pirateView.animate().x(currentPiratePos.x).y(currentPiratePos.y)
+                      .setDuration(100).setListener(animatorListener);
+            popIn.setText(goodText[(new Random()).nextInt(2)]);
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.show();
             drawPath();
         }
     }
 
     public void onTheBoat(){
         increaseScore(200);
+        popIn.setText("You've reached the boat!");
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.show();
         walkFinished();
     }
 
@@ -287,12 +330,18 @@ public class Level1cGameActivity extends Activity {
         else
             distance = currentPiratePos.y - boatView.getBottom();
 
+        popIn.setText("So close! Try again!");
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.show();
         increaseScore((int)(100*(1-(2*distance/h))));
         walkFinished();
     }
 
     public void missedTheBoat(){
         increaseScore(0);
+        popIn.setText("You fell into the sea! Try again.");
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.show();
         walkFinished();
     }
 
@@ -343,10 +392,14 @@ public class Level1cGameActivity extends Activity {
         drawing = false;
         finalPointX = pirateView.getX();
         finalPointY = pathView.getY();
-        Try save = new Try(this, "0", preferences.getInt("score_1C", 0), startingPoint, finalPointX, finalPointY, length, "C");
+        Try save = new Try(this, "0", preferences.getInt("score_1C", 0),
+                           startingPoint, finalPointX, finalPointY, length, "C");
         new EndpointsAsyncTask().execute(new Pair<Context, Try>(this, save));
-        if(walkCounter >= 2)
+        if(walkCounter >= 2){
             repositionPirate();
+            showEndLevel();
+        }
+
         pathView.changeColor();
 
 
@@ -388,16 +441,17 @@ public class Level1cGameActivity extends Activity {
 
     public void popUpScore(Point coordinate, int amount){
 
-        scorePopUp.setX( mainLayout.getWidth() - scorePopUp.getWidth() * 1.5f );
+        scorePopUp.setX(mainLayout.getWidth() - scorePopUp.getWidth() * 1.5f);
         scorePopUp.setY(coordinate.y);
-        scorePopUp.setText("+"+amount);
+        scorePopUp.setText("+" + amount);
         scorePopUp.setVisibility(View.VISIBLE);
-        scorePopUp.animate().y(coordinate.y - 150).setDuration(500).setListener(scorePopUpAnimListener);
+        scorePopUp.animate().y(coordinate.y - 150)
+                  .setDuration(500).setListener(scorePopUpAnimListener);
     }
 
     public void nextIntro(View v){
-        textViewIntro.setVisibility(View.GONE);
-        introLayout.setBackground(null);
+        introLayout.setVisibility(View.INVISIBLE);
+        //introLayout.setBackground(null);
 
         endIntro(v);
         guideText.setText("Tap on the shaded area to place the pirate.");
@@ -416,8 +470,20 @@ public class Level1cGameActivity extends Activity {
 
     }
 
+    public void showEndLevel(){
+        introLayout.setVisibility(View.VISIBLE);
+        textViewIntro.setText(getString(R.string.end_level1C));
+
+        introButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                introLayout.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
     public void endIntro(View v){
-        introLayout.setVisibility(View.GONE);
+        introLayout.setVisibility(View.INVISIBLE);
         pirateView.setVisibility(View.INVISIBLE);
     }
 
@@ -425,5 +491,29 @@ public class Level1cGameActivity extends Activity {
         editor.putBoolean("level1BUnlocked",true);
         startActivity(new Intent(this, Level1bGameActivity.class));
         finish();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("DESTROYED", "1A");
+        unbindDrawables(findViewById(R.id.level1c_mainlayout));
+    }
+
+    private void unbindDrawables(View view)
+    {
+        if (view.getBackground() != null)
+        {
+            view.getBackground().setCallback(null);
+        }
+        if (view instanceof ViewGroup && !(view instanceof AdapterView))
+        {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++)
+            {
+                unbindDrawables(((ViewGroup) view).getChildAt(i));
+            }
+            ((ViewGroup) view).removeAllViews();
+        }
     }
 }

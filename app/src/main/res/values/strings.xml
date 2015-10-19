@@ -6,17 +6,21 @@
     <string name="action_settings">Settings</string>
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
-    <string name="intro_level1A">The pirate has just arrived in a new harbour and is ready to go out, but he is aware that he might be tottering on his way back to the ship. \n \nTry helping him with choosing a position on the bar wisely, i.e. in such a way to maximise his chances of arriving to the ship! \n \nChoose a starting point of the pirate\'s walk and observe his movements… \n \nBe prepared - even if you choose
+    <string name="intro_level1A">The pirate has just arrived in a new harbour and is ready to go out, but he is aware that he might be tottering on his way back to the ship. \n \nTry to help him by choosing a position on the bar wisely, i.e. in such a way to maximise his chances of arriving to the ship! \n \nChoose a starting point of the pirate\'s walk and observe his movements… \n \nBe prepared - even if you choose
     an ideal starting point, due to the waddle of the pirate, he still might fall into the sea! \n \nTry a couple of times.\nIf you are really unlucky, you will be able to change your starting point.</string>
     <string name="end_level1A">\n \nThe type of walk we were observing in the pirate’s rambling is called \“Random walk\”: both the length and the direction of each step are unpredictable.\n\n
-        We can\’t say much about the success of reaching the boat when we are looking at one trajectory, but when we are observing more trials of the pirate, we can claim that some choices of bars
+        We can’t say much about the success of reaching the boat when we are looking at one trajectory, but when we are observing more trials of the pirate, we can claim that some choices of bars
 are better than others… For example, what if you choose a starting point just opposite to the ship?</string>
 
     <string name="intro_level1B">\n\n\n\nThe pirate is still wandering around the town and the crew is waiting for him. Pull him along the right direction by tilting the phone towards the boat!\n\n
 Nevertheless, you will see that the fuzziness of his tottering cannot be completely controlled in this way and the movement has a great deal of randomness still.\n\n
-Try a couple of times­ until you reach the boat and observe how the walk is modified by your intervention. Score 1000 points and you will move to the
+Try a couple of times­ until you reach the boat and observe how the walk is modified by your intervention. Score 300 points and you will move to the
 next level.</string>
     <string name="end_level1B"></string>
+    <string name="end_leve2C">\n\n\nDuring cell division TF number is randomly split: in these newly created \"daughter\" cells, gene expression is still affected by random fluctuations. The cell-to-cell differences that you have seen accumulate and become visible in all the colourful and diverse patterns around us!</string>
+    <string name="end_level1C">
+        Great! You helped the pirate come back to his boat safe and sound!\n\nThis time you could control the step length and the direction so you managed to reduce the randomness although it can\'t be completely eliminated from the process.\n\nThe boat can finally set sails to unknown lands.
+    </string>
     <string name="level2C_intro">\n\nHey! The boat is about to leave! Hurry up! Drag directly the pirate step by step: the faster you tap on the screen, the longer the step of the pirate!\n\n
 
 You can also to control the direction by tilting the phone as in the previous level.\n\n

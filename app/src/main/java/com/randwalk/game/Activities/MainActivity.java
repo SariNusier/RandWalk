@@ -221,4 +221,10 @@ public class MainActivity extends ActionBarActivity {
             dialog.show(manager, "Level 1C Locked");
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        System.gc();
+    }
 }

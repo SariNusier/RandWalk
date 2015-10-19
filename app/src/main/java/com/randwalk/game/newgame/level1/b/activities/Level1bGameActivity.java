@@ -14,6 +14,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -21,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,6 +38,8 @@ import com.randwalk.game.newgame.level1.c.activities.Level1cGameActivity;
 import java.util.Random;
 
 public class Level1bGameActivity extends Activity {
+
+    final int MAXIMUM_TRANSITION_SCORE = 300;
     RelativeLayout mainLayout;
     RelativeLayout introLayout;
     View startAreaView;
@@ -106,7 +110,8 @@ public class Level1bGameActivity extends Activity {
         isGuideOn = true;
 
         LayoutInflater mInflater = getLayoutInflater();
-        View mLayout = mInflater.inflate(R.layout.level1_toast, (ViewGroup) findViewById(R.id.level1_toast));
+        View mLayout = mInflater.inflate(R.layout.level1_toast,
+                                         (ViewGroup) findViewById(R.id.level1_toast));
         popIn = (TextView) mLayout.findViewById(R.id.toast_text);
         toast = new Toast(getApplicationContext());
         toast.setView(mLayout);
@@ -132,7 +137,8 @@ public class Level1bGameActivity extends Activity {
         };
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(sensorEventListener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(sensorEventListener, accelerometer,
+                                       SensorManager.SENSOR_DELAY_NORMAL);
 
        // preferences = getSharedPreferences("GAME_DATA", MODE_PRIVATE);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -177,7 +183,8 @@ public class Level1bGameActivity extends Activity {
                 float pirate_X = pirateView.getX()+pirateView.getWidth()/2;
                 float pirate_Y = pirateView.getY()+pirateView.getHeight()/2;
 
-                if(boat_X <= pirate_X && boat_Y<=pirate_Y && pirate_X <= boat_X+boat_W && pirate_Y <= boat_Y+boat_H)
+                if(boat_X <= pirate_X && boat_Y<=pirate_Y && pirate_X <= boat_X+boat_W &&
+                   pirate_Y <= boat_Y+boat_H)
                 {
                     onTheBoat();
                 } else if(pirate_X >= mainLayout.getWidth() &&
@@ -190,7 +197,8 @@ public class Level1bGameActivity extends Activity {
                 } else {
                     prevPiratePos = currentPiratePos;
                     pirateStep();
-                    pirateView.animate().x(currentPiratePos.x).y(currentPiratePos.y).setDuration(1).setListener(animatorListener);
+                    pirateView.animate().x(currentPiratePos.x).y(currentPiratePos.y).setDuration(1)
+                              .setListener(animatorListener);
                     drawPath();
                 }
 
@@ -242,7 +250,8 @@ public class Level1bGameActivity extends Activity {
     public void drawWalk(){
         prevPiratePos = currentPiratePos;
         pirateStep();
-        pirateView.animate().x(currentPiratePos.x).y(currentPiratePos.y).setDuration(100).setListener(animatorListener);
+        pirateView.animate().x(currentPiratePos.x).y(currentPiratePos.y).setDuration(100)
+                  .setListener(animatorListener);
         drawPath();
     }
 
@@ -251,14 +260,15 @@ public class Level1bGameActivity extends Activity {
                 prevPiratePos.y+pirateView.getHeight()/2);
         Point end = new Point(currentPiratePos.x+pirateView.getWidth()/2,
                 currentPiratePos.y+pirateView.getHeight()/2);
-        pathView.drawLine(start,end);
+        pathView.drawLine(start, end);
     }
 
     public void pirateStep(){
         Random rand = new Random();
         random_X = d;//(int)Math.abs(Math.floor(rand.nextGaussian()*20)); //generates two random numbers for X and Y
         random_Y = (int)Math.floor(rand.nextGaussian()*sig_Y) ; //was 30/60 but I think 20/40 looks better
-        currentPiratePos = new Point(currentPiratePos.x+random_X,currentPiratePos.y + random_Y + (int)drift_Y);
+        currentPiratePos = new Point(currentPiratePos.x+random_X,currentPiratePos.y +
+                                     random_Y + (int)drift_Y);
     }
 
     public void onTheBoat(){
@@ -272,12 +282,9 @@ public class Level1bGameActivity extends Activity {
     public void closeToBoat(){
         double h = mainLayout.getHeight();
         double distance;
-        if(currentPiratePos.y < h/2)
-            distance = boatView.getTop()-currentPiratePos.y;
-        else
-            distance = currentPiratePos.y - boatView.getBottom();
+        distance = currentPiratePos.y - boatView.getTop();
 
-        increaseScore((int)(100*(1-(2*distance/h))));
+        increaseScore((int)(100*(1-(distance/h))));
         Random r = new Random();
         popIn.setText(missText[r.nextInt(missText.length - 1)]);
         toast.show();
@@ -333,7 +340,8 @@ public class Level1bGameActivity extends Activity {
         editor.apply();
         updateScore();
         popUpScore(currentPiratePos, amount);
-        if(!preferences.getBoolean("level1CUnlocked",false) && preferences.getInt("score_1B",0)>=10)
+        if(!preferences.getBoolean("level1CUnlocked",false) &&
+            preferences.getInt("score_1B",0)>=MAXIMUM_TRANSITION_SCORE)
             goToLevel1C();
     }
 
@@ -345,7 +353,8 @@ public class Level1bGameActivity extends Activity {
         drawing = false;
         finalPointX = pirateView.getX();
         finalPointY = pathView.getY();
-        Try save = new Try(this, "0", preferences.getInt("score_1A", 0), startingPoint, finalPointX, finalPointY, length, "B");
+        Try save = new Try(this, "0", preferences.getInt("score_1A", 0),
+                           startingPoint, finalPointX, finalPointY, length, "B");
         new EndpointsAsyncTask().execute(new Pair<Context, Try>(this, save));
         if(walkCounter >= 2)
             repositionPirate();
@@ -382,11 +391,12 @@ public class Level1bGameActivity extends Activity {
 
     public void popUpScore(Point coordinate, int amount){
 
-        scorePopUp.setX( mainLayout.getWidth() - scorePopUp.getWidth() * 1.5f );
+        scorePopUp.setX(mainLayout.getWidth() - scorePopUp.getWidth() * 1.5f);
         scorePopUp.setY(coordinate.y);
-        scorePopUp.setText("+"+amount);
+        scorePopUp.setText("+" + amount);
         scorePopUp.setVisibility(View.VISIBLE);
-        scorePopUp.animate().y(coordinate.y - 150).setDuration(500).setListener(scorePopUpAnimListener);
+        scorePopUp.animate().y(coordinate.y - 150).setDuration(500)
+                  .setListener(scorePopUpAnimListener);
     }
 
     public void nextIntro(View v){
@@ -395,17 +405,7 @@ public class Level1bGameActivity extends Activity {
 
         endIntro(v);
         guideText.setText("Tap anywhere on the screen to start walking.");
-        // guideText.setX(startAreaView.getX() + startAreaView.getWidth() + 5);
-        //  guideText.setY(mainLayout.getHeight() / 4);
-       // highLightView.setX(startAreaView.getX());
-       // highLightView.setY(startAreaView.getY());
-       // ViewGroup.LayoutParams params = highLightView.getLayoutParams();
-       // params.height = startAreaView.getHeight();
-      //  params.width = startAreaView.getWidth();
-      //  highLightView.setVisibility(View.VISIBLE);
-       // highLightView.setAlpha(0.5f);
         fadeIn = false;
-       // highLightView.animate().alpha(0).setDuration(1000).setListener(highLightAnimListener);
 
 
     }
@@ -419,5 +419,30 @@ public class Level1bGameActivity extends Activity {
         editor.commit();
         startActivity(new Intent(this, Level1cGameActivity.class));
         finish();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("DESTROYED", "1A");
+        unbindDrawables(findViewById(R.id.level1b_mainlayout));
+        System.gc();
+    }
+
+    private void unbindDrawables(View view)
+    {
+        if (view.getBackground() != null)
+        {
+            view.getBackground().setCallback(null);
+        }
+        if (view instanceof ViewGroup && !(view instanceof AdapterView))
+        {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++)
+            {
+                unbindDrawables(((ViewGroup) view).getChildAt(i));
+            }
+            ((ViewGroup) view).removeAllViews();
+        }
     }
 }

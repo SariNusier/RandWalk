@@ -12,9 +12,15 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.randwalk.game.R;
 import com.randwalk.game.newgame.level2.views.Level2aPathView;
@@ -32,6 +38,7 @@ public class Level2cGameActivity extends Activity {
     View startAreaViewTop, startAreaViewBot, leftSideViewTop, rightSideViewTop, leftSideViewBot, rightSideViewBot,
     dnaMidTop, dnaMidBot, dnaLeftTop, dnaLeftBot, dnaRightTop, dnaRightBot;
     TextView textViewIntro;
+    Button introButton;
     Level2aPathView pathViewTop, pathViewBot;
     Animator.AnimatorListener animatorListenerTop, animatorListenerBot;
     int w, h;
@@ -42,6 +49,8 @@ public class Level2cGameActivity extends Activity {
     boolean walking = false;
     ArrayList<View> mrnasTop, mrnasBot;
     float activeTFTop = 0, activeTFBot = 0;
+    Toast toast;
+    TextView popIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +60,10 @@ public class Level2cGameActivity extends Activity {
         Intent i = getIntent();
         leftTFs = i.getIntExtra("left_TFs",0);
         rightTFs = i.getIntExtra("right_TFs",0);
-        Log.d("Left:",""+leftTFs);
+        Log.d("Left:", "" + leftTFs);
         tfSize =(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
         mainLayoutBot =(Level2cMainLayout) findViewById(R.id.level2c_mainlayout_bottom);
+        introButton = (Button) findViewById(R.id.level2c_intro_button);
         mainLayoutTop =(Level2cMainLayout) findViewById(R.id.level2c_mainlayout_top);
         startAreaViewBot = findViewById(R.id.level2c_startarea_view_bottom);
         startAreaViewTop = findViewById(R.id.level2c_startarea_view_top);
@@ -76,6 +86,13 @@ public class Level2cGameActivity extends Activity {
         tfViewsTop = new ArrayList<>();
         mrnasTop = new ArrayList<>();
         mrnasBot = new ArrayList<>();
+        LayoutInflater mInflater = getLayoutInflater();
+        View mLayout = mInflater.inflate(R.layout.level2_toast, (ViewGroup) findViewById(R.id.level2_toast));
+        popIn = (TextView) mLayout.findViewById(R.id.toast_text_2);
+        toast = new Toast(getApplicationContext());
+        toast.setView(mLayout);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER,0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics()));
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
@@ -225,11 +242,15 @@ public class Level2cGameActivity extends Activity {
     public void finishWalkTop(){
         mainLayoutTop.setBackgroundColor(getResources().getColor(colors[mrnasTop.size()]));
         finished++;
+        if(finished == 2)
+            showPopUp();
     }
 
     public void finishWalkBot(){
         mainLayoutBot.setBackgroundColor(getResources().getColor(colors[mrnasBot.size()]));
         finished++;
+        if(finished == 2)
+            showPopUp();
     }
 
 
@@ -444,8 +465,9 @@ public class Level2cGameActivity extends Activity {
     }
 
     public void nextIntro(View v){
-        findViewById(R.id.level2c_intro_layout).setVisibility(View.GONE);
+        findViewById(R.id.level2c_intro_layout).setVisibility(View.INVISIBLE);
     }
+
 
     public void endLevel(){
 //        new AlertDialog.Builder(this).
@@ -470,12 +492,54 @@ public class Level2cGameActivity extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(getApplicationContext(), Level2cGameActivity.class);
                         Random r = new Random();
-                        intent.putExtra("left_TFs",r.nextInt(4)+1);
-                        intent.putExtra("right_TFs",r.nextInt(4)+1);
+                        intent.putExtra("left_TFs", r.nextInt(4) + 1);
+                        intent.putExtra("right_TFs", r.nextInt(4) + 1);
                         startActivity(intent);
                         finish();
                     }
                 }).show();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("DESTROYED", "1A");
+        unbindDrawables(findViewById(R.id.level2c_mainlayout));
+    }
+
+    private void unbindDrawables(View view)
+    {
+        if (view.getBackground() != null)
+        {
+            view.getBackground().setCallback(null);
+        }
+        if (view instanceof ViewGroup && !(view instanceof AdapterView))
+        {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++)
+            {
+                unbindDrawables(((ViewGroup) view).getChildAt(i));
+            }
+            ((ViewGroup) view).removeAllViews();
+        }
+    }
+    private void showPopUp(){
+        popIn.setText("Observe the different colours between cells!\nNot different? Try again!");
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    public void showEndText(){
+        findViewById(R.id.level2c_intro_layout).setVisibility(View.VISIBLE);
+        textViewIntro.setText(getString(R.string.end_leve2C));
+        introButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                endLevel();
+            }
+        });
+
+
     }
 
 }

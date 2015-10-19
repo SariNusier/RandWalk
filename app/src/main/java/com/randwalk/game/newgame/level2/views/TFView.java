@@ -15,8 +15,8 @@ import java.util.Random;
 public class TFView extends View {
     Point coordinates;
     Point prevCoordinates;
-    int sig_Y=15;//this is stdev for normal distribution along Y axes
-    int d=16;//this is step along x axis
+    int sig_Y=25;//this is stdev for normal distribution along Y axes
+    int d=5;//this is step along x axis
     int random_X,random_Y;
     boolean bounced = false;
     public boolean finished = false;

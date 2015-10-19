@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -79,7 +80,7 @@ public class Level2aGameActivity extends Activity {
         toast = new Toast(getApplicationContext());
         toast.setView(mLayout);
         toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.BOTTOM,0,(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics()));
+        toast.setGravity(Gravity.BOTTOM, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics()));
         tfSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
         Log.d("SUBLEVEL:", subLevel);
         if(subLevel.equals("A"))
@@ -114,7 +115,7 @@ public class Level2aGameActivity extends Activity {
                 float tfView_X = tfViews.get(drawIndex).getX()+tfViews.get(drawIndex).getWidth()/2;
                 float tfView_Y = tfViews.get(drawIndex).getY()+tfViews.get(drawIndex).getHeight()/2;
 
-                if(tfView_Y >= dna_Y){
+                if(tfView_Y >= dna_Y + dna_H/2){
                     if(tfView_X >= dna_X && tfView_X <= dna_W+dna_X)
                         insideActiveRegion();
                     else
@@ -266,6 +267,11 @@ public class Level2aGameActivity extends Activity {
         }
     }
     public void finishWalk(){
+        try{
+        Thread.sleep(1000);
+        }
+        catch (Exception ignored){
+        }
         toRestart = true;
         mainLayout.setBackgroundColor(getResources().getColor(colors[mrnas.size()]));
         showEndGuideFixed(getResources().getString(R.string.level2a_endText));
@@ -342,7 +348,9 @@ public class Level2aGameActivity extends Activity {
     }
 
     public void showEndGuide(String text){
-
+        int[] location = new int[2];
+        pb.getLocationInWindow(location);
+        toast.setGravity(Gravity.TOP,0 , location[1]);
         endGuideText.setVisibility(View.INVISIBLE);
         popIn.setText(text);
         toast.setDuration(Toast.LENGTH_LONG);
@@ -390,6 +398,30 @@ public class Level2aGameActivity extends Activity {
             intent.putExtra("right_TFs",rightSideTFs);
             startActivity(intent);
             finish();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("DESTROYED", "1A");
+        unbindDrawables(findViewById(R.id.level2a_mainlayout));
+    }
+
+
+    private void unbindDrawables(View view)
+    {
+        if (view.getBackground() != null)
+        {
+            view.getBackground().setCallback(null);
+        }
+        if (view instanceof ViewGroup && !(view instanceof AdapterView))
+        {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++)
+            {
+                unbindDrawables(((ViewGroup) view).getChildAt(i));
+            }
+            ((ViewGroup) view).removeAllViews();
         }
     }
 }

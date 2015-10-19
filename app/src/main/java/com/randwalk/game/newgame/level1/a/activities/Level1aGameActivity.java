@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,7 +36,7 @@ import java.util.Random;
 
 public class Level1aGameActivity extends Activity {
 
-    final int MAXIMUM_TRANSITION_SCORE = 10;
+    final int MAXIMUM_TRANSITION_SCORE = 300;
 
     RelativeLayout mainLayout;
     RelativeLayout introLayout;
@@ -266,7 +267,7 @@ public class Level1aGameActivity extends Activity {
                 prevPiratePos.y+pirateView.getHeight()/2);
         Point end = new Point(currentPiratePos.x+pirateView.getWidth()/2,
                 currentPiratePos.y+pirateView.getHeight()/2);
-        pathView.drawLine(start,end);
+        pathView.drawLine(start, end);
     }
 
     public void pirateStep(){
@@ -420,7 +421,7 @@ public class Level1aGameActivity extends Activity {
 
     public void popUpScore(Point coordinate, int amount) {
 
-        scorePopUp.setX(mainLayout.getWidth() - scorePopUp.getWidth() * 1.5f );
+        scorePopUp.setX(mainLayout.getWidth() - scorePopUp.getWidth() * 1.5f);
         scorePopUp.setY(coordinate.y);
         scorePopUp.setText("+" + amount);
         scorePopUp.setVisibility(View.VISIBLE);
@@ -469,5 +470,29 @@ public class Level1aGameActivity extends Activity {
     public void showEndText(){
         introLayout.setVisibility(View.VISIBLE);
         textViewIntro.setText(R.string.end_level1A);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindDrawables(findViewById(R.id.level1a_mainlayout));
+        System.gc();
+        Log.d("DESTROYED", "1A");
+    }
+
+    private void unbindDrawables(View view)
+    {
+        if (view.getBackground() != null)
+        {
+            view.getBackground().setCallback(null);
+        }
+        if (view instanceof ViewGroup && !(view instanceof AdapterView))
+        {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++)
+            {
+                unbindDrawables(((ViewGroup) view).getChildAt(i));
+            }
+            ((ViewGroup) view).removeAllViews();
+        }
     }
 }

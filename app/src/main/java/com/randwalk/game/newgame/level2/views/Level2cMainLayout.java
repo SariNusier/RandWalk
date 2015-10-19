@@ -62,10 +62,9 @@ public class Level2cMainLayout extends RelativeLayout implements View.OnTouchLis
 
         @Override
         public boolean onDown(MotionEvent event) {
-            if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-                //if (event.getY()<=findViewById(R.id.level2b_startarea_view).getHeight()) {
-                //parentActivity.placeTF(event);
-                //}
+            if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN &&
+               parentActivity.finished == 2) {
+                parentActivity.showEndText();
 
             }
             return true;
