@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context="com.randwalk.game.Activities.Level1Activity" >
+    tools:context="com.randomwalk.game.Activities.Level1Activity" >
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -16,7 +16,7 @@
             android:layout_above="@+id/level1_guide_layout"
             android:orientation="vertical">
 
-            <com.randwalk.game.GameViews.GameView
+            <com.randomwalk.game.GameViews.GameView
                 android:id="@+id/gameView1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

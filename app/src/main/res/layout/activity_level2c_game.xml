@@ -2,13 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/level2c_mainlayout"
-    tools:context="com.randwalk.game.newgame.level2.activities.Level2cGameActivity">
+    tools:context="com.randomwalk.game.newgame.level2.activities.Level2cGameActivity">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.randwalk.game.newgame.level2.views.Level2cMainLayout  android:layout_width="match_parent"
+    <com.randomwalk.game.newgame.level2.views.Level2cMainLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/level2_game_background"
         android:id="@+id/level2c_mainlayout_top"
@@ -186,16 +187,16 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <com.randwalk.game.newgame.level2.views.Level2aPathView
+        <com.randomwalk.game.newgame.level2.views.Level2aPathView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/level2c_path_view_top" />
-    </com.randwalk.game.newgame.level2.views.Level2cMainLayout>
+    </com.randomwalk.game.newgame.level2.views.Level2cMainLayout>
 
 
 
 
-    <com.randwalk.game.newgame.level2.views.Level2cMainLayout
+    <com.randomwalk.game.newgame.level2.views.Level2cMainLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/level2_game_background"
@@ -373,11 +374,11 @@
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
-        <com.randwalk.game.newgame.level2.views.Level2aPathView
+        <com.randomwalk.game.newgame.level2.views.Level2aPathView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/level2c_path_view_bottom" />
-    </com.randwalk.game.newgame.level2.views.Level2cMainLayout>
+    </com.randomwalk.game.newgame.level2.views.Level2cMainLayout>
 </LinearLayout>
 
     <RelativeLayout

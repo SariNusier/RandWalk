@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.randwalk.game.newgame.level1.b.activities.Level1bGameActivity"
+    tools:context="com.randomwalk.game.newgame.level1.b.activities.Level1bGameActivity"
     android:id="@+id/level1b_mainlayout"
     android:background="@color/Level1_game_background">
 
@@ -90,7 +90,7 @@
         android:visibility="invisible"
         android:id="@+id/level1b_highlight_view"/>-->
 
-    <com.randwalk.game.newgame.level1.a.views.Level1aPathView
+    <com.randomwalk.game.newgame.level1.a.views.Level1aPathView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusableInTouchMode="false"

@@ -1,8 +1,8 @@
-<com.randwalk.game.GameViews.Level2bMainLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<com.randomwalk.game.GameViews.Level2bMainLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#C2D5F0"
-    tools:context="com.randwalk.game.Activities.Level2BActivity"
+    tools:context="com.randomwalk.game.Activities.Level2BActivity"
     android:id="@+id/level2B_mainlayout">
 
     <LinearLayout
@@ -58,9 +58,9 @@
 
     </LinearLayout>
 
-    <com.randwalk.game.GameViews.Level2bWalkView
+    <com.randomwalk.game.GameViews.Level2bWalkView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/level2b_walk_view" />
 
-</com.randwalk.game.GameViews.Level2bMainLayout>
+</com.randomwalk.game.GameViews.Level2bMainLayout>

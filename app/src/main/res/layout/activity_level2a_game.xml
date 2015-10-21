@@ -1,7 +1,7 @@
-<com.randwalk.game.newgame.level2.views.Level2bMainLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.randomwalk.game.newgame.level2.views.Level2bMainLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.randwalk.game.newgame.level2.activities.Level2aGameActivity"
+    tools:context="com.randomwalk.game.newgame.level2.activities.Level2aGameActivity"
     android:background="@color/level2_game_background"
     android:id="@+id/level2a_mainlayout">
 
@@ -206,7 +206,7 @@
             android:background="@drawable/level1_guideshape"
             android:layout_marginTop="10dp" />
         </RelativeLayout>
-     <com.randwalk.game.newgame.level2.views.Level2aPathView
+     <com.randomwalk.game.newgame.level2.views.Level2aPathView
          android:layout_width="match_parent"
          android:layout_height="match_parent"
          android:id="@+id/level2a_path_view" />
@@ -263,5 +263,5 @@
 
 
 
-</com.randwalk.game.newgame.level2.views.Level2bMainLayout>
+</com.randomwalk.game.newgame.level2.views.Level2bMainLayout>
 

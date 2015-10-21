@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.randwalk.game" >
+    package="com.randomwalk.game" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_launcher"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".Activities.StartActivity"
+            android:name="com.randomwalk.game.Activities.StartActivity"
             android:label="@string/title_activity_start"
             android:screenOrientation="portrait" >
             <intent-filter android:label="@string/app_name" >
@@ -19,96 +19,96 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.MainActivity"
+            android:name="com.randomwalk.game.Activities.MainActivity"
             android:label="Random Walk"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".Activities.Level1Activity"
+            android:name="com.randomwalk.game.Activities.Level1Activity"
             android:label="@string/title_activity_level1"
-            android:parentActivityName=".Activities.MainActivity"
+            android:parentActivityName="com.randomwalk.game.Activities.MainActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.MainActivity" />
+                android:value="com.randomwalk.game.Activities.MainActivity" />
         </activity>
         <activity
-            android:name=".Activities.Level2Activity"
+            android:name="com.randomwalk.game.Activities.Level2Activity"
             android:label="@string/title_activity_level2"
-            android:parentActivityName=".Activities.MainActivity"
+            android:parentActivityName="com.randomwalk.game.Activities.MainActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.MainActivity" />
+                android:value="com.randomwalk.game.Activities.MainActivity" />
         </activity>
         <activity
-            android:name=".Activities.SettingsActivity"
+            android:name="com.randomwalk.game.Activities.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".Activities.MainActivity" >
+            android:parentActivityName="com.randomwalk.game.Activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.MainActivity" />
+                android:value="com.randomwalk.game.Activities.MainActivity" />
         </activity>
         <activity
-            android:name=".Activities.Level2Animation"
+            android:name="com.randomwalk.game.Activities.Level2Animation"
             android:label="@string/title_activity_level2_animation"
-            android:parentActivityName=".Activities.MainActivity" >
+            android:parentActivityName="com.randomwalk.game.Activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.MainActivity" />
+                android:value="com.randomwalk.game.Activities.MainActivity" />
         </activity>
         <activity
-            android:name=".Activities.Level2BActivity"
+            android:name="com.randomwalk.game.Activities.Level2BActivity"
             android:label="@string/title_activity_level2_b"
-            android:parentActivityName=".Activities.MainActivity" >
+            android:parentActivityName="com.randomwalk.game.Activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.randwalk.game.Activities.MainActivity" />
+                android:value="com.randomwalk.game.Activities.MainActivity" />
         </activity>
         <activity
-            android:name=".newgame.level1.a.activities.Level1aGameActivity"
+            android:name="com.randomwalk.game.newgame.level1.a.activities.Level1aGameActivity"
             android:label="@string/title_activity_level1a_game"
-            android:parentActivityName=".Activities.MainActivity"
+            android:parentActivityName="com.randomwalk.game.Activities.MainActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.randwalk.game.Activities.MainActivity" />
+                android:value="com.randomwalk.game.Activities.MainActivity" />
         </activity>
         <activity
-            android:name=".newgame.level1.b.activities.Level1bGameActivity"
+            android:name="com.randomwalk.game.newgame.level1.b.activities.Level1bGameActivity"
             android:label="@string/title_activity_level1b_game"
-            android:parentActivityName=".Activities.MainActivity"
+            android:parentActivityName="com.randomwalk.game.Activities.MainActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.randwalk.game.Activities.MainActivity" />
+                android:value="com.randomwalk.game.Activities.MainActivity" />
         </activity>
         <activity
-            android:name=".newgame.level2.activities.Level2aGameActivity"
+            android:name="com.randomwalk.game.newgame.level2.activities.Level2aGameActivity"
             android:label="@string/title_activity_level2a_game"
-            android:parentActivityName=".Activities.MainActivity"
+            android:parentActivityName="com.randomwalk.game.Activities.MainActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.randwalk.game.Activities.MainActivity" />
+                android:value="com.randomwalk.game.Activities.MainActivity" />
         </activity>
         <activity
-            android:name=".newgame.level2.activities.Level2cGameActivity"
+            android:name="com.randomwalk.game.newgame.level2.activities.Level2cGameActivity"
             android:label="@string/title_activity_level2c_game"
-            android:parentActivityName=".Activities.MainActivity"
+            android:parentActivityName="com.randomwalk.game.Activities.MainActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.randwalk.game.Activities.MainActivity" />
+                android:value="com.randomwalk.game.Activities.MainActivity" />
         </activity>
         <activity
-            android:name=".newgame.level1.c.activities.Level1cGameActivity"
+            android:name="com.randomwalk.game.newgame.level1.c.activities.Level1cGameActivity"
             android:label="@string/title_activity_level1c_game"
-            android:parentActivityName=".Activities.MainActivity"
+            android:parentActivityName="com.randomwalk.game.Activities.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.randwalk.game.Activities.MainActivity" />
+                android:value="com.randomwalk.game.Activities.MainActivity" />
         </activity>
     </application>
 
