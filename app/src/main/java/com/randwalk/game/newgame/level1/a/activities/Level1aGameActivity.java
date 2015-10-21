@@ -53,6 +53,7 @@ public class Level1aGameActivity extends Activity {
     Point placedPiratePos;
     Point currentPiratePos;
     Point prevPiratePos;
+    boolean stopAnimation = false;
     Animator.AnimatorListener animatorListener, scorePopUpAnimListener, highLightAnimListener;
     String[] outText = {"Sink me!","Oups, pirate went too far, the crew returned him to the pub.",
             "Arrrgh!!!","That Clap of Thunder killed me!"};
@@ -194,6 +195,7 @@ public class Level1aGameActivity extends Activity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
+                if(!stopAnimation)
                 if(!fadeIn){
                     highLightView.animate().alpha(0.5f).setDuration(1000).setListener(highLightAnimListener);
                     fadeIn = true;
@@ -235,8 +237,10 @@ public class Level1aGameActivity extends Activity {
         if(isGuideOn) {
             guideText.setText("The pirate is now walking and will try to reach the boat. \nYou can see the steps left behind him.");
             highLightView.setVisibility(View.GONE);
+            stopAnimation = true;
         }
         else {guideText.setVisibility(View.GONE);
+            stopAnimation = true;
             highLightView.setVisibility(View.GONE);}
 
         if(!piratePlaced) {
