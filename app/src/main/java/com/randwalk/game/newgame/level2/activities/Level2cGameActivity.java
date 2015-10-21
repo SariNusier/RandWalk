@@ -60,7 +60,6 @@ public class Level2cGameActivity extends Activity {
         Intent i = getIntent();
         leftTFs = i.getIntExtra("left_TFs",0);
         rightTFs = i.getIntExtra("right_TFs",0);
-        Log.d("Left:", "" + leftTFs);
         tfSize =(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
         mainLayoutBot =(Level2cMainLayout) findViewById(R.id.level2c_mainlayout_bottom);
         introButton = (Button) findViewById(R.id.level2c_intro_button);
@@ -504,7 +503,6 @@ public class Level2cGameActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("DESTROYED", "1A");
         unbindDrawables(findViewById(R.id.level2c_mainlayout));
     }
 

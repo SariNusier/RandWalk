@@ -62,7 +62,6 @@ public class Level1aPathView extends View {
 
     public void recycleBM() {
         walkBitmap.recycle();
-        Log.d("Recycled bitmap", "");
     }
 
     public int getColorToUse(){

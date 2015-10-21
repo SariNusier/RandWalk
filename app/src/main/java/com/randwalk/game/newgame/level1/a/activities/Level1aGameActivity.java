@@ -481,7 +481,6 @@ public class Level1aGameActivity extends Activity {
         super.onDestroy();
         unbindDrawables(findViewById(R.id.level1a_mainlayout));
         System.gc();
-        Log.d("DESTROYED", "1A");
     }
 
     private void unbindDrawables(View view)

@@ -82,7 +82,6 @@ public class Level2aGameActivity extends Activity {
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics()));
         tfSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
-        Log.d("SUBLEVEL:", subLevel);
         if(subLevel.equals("A"))
             animationDuration = 1;
         else{
@@ -404,7 +403,6 @@ public class Level2aGameActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("DESTROYED", "1A");
         unbindDrawables(findViewById(R.id.level2a_mainlayout));
     }
 

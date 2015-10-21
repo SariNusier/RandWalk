@@ -4,10 +4,8 @@ import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.graphics.Point;
-import android.os.Build;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -61,7 +59,6 @@ public class Level2BActivity extends ActionBarActivity {
                 if(counter < 50)
                 for(TFView t : TFViews) {
                     t.takeOneStep();
-                    Log.d("OUTSIDE VIEW:","DRAWING" + t.getPrevCoordinates() +" "+ t.getCoordinates());
                     walkView.drawLine(t);
                     t.animate().x(t.getCoordinates().x).y(t.getCoordinates().y).setDuration(100).setListener(animatorListener);
 
@@ -98,7 +95,6 @@ public class Level2BActivity extends ActionBarActivity {
     public void startDrawingWalk() {
         for(TFView t : TFViews) {
             t.takeOneStep();
-            Log.d("OUTSIDE VIEW:","DRAWING" + t.getPrevCoordinates() +" "+ t.getCoordinates());
             walkView.drawLine(t);
             t.animate().x(t.getCoordinates().x).y(t.getCoordinates().y).setDuration(100).setListener(animatorListener);
 

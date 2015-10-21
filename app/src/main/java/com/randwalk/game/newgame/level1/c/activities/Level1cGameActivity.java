@@ -297,14 +297,12 @@ public class Level1cGameActivity extends Activity {
             toast.setDuration(Toast.LENGTH_SHORT);
             toast.show();
         } else {
-            Log.d("TIME DIF:", ""+distance);
             prevPiratePos = currentPiratePos;
             maximumPossibleStep = mainLayout.getWidth()/5;
             random_X = (maximumPossibleStep*50)/distance;//(int)Math.abs(Math.floor(rand.nextGaussian()*20)); //generates two random numbers for X and Y
             random_Y = (int)Math.floor(rand.nextGaussian()*sig_Y); //was 30/60 but I think 20/40 looks better
             currentPiratePos = new Point((int)(currentPiratePos.x+random_X),
                                          (int)(currentPiratePos.y + random_Y +  drift_Y*20));
-            Log.d("DRIFT :", ""+drift_Y+" "+random_X);
             pirateView.animate().x(currentPiratePos.x).y(currentPiratePos.y)
                       .setDuration(100).setListener(animatorListener);
             popIn.setText(goodText[(new Random()).nextInt(2)]);
@@ -497,7 +495,6 @@ public class Level1cGameActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("DESTROYED", "1A");
         unbindDrawables(findViewById(R.id.level1c_mainlayout));
     }
 

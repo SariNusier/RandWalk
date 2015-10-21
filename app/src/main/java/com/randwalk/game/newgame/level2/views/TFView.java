@@ -54,7 +54,6 @@ public class TFView extends View {
             int[] location= new int[2];
             int bound;
             prevCoordinates = new Point(coordinates.x, coordinates.y);
-            Log.d("INSIDE TFView", "THIS IS THE PREV" + prevCoordinates);
             random_Y = d;//(int)Math.abs(Math.floor(rand.nextGaussian()*20)); //generates two random numbers for X and Y
             random_X = (int) Math.floor(rand.nextGaussian() * sig_Y); //was 30/60 but I think 20/40 looks better
             rightSide.getLocationOnScreen(location);
@@ -75,7 +74,6 @@ public class TFView extends View {
                 } else {
                     coordinates.x = coordinates.x + random_X;
                     coordinates.y = coordinates.y + random_Y;
-                    Log.d("INSIDE TFView", "THIS IS AFTER GENERATION" + coordinates + " " + prevCoordinates);
                 }
             }
         } else {
@@ -91,7 +89,6 @@ public class TFView extends View {
             int[] location= new int[2];
             int bound;
             prevCoordinates = new Point(coordinates.x, coordinates.y);
-            Log.d("INSIDE TFView", "THIS IS THE PREV" + prevCoordinates);
             random_Y = d;//(int)Math.abs(Math.floor(rand.nextGaussian()*20)); //generates two random numbers for X and Y
             random_X = (int) Math.floor(rand.nextGaussian() * sig_Y); //was 30/60 but I think 20/40 looks better
             rightSide.getLocationOnScreen(location);
@@ -112,7 +109,6 @@ public class TFView extends View {
                 } else {
                     coordinates.x = coordinates.x + random_X;
                     coordinates.y = coordinates.y + random_Y;
-                    Log.d("INSIDE TFView", "THIS IS AFTER GENERATION" + coordinates + " " + prevCoordinates);
                 }
             }
         } else {

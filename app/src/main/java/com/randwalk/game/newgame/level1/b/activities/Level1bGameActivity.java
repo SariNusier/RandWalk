@@ -425,7 +425,6 @@ public class Level1bGameActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("DESTROYED", "1A");
         unbindDrawables(findViewById(R.id.level1b_mainlayout));
         System.gc();
     }

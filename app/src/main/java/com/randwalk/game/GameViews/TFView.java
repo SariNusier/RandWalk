@@ -45,10 +45,8 @@ public class TFView extends View {
     public void takeOneStep(){
         Random rand = new Random();
         prevCoordinates = new Point(coordinates.x,coordinates.y);
-        Log.d("INSIDE TFView","THIS IS THE PREV"+prevCoordinates);
         coordinates.y = coordinates.y + rand.nextInt(20);
         coordinates.x = coordinates.x + rand.nextInt(61)-30;
-        Log.d("INSIDE TFView","THIS IS AFTER GENERATION"+coordinates+" "+prevCoordinates);
     }
 
 
