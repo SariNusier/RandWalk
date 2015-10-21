@@ -9,7 +9,7 @@
     <string name="intro_level1A">The pirate has just arrived in a new harbour and is ready to go out, but he is aware that he might be tottering on his way back to the ship. \n \nTry to help him by choosing a position on the bar wisely, i.e. in such a way to maximise his chances of arriving to the ship! \n \nChoose a starting point of the pirate\'s walk and observe his movements… \n \nBe prepared - even if you choose
     an ideal starting point, due to the waddle of the pirate, he still might fall into the sea! \n \nTry a couple of times.\nIf you are really unlucky, you will be able to change your starting point.</string>
     <string name="end_level1A">\n \nThe type of walk we were observing in the pirate’s rambling is called \“Random walk\”: both the length and the direction of each step are unpredictable.\n\n
-        We can’t say much about the success of reaching the boat when we are looking at one trajectory, but when we are observing more trials of the pirate, we can claim that some choices of bars
+        We can’t say much about the success of reaching the boat when we are looking at one trajectory, but when we are observing more trials of the pirate, we can claim that some choices of positions
 are better than others… For example, what if you choose a starting point just opposite to the ship?</string>
 
     <string name="intro_level1B">\n\n\n\nThe pirate is still wandering around the town and the crew is waiting for him. Pull him along the right direction by tilting the phone towards the boat!\n\n
@@ -23,7 +23,7 @@ next level.</string>
     </string>
     <string name="level2C_intro">\n\nHey! The boat is about to leave! Hurry up! Drag directly the pirate step by step: the faster you tap on the screen, the longer the step of the pirate!\n\n
 
-You can also to control the direction by tilting the phone as in the previous level.\n\n
+You can also control the direction by tilting the phone as in the previous level.\n\n
 
 Will you manage to beat the randomness this time?\n\n</string>
     <string name="learn_more_main_menu">
